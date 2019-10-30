@@ -1,0 +1,580 @@
+2019-10-29 14:29:57,619 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/dao/sussex_huawei_dao.py", line 28, in read_data
+    if not path.exists(file_path): raise FileNotFoundError('file_path not found on disk')
+FileNotFoundError: file_path not found on disk
+
+2019-10-29 14:30:28,582 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/dao/sussex_huawei_dao.py", line 43, in read_data
+    raise IndexError('provided labels length doesnt match number of data columns')
+IndexError: provided labels length doesnt match number of data columns
+
+2019-10-29 14:30:56,731 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/dao/sussex_huawei_dao.py", line 43, in read_data
+    raise IndexError('provided labels length doesnt match number of data columns')
+IndexError: provided labels length doesnt match number of data columns
+
+2019-10-29 14:33:22,304 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/dao/sussex_huawei_dao.py", line 43, in read_data
+    raise IndexError('provided labels length doesnt match number of data columns')
+IndexError: provided labels length doesnt match number of data columns
+
+2019-10-29 14:34:53,437 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/dao/sussex_huawei_dao.py", line 56, in read_data
+    raise IndexError('provided columns do not match data columns')
+IndexError: provided columns do not match data columns
+
+2019-10-29 14:36:07,467 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/dao/sussex_huawei_dao.py", line 57, in read_data
+    raise IndexError('provided columns do not match data columns')
+IndexError: provided columns do not match data columns
+
+2019-10-29 14:36:53,055 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/dao/sussex_huawei_dao.py", line 56, in read_data
+    raise IndexError('provided columns do not match data columns')
+IndexError: provided columns do not match data columns
+
+2019-10-29 14:37:46,130 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/dao/sussex_huawei_dao.py", line 58, in read_data
+    raise IndexError('provided columns do not match data columns')
+IndexError: provided columns do not match data columns
+
+2019-10-29 15:39:37,994 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/dao/sussex_huawei_dao.py", line 48, in read_data
+    raise IndexError('provided column names length doesnt match number of data columns')
+IndexError: provided column names length doesnt match number of data columns
+
+2019-10-29 15:39:37,994 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/dao/sussex_huawei_dao.py", line 48, in read_data
+    raise IndexError('provided column names length doesnt match number of data columns')
+IndexError: provided column names length doesnt match number of data columns
+
+2019-10-29 17:00:41,331 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/dao/sussex_huawei_dao.py", line 48, in read_data
+    raise IndexError('provided column names length doesnt match number of data columns')
+IndexError: provided column names length doesnt match number of data columns
+
+2019-10-29 17:00:41,331 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/dao/sussex_huawei_dao.py", line 48, in read_data
+    raise IndexError('provided column names length doesnt match number of data columns')
+IndexError: provided column names length doesnt match number of data columns
+
+2019-10-29 17:17:58,869 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/preprocessing/sussex_huawei_preprocessor.py", line 32, in remove_nans
+    raise Exception('asd')
+Exception: asd
+
+2019-10-29 17:17:58,869 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/preprocessing/sussex_huawei_preprocessor.py", line 32, in remove_nans
+    raise Exception('asd')
+Exception: asd
+
+2019-10-29 17:18:47,823 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/preprocessing/sussex_huawei_preprocessor.py", line 32, in remove_nans
+    raise Exception('asd')
+Exception: asd
+
+2019-10-29 17:18:47,823 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/preprocessing/sussex_huawei_preprocessor.py", line 32, in remove_nans
+    raise Exception('asd')
+Exception: asd
+
+2019-10-29 18:27:19,271 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/preprocessing/replacement_strategies/del_row_replacement_strategy.py", line 17, in replace
+    return data.drop([target_vals], axis=1)
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/frame.py", line 4117, in drop
+    errors=errors,
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/generic.py", line 3914, in drop
+    obj = obj._drop_axis(labels, axis, level=level, errors=errors)
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/generic.py", line 3946, in _drop_axis
+    new_axis = axis.drop(labels, errors=errors)
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 5340, in drop
+    raise KeyError("{} not found in axis".format(labels[mask]))
+KeyError: "[('linear_acceleration_x', 'linear_acceleration_y', 'linear_acceleration_z')] not found in axis"
+
+2019-10-29 18:27:19,271 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/preprocessing/replacement_strategies/del_row_replacement_strategy.py", line 17, in replace
+    return data.drop([target_vals], axis=1)
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/frame.py", line 4117, in drop
+    errors=errors,
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/generic.py", line 3914, in drop
+    obj = obj._drop_axis(labels, axis, level=level, errors=errors)
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/generic.py", line 3946, in _drop_axis
+    new_axis = axis.drop(labels, errors=errors)
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 5340, in drop
+    raise KeyError("{} not found in axis".format(labels[mask]))
+KeyError: "[('linear_acceleration_x', 'linear_acceleration_y', 'linear_acceleration_z')] not found in axis"
+
+2019-10-29 18:27:19,271 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/preprocessing/replacement_strategies/del_row_replacement_strategy.py", line 17, in replace
+    return data.drop([target_vals], axis=1)
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/frame.py", line 4117, in drop
+    errors=errors,
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/generic.py", line 3914, in drop
+    obj = obj._drop_axis(labels, axis, level=level, errors=errors)
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/generic.py", line 3946, in _drop_axis
+    new_axis = axis.drop(labels, errors=errors)
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 5340, in drop
+    raise KeyError("{} not found in axis".format(labels[mask]))
+KeyError: "[('linear_acceleration_x', 'linear_acceleration_y', 'linear_acceleration_z')] not found in axis"
+
+2019-10-29 18:35:51,867 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/preprocessing/replacement_strategies/del_row_replacement_strategy.py", line 19, in replace
+    data = data.drop(val, axis=0)
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/frame.py", line 4117, in drop
+    errors=errors,
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/generic.py", line 3914, in drop
+    obj = obj._drop_axis(labels, axis, level=level, errors=errors)
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/generic.py", line 3946, in _drop_axis
+    new_axis = axis.drop(labels, errors=errors)
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 5340, in drop
+    raise KeyError("{} not found in axis".format(labels[mask]))
+KeyError: '[2] not found in axis'
+
+2019-10-29 18:35:51,867 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/preprocessing/replacement_strategies/del_row_replacement_strategy.py", line 19, in replace
+    data = data.drop(val, axis=0)
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/frame.py", line 4117, in drop
+    errors=errors,
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/generic.py", line 3914, in drop
+    obj = obj._drop_axis(labels, axis, level=level, errors=errors)
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/generic.py", line 3946, in _drop_axis
+    new_axis = axis.drop(labels, errors=errors)
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 5340, in drop
+    raise KeyError("{} not found in axis".format(labels[mask]))
+KeyError: '[2] not found in axis'
+
+2019-10-29 18:35:51,867 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/preprocessing/replacement_strategies/del_row_replacement_strategy.py", line 19, in replace
+    data = data.drop(val, axis=0)
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/frame.py", line 4117, in drop
+    errors=errors,
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/generic.py", line 3914, in drop
+    obj = obj._drop_axis(labels, axis, level=level, errors=errors)
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/generic.py", line 3946, in _drop_axis
+    new_axis = axis.drop(labels, errors=errors)
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 5340, in drop
+    raise KeyError("{} not found in axis".format(labels[mask]))
+KeyError: '[2] not found in axis'
+
+2019-10-29 18:37:37,138 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 2897, in get_loc
+    return self._engine.get_loc(key)
+  File "pandas/_libs/index.pyx", line 107, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 131, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1607, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1614, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'coarse_label'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/preprocessing/replacement_strategies/del_row_replacement_strategy.py", line 19, in replace
+    data = data[data[key]==val]
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/frame.py", line 2995, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 2899, in get_loc
+    return self._engine.get_loc(self._maybe_cast_indexer(key))
+  File "pandas/_libs/index.pyx", line 107, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 131, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1607, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1614, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'coarse_label'
+
+2019-10-29 18:37:37,138 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 2897, in get_loc
+    return self._engine.get_loc(key)
+  File "pandas/_libs/index.pyx", line 107, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 131, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1607, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1614, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'coarse_label'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/preprocessing/replacement_strategies/del_row_replacement_strategy.py", line 19, in replace
+    data = data[data[key]==val]
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/frame.py", line 2995, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 2899, in get_loc
+    return self._engine.get_loc(self._maybe_cast_indexer(key))
+  File "pandas/_libs/index.pyx", line 107, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 131, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1607, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1614, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'coarse_label'
+
+2019-10-29 18:37:37,138 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 2897, in get_loc
+    return self._engine.get_loc(key)
+  File "pandas/_libs/index.pyx", line 107, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 131, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1607, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1614, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'coarse_label'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/preprocessing/replacement_strategies/del_row_replacement_strategy.py", line 19, in replace
+    data = data[data[key]==val]
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/frame.py", line 2995, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 2899, in get_loc
+    return self._engine.get_loc(self._maybe_cast_indexer(key))
+  File "pandas/_libs/index.pyx", line 107, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 131, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1607, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1614, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'coarse_label'
+
+2019-10-29 18:38:07,117 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 2897, in get_loc
+    return self._engine.get_loc(key)
+  File "pandas/_libs/index.pyx", line 107, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 131, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1607, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1614, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'coarse_label'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/preprocessing/replacement_strategies/del_row_replacement_strategy.py", line 19, in replace
+    data = data[data[key]==val]
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/frame.py", line 2995, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 2899, in get_loc
+    return self._engine.get_loc(self._maybe_cast_indexer(key))
+  File "pandas/_libs/index.pyx", line 107, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 131, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1607, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1614, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'coarse_label'
+
+2019-10-29 18:38:07,117 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 2897, in get_loc
+    return self._engine.get_loc(key)
+  File "pandas/_libs/index.pyx", line 107, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 131, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1607, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1614, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'coarse_label'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/preprocessing/replacement_strategies/del_row_replacement_strategy.py", line 19, in replace
+    data = data[data[key]==val]
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/frame.py", line 2995, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 2899, in get_loc
+    return self._engine.get_loc(self._maybe_cast_indexer(key))
+  File "pandas/_libs/index.pyx", line 107, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 131, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1607, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1614, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'coarse_label'
+
+2019-10-29 18:38:07,117 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 2897, in get_loc
+    return self._engine.get_loc(key)
+  File "pandas/_libs/index.pyx", line 107, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 131, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1607, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1614, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'coarse_label'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/preprocessing/replacement_strategies/del_row_replacement_strategy.py", line 19, in replace
+    data = data[data[key]==val]
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/frame.py", line 2995, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 2899, in get_loc
+    return self._engine.get_loc(self._maybe_cast_indexer(key))
+  File "pandas/_libs/index.pyx", line 107, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 131, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1607, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1614, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'coarse_label'
+
+2019-10-29 18:46:31,906 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 2897, in get_loc
+    return self._engine.get_loc(key)
+  File "pandas/_libs/index.pyx", line 107, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 131, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1607, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1614, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'coarse_label'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/preprocessing/replacement_strategies/del_row_replacement_strategy.py", line 20, in replace
+    data = data[data[key]!=val]
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/frame.py", line 2995, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 2899, in get_loc
+    return self._engine.get_loc(self._maybe_cast_indexer(key))
+  File "pandas/_libs/index.pyx", line 107, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 131, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1607, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1614, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'coarse_label'
+
+2019-10-29 18:46:31,906 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 2897, in get_loc
+    return self._engine.get_loc(key)
+  File "pandas/_libs/index.pyx", line 107, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 131, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1607, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1614, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'coarse_label'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/preprocessing/replacement_strategies/del_row_replacement_strategy.py", line 20, in replace
+    data = data[data[key]!=val]
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/frame.py", line 2995, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 2899, in get_loc
+    return self._engine.get_loc(self._maybe_cast_indexer(key))
+  File "pandas/_libs/index.pyx", line 107, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 131, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1607, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1614, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'coarse_label'
+
+2019-10-29 18:46:31,906 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 2897, in get_loc
+    return self._engine.get_loc(key)
+  File "pandas/_libs/index.pyx", line 107, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 131, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1607, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1614, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'coarse_label'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/preprocessing/replacement_strategies/del_row_replacement_strategy.py", line 20, in replace
+    data = data[data[key]!=val]
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/frame.py", line 2995, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 2899, in get_loc
+    return self._engine.get_loc(self._maybe_cast_indexer(key))
+  File "pandas/_libs/index.pyx", line 107, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 131, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1607, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1614, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'coarse_label'
+
+2019-10-29 18:46:31,906 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 2897, in get_loc
+    return self._engine.get_loc(key)
+  File "pandas/_libs/index.pyx", line 107, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 131, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1607, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1614, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'coarse_label'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/preprocessing/replacement_strategies/del_row_replacement_strategy.py", line 20, in replace
+    data = data[data[key]!=val]
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/frame.py", line 2995, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 2899, in get_loc
+    return self._engine.get_loc(self._maybe_cast_indexer(key))
+  File "pandas/_libs/index.pyx", line 107, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 131, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1607, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1614, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'coarse_label'
+
+2019-10-29 18:47:12,595 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/preprocessing/replacement_strategies/replacement_val_replacement_strategy.py", line 15, in replace
+    return data.fillna(replacement_vals)
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/frame.py", line 4259, in fillna
+    **kwargs
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/generic.py", line 6207, in fillna
+    value, method = validate_fillna_kwargs(value, method)
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/util/_validators.py", line 358, in validate_fillna_kwargs
+    raise ValueError("Must specify a fill 'value' or 'method'.")
+ValueError: Must specify a fill 'value' or 'method'.
+
+2019-10-29 18:47:12,595 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/preprocessing/replacement_strategies/replacement_val_replacement_strategy.py", line 15, in replace
+    return data.fillna(replacement_vals)
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/frame.py", line 4259, in fillna
+    **kwargs
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/generic.py", line 6207, in fillna
+    value, method = validate_fillna_kwargs(value, method)
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/util/_validators.py", line 358, in validate_fillna_kwargs
+    raise ValueError("Must specify a fill 'value' or 'method'.")
+ValueError: Must specify a fill 'value' or 'method'.
+
+2019-10-29 18:47:12,595 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/preprocessing/replacement_strategies/replacement_val_replacement_strategy.py", line 15, in replace
+    return data.fillna(replacement_vals)
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/frame.py", line 4259, in fillna
+    **kwargs
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/generic.py", line 6207, in fillna
+    value, method = validate_fillna_kwargs(value, method)
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/util/_validators.py", line 358, in validate_fillna_kwargs
+    raise ValueError("Must specify a fill 'value' or 'method'.")
+ValueError: Must specify a fill 'value' or 'method'.
+
+2019-10-29 18:48:14,504 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/preprocessing/replacement_strategies/replacement_val_replacement_strategy.py", line 15, in replace
+    return data.fillna(replacement_vals)
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/frame.py", line 4259, in fillna
+    **kwargs
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/generic.py", line 6207, in fillna
+    value, method = validate_fillna_kwargs(value, method)
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/util/_validators.py", line 358, in validate_fillna_kwargs
+    raise ValueError("Must specify a fill 'value' or 'method'.")
+ValueError: Must specify a fill 'value' or 'method'.
+
+2019-10-29 18:48:14,504 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/preprocessing/replacement_strategies/replacement_val_replacement_strategy.py", line 15, in replace
+    return data.fillna(replacement_vals)
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/frame.py", line 4259, in fillna
+    **kwargs
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/generic.py", line 6207, in fillna
+    value, method = validate_fillna_kwargs(value, method)
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/util/_validators.py", line 358, in validate_fillna_kwargs
+    raise ValueError("Must specify a fill 'value' or 'method'.")
+ValueError: Must specify a fill 'value' or 'method'.
+
+2019-10-29 18:48:14,504 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/preprocessing/replacement_strategies/replacement_val_replacement_strategy.py", line 15, in replace
+    return data.fillna(replacement_vals)
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/frame.py", line 4259, in fillna
+    **kwargs
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/generic.py", line 6207, in fillna
+    value, method = validate_fillna_kwargs(value, method)
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/util/_validators.py", line 358, in validate_fillna_kwargs
+    raise ValueError("Must specify a fill 'value' or 'method'.")
+ValueError: Must specify a fill 'value' or 'method'.
+
+2019-10-29 18:48:58,880 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 2897, in get_loc
+    return self._engine.get_loc(key)
+  File "pandas/_libs/index.pyx", line 107, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 131, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1607, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1614, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'coarse_label'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/preprocessing/replacement_strategies/del_row_replacement_strategy.py", line 20, in replace
+    data = data[data[key]!=val]
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/frame.py", line 2995, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 2899, in get_loc
+    return self._engine.get_loc(self._maybe_cast_indexer(key))
+  File "pandas/_libs/index.pyx", line 107, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 131, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1607, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1614, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'coarse_label'
+
+2019-10-29 18:48:58,880 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 2897, in get_loc
+    return self._engine.get_loc(key)
+  File "pandas/_libs/index.pyx", line 107, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 131, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1607, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1614, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'coarse_label'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/preprocessing/replacement_strategies/del_row_replacement_strategy.py", line 20, in replace
+    data = data[data[key]!=val]
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/frame.py", line 2995, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 2899, in get_loc
+    return self._engine.get_loc(self._maybe_cast_indexer(key))
+  File "pandas/_libs/index.pyx", line 107, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 131, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1607, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1614, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'coarse_label'
+
+2019-10-29 18:48:58,880 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 2897, in get_loc
+    return self._engine.get_loc(key)
+  File "pandas/_libs/index.pyx", line 107, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 131, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1607, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1614, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'coarse_label'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/preprocessing/replacement_strategies/del_row_replacement_strategy.py", line 20, in replace
+    data = data[data[key]!=val]
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/frame.py", line 2995, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 2899, in get_loc
+    return self._engine.get_loc(self._maybe_cast_indexer(key))
+  File "pandas/_libs/index.pyx", line 107, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 131, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1607, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1614, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'coarse_label'
+
+2019-10-29 18:48:58,880 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 2897, in get_loc
+    return self._engine.get_loc(key)
+  File "pandas/_libs/index.pyx", line 107, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 131, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1607, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1614, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'coarse_label'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/preprocessing/replacement_strategies/del_row_replacement_strategy.py", line 20, in replace
+    data = data[data[key]!=val]
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/frame.py", line 2995, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/venv/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 2899, in get_loc
+    return self._engine.get_loc(self._maybe_cast_indexer(key))
+  File "pandas/_libs/index.pyx", line 107, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 131, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1607, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1614, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'coarse_label'
+
+2019-10-30 11:05:16,839 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/preprocessing/sussex_huawei_preprocessor.py", line 81, in label_data
+    raise TypeError(self.messages.PROVIDED_FRAME_DOESNT_MATCH_DATA)
+TypeError: Messages.PROVIDED_FRAME_DOESNT_MATCH_DATA
+
+2019-10-30 11:05:16,839 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/preprocessing/sussex_huawei_preprocessor.py", line 81, in label_data
+    raise TypeError(self.messages.PROVIDED_FRAME_DOESNT_MATCH_DATA)
+TypeError: Messages.PROVIDED_FRAME_DOESNT_MATCH_DATA
+
+2019-10-30 11:08:13,544 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/preprocessing/sussex_huawei_preprocessor.py", line 83, in label_data
+    raise TypeError(self.messages.PROVIDED_FRAME_DOESNT_MATCH_DATA)
+TypeError: Messages.PROVIDED_FRAME_DOESNT_MATCH_DATA
+
+2019-10-30 11:08:13,544 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/preprocessing/sussex_huawei_preprocessor.py", line 83, in label_data
+    raise TypeError(self.messages.PROVIDED_FRAME_DOESNT_MATCH_DATA)
+TypeError: Messages.PROVIDED_FRAME_DOESNT_MATCH_DATA
+
