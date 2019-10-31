@@ -37,6 +37,7 @@ class SussexHuaweiPreprocessor(Preprocessor):
 
                 for segment in selected_data_segments:
                     data_segments.append(segment)
+
             return data_segments
 
 
@@ -76,6 +77,20 @@ class SussexHuaweiPreprocessor(Preprocessor):
         raise NotImplementedError
 
     @overrides
+    def resample_quantitative_data(self, data, freq):
+        # https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.asfreq.html#pandas.Series.asfreq
+        # https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.resample.html
+        # https://jakevdp.github.io/PythonDataScienceHandbook/03.11-working-with-time-series.html
+        return data.resample(freq).mean()
+
+    @overrides
+    def convert_unix_to_datetime(self, data, column, unit):
+        # https://stackoverflow.com/questions/19231871/convert-unix-time-to-readable-date-in-pandas-dataframe
+        # https://stackoverflow.com/questions/42698421/pandas-to-datetime-from-milliseconds-produces-incorrect-datetime
+        data[column] = pandas.to_datetime(data[column], unit=unit)
+        return data
+
+    @overrides
     def remove_unwanted_labels(self, data, unwanted_labels, replacement_mode):
         try:
             if data is None or replacement_mode is None:
@@ -107,10 +122,10 @@ class SussexHuaweiPreprocessor(Preprocessor):
             if mode == 'mean_estimate_gravity':
                 raise NotImplementedError
 
-            if mode == 'known_gyroscope':
+            if mode == 'gyroscope':
                 raise NotImplementedError
 
-            if mode == 'known_gravity':
+            if mode == 'gravity':
                 if len(target_columns) != len(support_columns):
                     raise TypeError(self.messages.PROVIDED_ARRAYS_DONT_MATCH_LENGTH.value)
 
@@ -119,8 +134,18 @@ class SussexHuaweiPreprocessor(Preprocessor):
 
                 return data
 
-            if mode == 'known_orientation':
-                raise NotImplementedError
+            if mode == 'orientation':
+                if len(target_columns)+1 != len(support_columns):
+                    raise TypeError(self.messages.PROVIDED_ARRAYS_DONT_MATCH_LENGTH.value)
+
+                # Source for theory behind below calculation
+                # https://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation
+                # https://en.wikipedia.org/wiki/Homogeneous_coordinates
+                # #https://stackoverflow.com/questions/2422750/in-opengl-vertex-shaders-what-is-w-and-why-do-i-divide-by-it
+                for ind, column in enumerate(target_columns):
+                    data[column] = data[column] * (data[support_columns[ind]] / data[support_columns[3]])
+
+                return data
 
 
         except (TypeError):
