@@ -4,6 +4,7 @@ import os.path
 from os import path
 import traceback
 import pandas
+import numpy
 
 class SussexHuaweiDAO(DAO):
 
@@ -29,9 +30,12 @@ class SussexHuaweiDAO(DAO):
             # 2. load data and return pandas, use only rows specified
             data =  None
             if use_rows is not None:
-                data = pandas.read_csv(file_path, sep=" ", header=None, skiprows=(lambda i : i < use_rows[0] or i >= use_rows[0]+use_rows[1]))
+                data = pandas.read_csv(file_path, sep=" ", header=None,
+                                       skiprows=(lambda i : i < use_rows[0] or i >= use_rows[0]+use_rows[1]),
+                                       float_precision='high', dtype={0:numpy.int64})
             else:
-                data = pandas.read_csv(file_path, sep=" ", header=None,)
+                data = pandas.read_csv(file_path, sep=" ", header=None,
+                                       float_precision='high', dtype={0:numpy.int64})
 
             # 3. remove unwated columns
             if use_columns is not None:

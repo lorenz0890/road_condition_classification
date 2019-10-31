@@ -35,7 +35,26 @@ class Preprocessor(ABC, RCTCComponent):
         :param data: pandas.DataFrame
         :param threshold:
         :param replacement_mode:
-        :return:
+        :return: pandas.DataFrame
+        """
+        pass
+
+    @abstractmethod
+    def resample_quantitative_data(self, data, freq):
+        """
+        Apply a low/high pass filter to the dataset
+        :param data:
+        :return: pandas.DataFrame
+        """
+
+    @abstractmethod
+    def convert_unix_to_datetime(self, data, column, unit):
+        """
+        Convert unix time to date time
+        :param data: pandas.DataFrame
+        :param unit: string
+        :param column: string
+        :return:  pandas.DataFrame
         """
         pass
 
@@ -46,7 +65,7 @@ class Preprocessor(ABC, RCTCComponent):
         :param data: pandas.DataFrame
         :param unwanted_labels:
         :param replacement_mode:
-        :return:
+        :return: pandas.DataFrame
         """
         pass
 
