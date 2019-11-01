@@ -1,13 +1,14 @@
 from abc import ABC, abstractmethod
 from utils.rctc_component import RCTCComponent
 
+
 class Preprocessor(ABC, RCTCComponent):
 
     def __init__(self):
         super().__init__()
 
     @abstractmethod
-    def segment_data(self, data, mode, label_column=None, support=None):
+    def segment_data(self, data, mode, label_column=None, args=None):
         """
         Reformat data
         :param data: pandas.DataFrame
@@ -82,7 +83,7 @@ class Preprocessor(ABC, RCTCComponent):
         pass
 
     @abstractmethod
-    def project_accelerometer_to_global_coordinates(self, data, target_columns, mode, support_columns = None):
+    def project_accelerometer_to_global_coordinates(self, data, target_columns, mode, args = None):
         """
         Project accelerometer data to a global coordinate system.
         This can be done, if gravity readings are known, by substracting them from the accelerometer readings,
@@ -97,7 +98,7 @@ class Preprocessor(ABC, RCTCComponent):
         :param data: pandas.DataFrame
         :param target_columns: list, the columns containing accelerometer readings
         :param mode: string, 'mean_estimate_gravity', 'known_gravity', 'known_gyroscope', 'known_orientation'
-        :param support_columns: list , the columns containing, for example, gravity readings
+        :param args: list , the columns containing, for example, gravity readings, but can be
         :return: pandas.DataFrame
         """
         pass

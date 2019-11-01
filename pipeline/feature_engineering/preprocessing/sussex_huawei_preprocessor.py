@@ -1,7 +1,7 @@
-from feature_engineering.preprocessing.abstract_preprocessor import Preprocessor
-from feature_engineering.preprocessing.replacement_strategies.mean_replacement_strategy import MeanReplacementStrategy
-from feature_engineering.preprocessing.replacement_strategies.del_row_replacement_strategy import DelRowReplacementStrategy
-from feature_engineering.preprocessing.replacement_strategies.replacement_val_replacement_strategy import ReplacementValReplacementStrategy
+from pipeline.feature_engineering.preprocessing.abstract_preprocessor import Preprocessor
+from pipeline.feature_engineering.preprocessing.replacement_strategies.mean_replacement_strategy import MeanReplacementStrategy
+from pipeline.feature_engineering.preprocessing.replacement_strategies.del_row_replacement_strategy import DelRowReplacementStrategy
+from pipeline.feature_engineering.preprocessing.replacement_strategies.replacement_val_replacement_strategy import ReplacementValReplacementStrategy
 from overrides import overrides
 import traceback
 import os
@@ -9,13 +9,14 @@ import pandas
 from sklearn.decomposition import PCA
 import numpy
 
+
 class SussexHuaweiPreprocessor(Preprocessor):
 
     def __init__(self):
         super().__init__()
 
     @overrides
-    def segment_data(self, data, mode, label_column=None, support=None):
+    def segment_data(self, data, mode, label_column=None, args=None):
         try:
             if data is None or mode is None:
                 raise TypeError(self.messages.ILLEGAL_ARGUMENT_NONE_TYPE.value)
@@ -28,7 +29,7 @@ class SussexHuaweiPreprocessor(Preprocessor):
             if mode == 'labels':
                 # 1. Select all data with desired label value
                 data_segments = []
-                for target_label in support:
+                for target_label in args:
                     selected_data = data[data[label_column] == target_label]
 
                     # 2. Split by non-subsequent indices
@@ -196,7 +197,7 @@ class SussexHuaweiPreprocessor(Preprocessor):
             os._exit(2)
 
     @overrides
-    def project_accelerometer_to_global_coordinates(self, data, target_columns, mode, support_columns=None):
+    def project_accelerometer_to_global_coordinates(self, data, target_columns, mode, args=None):
         try:
             if data is None or target_columns is None or mode is None:
                 raise TypeError(self.messages.ILLEGAL_ARGUMENT_NONE_TYPE.value)
@@ -210,16 +211,16 @@ class SussexHuaweiPreprocessor(Preprocessor):
                 raise NotImplementedError(self.messages.NOT_IMPLEMENTED.value)
 
             if mode == 'gravity':
-                if len(target_columns) != len(support_columns):
+                if len(target_columns) != len(args):
                     raise TypeError(self.messages.PROVIDED_ARRAYS_DONT_MATCH_LENGTH.value)
 
                 for ind, column in enumerate(target_columns):
-                    data[column] = data[column] - data[support_columns[ind]]
+                    data[column] = data[column] - data[args[ind]]
 
                 return data
 
             if mode == 'orientation':
-                if len(target_columns)+1 != len(support_columns):
+                if len(target_columns)+1 != len(args):
                     raise TypeError(self.messages.PROVIDED_ARRAYS_DONT_MATCH_LENGTH.value)
 
                 # Source for theory behind below calculation
@@ -227,7 +228,7 @@ class SussexHuaweiPreprocessor(Preprocessor):
                 # https://en.wikipedia.org/wiki/Homogeneous_coordinates
                 # #https://stackoverflow.com/questions/2422750/in-opengl-vertex-shaders-what-is-w-and-why-do-i-divide-by-it
                 for ind, column in enumerate(target_columns):
-                    data[column] = data[column] * (data[support_columns[ind]] / data[support_columns[3]])
+                    data[column] = data[column] * (data[args[ind]] / data[args[3]])
 
                 return data
 

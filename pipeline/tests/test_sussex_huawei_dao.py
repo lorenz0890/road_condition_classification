@@ -1,5 +1,5 @@
 import unittest
-from feature_engineering.dao.sussex_huawei_dao import SussexHuaweiDAO
+from pipeline.feature_engineering.dao.sussex_huawei_dao import SussexHuaweiDAO
 
 class TestSussexHuaweiDao(unittest.TestCase):
 

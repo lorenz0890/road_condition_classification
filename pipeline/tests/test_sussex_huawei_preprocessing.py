@@ -1,7 +1,7 @@
 import unittest
 import numpy
-from feature_engineering.dao.sussex_huawei_dao import SussexHuaweiDAO
-from feature_engineering.preprocessing.sussex_huawei_preprocessor import SussexHuaweiPreprocessor
+from pipeline.feature_engineering.dao.sussex_huawei_dao import SussexHuaweiDAO
+from pipeline.feature_engineering.preprocessing.sussex_huawei_preprocessor import SussexHuaweiPreprocessor
 
 class TestSussexHuaweiPreprocessor(unittest.TestCase):
 
@@ -110,8 +110,8 @@ class TestSussexHuaweiPreprocessor(unittest.TestCase):
         selected_coarse_labels = [5]
         data = self.preprocessor.label_data(self.data, self.labels)
         data = self.preprocessor.segment_data(data, mode='labels',
-                                  label_column='coarse_label',
-                                  support=selected_coarse_labels)
+                                              label_column='coarse_label',
+                                              args=selected_coarse_labels)
 
         self.assertTrue(len(data) > 1 and segment['coarse_label'] in selected_coarse_labels for segment in data)
 

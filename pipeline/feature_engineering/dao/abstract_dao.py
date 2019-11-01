@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from utils.rctc_component import RCTCComponent
 
+
 class DAO(ABC, RCTCComponent):
 
     def __init__(self):
