@@ -10,3 +10,5 @@ class Messages(Enum):
     PROVIDED_ARRAY_DOESNT_MATCH_DATA = ('provided array does not match data frame')
     PROVIDED_ARRAYS_DONT_MATCH_LENGTH = ('provided arrays do not match in length')
     PROVIDED_FRAME_DOESNT_MATCH_DATA = ('provided data frame does not match data frame')
+    PROVIDED_MODE_DOESNT_EXIST = ('provided mode does not exist')
+    NOT_IMPLEMENTED = ('requested operation not implemented')

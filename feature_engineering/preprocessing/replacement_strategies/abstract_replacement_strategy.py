@@ -7,6 +7,6 @@ class ReplacementStrategy(ABC, RCTCComponent):
         super().__init__()
 
     @abstractmethod
-    def replace(self, data, target, target_vals = None, replacement_vals=None):
+    def replace(self, data, mode, target_vals = None, replacement_vals=None):
         pass
 

@@ -16,9 +16,9 @@ class SussexHuaweiDAO(DAO):
         """
         Load a dataset from disk. start_row and end_row can be used in case the data has to be loaded chunk-wise.
         :param file_path: string, path to data file
-        :param column_names: array[string]
+        :param column_names: list
         :param use_rows: (int, int), (start index, end_index)
-        :param use_columns: array[], column names
+        :param use_columns: list, column names
         :return: pandas.DataFrame, named clumns and loaded data
         """
         try:
@@ -42,18 +42,18 @@ class SussexHuaweiDAO(DAO):
                 if all(column in data.keys() for column in use_columns):
                     data = data[use_columns]
                 else:
-                    raise IndexError(self.messages.PROVIDED_ARRAY_DOESNT_MATCH_DATA.value)
+                    raise ValueError(self.messages.PROVIDED_ARRAY_DOESNT_MATCH_DATA.value)
 
             # 4. add label information
             if column_names is not None:
                 if len(column_names) == len(data.columns):
                     data.columns = column_names
                 else:
-                    raise IndexError(self.messages.PROVIDED_ARRAY_DOESNT_MATCH_DATA.value)
+                    raise ValueError(self.messages.PROVIDED_ARRAY_DOESNT_MATCH_DATA.value)
 
             return data
 
-        except (FileNotFoundError, IndexError, TypeError):
+        except (FileNotFoundError, ValueError, TypeError):
             self.logger.error(traceback.format_exc())
             os._exit(1)
 
@@ -70,7 +70,7 @@ class SussexHuaweiDAO(DAO):
         :param data_dict:
         :return:
         """
-        raise NotImplementedError
+        raise NotImplementedError(self.messages.NOT_IMPLEMENTED.value)
 
     @overrides
     def load_features(self, file_path):
@@ -79,4 +79,4 @@ class SussexHuaweiDAO(DAO):
         :param file_path:
         :return:
         """
-        raise NotImplementedError
+        raise NotImplementedError(self.messages.NOT_IMPLEMENTED.value)

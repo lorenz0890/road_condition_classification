@@ -29,13 +29,14 @@ class Preprocessor(ABC, RCTCComponent):
 
 
     @abstractmethod
-    def remove_outliers_from_quantitative_data(self, data, threshold, replacement_mode):
+    def remove_outliers_from_quantitative_data(self, data, replacement_mode, columns, quantile = None, threshold = None):
         """
         Remove statistical outliers,
         :param data: pandas.DataFrame
-        :param threshold:
-        :param replacement_mode:
+        :param replacement_mode: string, 'quantile' or 'threshold'
         :return: pandas.DataFrame
+        :param quantile: float
+        :param threshold: float
         """
         pass
 
@@ -43,7 +44,8 @@ class Preprocessor(ABC, RCTCComponent):
     def resample_quantitative_data(self, data, freq):
         """
         Apply a low/high pass filter to the dataset
-        :param data:
+        :param data: pandas.DataFrame
+        :param freq: str
         :return: pandas.DataFrame
         """
 
@@ -63,8 +65,8 @@ class Preprocessor(ABC, RCTCComponent):
         """
         Remove unwanted data
         :param data: pandas.DataFrame
-        :param unwanted_labels:
-        :param replacement_mode:
+        :param unwanted_labels: list
+        :param replacement_mode: str
         :return: pandas.DataFrame
         """
         pass
@@ -74,6 +76,7 @@ class Preprocessor(ABC, RCTCComponent):
         """
         Combine labels and data rows
         :param data: pandas.DataFrame
+        :param labels: pandas.DataFrame
         :return: pandas.DataFrame
         """
         pass
@@ -92,9 +95,9 @@ class Preprocessor(ABC, RCTCComponent):
         In ISWC ’03:Proceedings of the 7th IEEE International Symposium on Wearable Computers,page 252, Washington, DC, USA, 2003. IEEE Computer Society
 
         :param data: pandas.DataFrame
-        :param target_columns: array['string], the columns containing accelerometer readings
+        :param target_columns: list, the columns containing accelerometer readings
         :param mode: string, 'mean_estimate_gravity', 'known_gravity', 'known_gyroscope', 'known_orientation'
-        :param support_columns: array['string] , the columns containing, for example, gravity readings
+        :param support_columns: list , the columns containing, for example, gravity readings
         :return: pandas.DataFrame
         """
         pass
@@ -106,7 +109,7 @@ class Preprocessor(ABC, RCTCComponent):
         Source:
             https://stackoverflow.com/questions/26414913/normalize-columns-of-pandas-data-frame
         :param data: pandas.DataFrame
-        :param columns: columns to be modified
+        :param columns: list, columns to be modified
         :return: pandas.DataFrame
         """
         pass
@@ -135,12 +138,12 @@ class Preprocessor(ABC, RCTCComponent):
         pass
 
     @abstractmethod
-    def norm_quantitative_data(self, norm, represenation, data, columns = None):
+    def reduce_quantitativ_data_dimensionality(self, data, mode, reduced_column_name = 'reduced', columns = None):
         """
-        Apply norm to quantitative data
+        Reduce accelerometer dimensionality from 3 to 1 using L2 norm, PCA
         :param data: pandas.DataFrame
-        :param norm: string, 'euclidean', 'manhatten'
-        :param represenation: string, 'SAX' 'DTW', 'numerical'
+        :param mode: string, 'euclidean', 'manhatten'
+        :param columns: list
         :return: pandas.DataFrame
         """
         pass

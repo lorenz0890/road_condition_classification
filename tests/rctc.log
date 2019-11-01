@@ -578,3 +578,18 @@ TypeError: Messages.PROVIDED_FRAME_DOESNT_MATCH_DATA
     raise TypeError(self.messages.PROVIDED_FRAME_DOESNT_MATCH_DATA)
 TypeError: Messages.PROVIDED_FRAME_DOESNT_MATCH_DATA
 
+2019-11-01 11:12:28,678 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/preprocessing/sussex_huawei_preprocessor.py", line 166, in label_data
+    raise TypeError(self.messages.PROVIDED_FRAME_DOESNT_MATCH_DATA.value)
+TypeError: provided data frame does not match data frame
+
+2019-11-01 11:12:28,678 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/preprocessing/sussex_huawei_preprocessor.py", line 166, in label_data
+    raise TypeError(self.messages.PROVIDED_FRAME_DOESNT_MATCH_DATA.value)
+TypeError: provided data frame does not match data frame
+
+2019-11-01 11:12:28,678 - rctc_logger - ERROR - Traceback (most recent call last):
+  File "/home/lorenz/PycharmProjects/rctc_pipeline/feature_engineering/preprocessing/sussex_huawei_preprocessor.py", line 166, in label_data
+    raise TypeError(self.messages.PROVIDED_FRAME_DOESNT_MATCH_DATA.value)
+TypeError: provided data frame does not match data frame
+
