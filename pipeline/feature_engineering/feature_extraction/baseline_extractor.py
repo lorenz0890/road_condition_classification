@@ -26,6 +26,8 @@ class BaselineExtractor(Extractor):
         X = extract_features(data, column_id = args[0], n_jobs = args[2])
         X = impute(X)
         y = args[1]
+        print(X.index)
+        print(y.index)
         features_filtered = select_features(X, y)
 
         return features_filtered
