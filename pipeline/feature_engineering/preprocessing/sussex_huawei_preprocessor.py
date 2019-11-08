@@ -53,6 +53,29 @@ class SussexHuaweiPreprocessor(Preprocessor):
             self.logger.error(traceback.format_exc())
             os._exit(2)
 
+    @overrides
+    def de_segment_data(self, data_segments, selected_columns=None):
+        try:
+
+            data = None
+            for ind in range(len(data_segments)):
+                if data is None:
+                    data = data_segments[ind][selected_columns]
+                else:
+                    data = pandas.concat([data, data_segments[ind][selected_columns]])
+                    data = data.reset_index(drop=True)
+
+            return data
+
+        except (TypeError, NotImplementedError, ValueError):
+            self.logger.error(traceback.format_exc())
+            os._exit(1)
+
+
+        except Exception:
+            self.logger.error(traceback.format_exc())
+            os._exit(2)
+
 
     @overrides
     def remove_nans(self, data, replacement_mode, replacement_value=None):

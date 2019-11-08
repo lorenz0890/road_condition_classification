@@ -83,7 +83,7 @@ class SussexHuaweiDAO(DAO):
         raise NotImplementedError(self.messages.NOT_IMPLEMENTED.value)
 
     @overrides
-    def write_model(self, file_path, model):
+    def write_model(self, file_path, mode, model):
         """
         Write trained features to disk
         :param file_path:
@@ -93,7 +93,7 @@ class SussexHuaweiDAO(DAO):
         raise NotImplementedError(self.messages.NOT_IMPLEMENTED.value)
 
     @overrides
-    def load_model(self, file_path):
+    def load_model(self, file_path, mode):
         """
         Load trained model from disk
         :param file_path:

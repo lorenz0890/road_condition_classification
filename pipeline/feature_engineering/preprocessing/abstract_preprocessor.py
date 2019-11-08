@@ -18,6 +18,16 @@ class Preprocessor(ABC, RCTCComponent):
         pass
 
     @abstractmethod
+    def de_segment_data(self, data_segments, selected_columns=None):
+        """
+        Reformat data
+        :param data: pandas.DataFrame
+        :param mode: 'string, 'semantic' for semantic segmentation, 'labels' for segementation per label
+        :return: pandas.DataFrame(s)
+        """
+        pass
+
+    @abstractmethod
     def remove_nans(self, data, replacement_mode, replacement_value = None):
         """
         Remove NaNs

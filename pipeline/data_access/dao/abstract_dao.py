@@ -39,7 +39,7 @@ class DAO(ABC, RCTCComponent):
         pass
 
     @abstractmethod
-    def write_model(self, file_path, model):
+    def write_model(self, file_path, mode, model):
         """
         Write trained features to disk
         :param file_path:
@@ -49,7 +49,7 @@ class DAO(ABC, RCTCComponent):
         pass
 
     @abstractmethod
-    def load_model(self, file_path):
+    def load_model(self, mode ,file_path):
         """
         Load trained model from disk
         :param file_path:
