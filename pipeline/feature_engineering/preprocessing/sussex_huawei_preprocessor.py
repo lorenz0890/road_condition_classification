@@ -61,7 +61,7 @@ class SussexHuaweiPreprocessor(Preprocessor):
                 if data is None:
                     data = data_segments[ind][selected_columns]
                 else:
-                    data = pandas.concat([data, data_segments[ind][selected_columns]])
+                    data = pandas.concat([data, data_segments[ind][selected_columns]], axis=1)
                     data = data.reset_index(drop=True)
 
             return data
@@ -352,8 +352,11 @@ class SussexHuaweiPreprocessor(Preprocessor):
                 # https://stackoverflow.com/questions/54260920/combine-merge-dataframes-with-different-indexes-and-different-column-names
                 # https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.append.html
                 reduced = data[columns].apply(numpy.square, axis=1)[columns].sum(axis=1)
+                old_index = data.index
                 data = pandas.concat([data, reduced], axis=1)
                 data = data.rename(columns={0: reduced_column_name})
+                data = data.reset_index(drop=True)
+                data = data.set_index(old_index)
                 return data
 
             if mode == 'manhatten':
