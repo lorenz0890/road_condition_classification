@@ -56,7 +56,6 @@ class SussexHuaweiPreprocessor(Preprocessor):
     @overrides
     def de_segment_data(self, data_segments, selected_columns=None):
         try:
-
             data = None
             for ind in range(len(data_segments)):
                 if data is None:
@@ -372,7 +371,7 @@ class SussexHuaweiPreprocessor(Preprocessor):
                 reduced = reduced.rename(columns={0:reduced_column_name})
                 reduced = reduced.reset_index(drop=True)
                 old_index = data.index
-                data = data.reset_index(drop=False)
+                data = data.reset_index(drop=True)
                 data = pandas.concat([data, reduced], axis=1)
                 data = data.set_index(old_index)
                 return data
