@@ -81,3 +81,22 @@ class SussexHuaweiDAO(DAO):
         :return:
         """
         raise NotImplementedError(self.messages.NOT_IMPLEMENTED.value)
+
+    @overrides
+    def write_model(self, file_path, model):
+        """
+        Write trained features to disk
+        :param file_path:
+        :param model:
+        :return:
+        """
+        raise NotImplementedError(self.messages.NOT_IMPLEMENTED.value)
+
+    @overrides
+    def load_model(self, file_path):
+        """
+        Load trained model from disk
+        :param file_path:
+        :return:
+        """
+        raise NotImplementedError(self.messages.NOT_IMPLEMENTED.value)

@@ -3,12 +3,6 @@ from overrides import overrides
 from tsfresh import extract_features
 from tsfresh import select_features
 from tsfresh.utilities.dataframe_functions import impute
-from tsfresh import extract_relevant_features
-import numpy
-
-
-
-
 
 class BaselineExtractor(Extractor):
 
@@ -26,6 +20,6 @@ class BaselineExtractor(Extractor):
         X = extract_features(data, column_id = args[0], n_jobs = args[2])
         X = impute(X)
         y = args[1]
-        features_filtered = select_features(X, y)
+        X_filtered = select_features(X, y)
 
-        return features_filtered
+        return X_filtered

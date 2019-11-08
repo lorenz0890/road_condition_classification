@@ -318,7 +318,6 @@ class SussexHuaweiPreprocessor(Preprocessor):
     @overrides
     def reduce_quantitativ_data_dimensionality(self, data, mode, reduced_column_name = 'reduced', columns = None):
         try:
-
             if data is None or mode is None or reduced_column_name is None:
                 raise TypeError(self.messages.ILLEGAL_ARGUMENT_NONE_TYPE.value)
             if not isinstance(data, pandas.DataFrame) or not isinstance(mode, str) or not isinstance(reduced_column_name, str):
@@ -380,8 +379,6 @@ class SussexHuaweiPreprocessor(Preprocessor):
 
                 for column in columns:
                     data[column] = encoding_function(data[column])
-                    print(encoding_function(data[column]))
-                    print(encoding_function)
                 return data
 
 

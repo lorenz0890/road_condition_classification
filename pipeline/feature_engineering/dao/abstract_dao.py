@@ -37,3 +37,22 @@ class DAO(ABC, RCTCComponent):
         :return:
         """
         pass
+
+    @abstractmethod
+    def write_model(self, file_path, model):
+        """
+        Write trained features to disk
+        :param file_path:
+        :param model:
+        :return:
+        """
+        pass
+
+    @abstractmethod
+    def load_model(self, file_path):
+        """
+        Load trained model from disk
+        :param file_path:
+        :return:
+        """
+        pass
