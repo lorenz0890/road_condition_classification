@@ -366,4 +366,32 @@ class SussexHuaweiPreprocessor(Preprocessor):
             os._exit(2)
 
 
+        def encode_categorical_features(self, data, mode, columns, encoding_function):
+            try:
+                if data is None or mode is None or columns is None:
+                    raise TypeError(self.messages.ILLEGAL_ARGUMENT_NONE_TYPE.value)
+                if not isinstance(data, pandas.DataFrame) or not isinstance(mode, str) or not isinstance(
+                        reduced_column_name, str):
+                    raise TypeError(type(data))
+
+                if mode == 'custom_function':
+                    if encoding_function is None:
+                        raise TypeError(self.messages.ILLEGAL_ARGUMENT_NONE_TYPE.value)
+
+                    for column in columns:
+                        data[column] = encoding_function(data[column])
+                    return data
+
+
+                raise ValueError(self.messages.PROVIDED_MODE_DOESNT_EXIST.value)
+
+            except (TypeError, NotImplementedError, ValueError):
+                self.logger.error(traceback.format_exc())
+                os._exit(1)
+
+            except Exception:
+                self.logger.error(traceback.format_exc())
+                os._exit(2)
+
+
 
