@@ -380,6 +380,8 @@ class SussexHuaweiPreprocessor(Preprocessor):
 
                 for column in columns:
                     data[column] = encoding_function(data[column])
+                    print(encoding_function(data[column]))
+                    print(encoding_function)
                 return data
 
 
