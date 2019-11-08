@@ -1,4 +1,4 @@
-from pipeline.feature_engineering.dao.abstract_dao import DAO
+from pipeline.data_access.dao.abstract_dao import DAO
 from overrides import overrides
 import os.path
 from os import path

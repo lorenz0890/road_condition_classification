@@ -1,6 +1,6 @@
 import unittest
 import numpy
-from pipeline.feature_engineering.dao.sussex_huawei_dao import SussexHuaweiDAO
+from pipeline.data_access.dao.sussex_huawei_dao import SussexHuaweiDAO
 from pipeline.feature_engineering.preprocessing.sussex_huawei_preprocessor import SussexHuaweiPreprocessor
 
 class TestSussexHuaweiPreprocessor(unittest.TestCase):
