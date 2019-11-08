@@ -365,7 +365,7 @@ class SussexHuaweiPreprocessor(Preprocessor):
             self.logger.error(traceback.format_exc())
             os._exit(2)
 
-
+        @overrides
         def encode_categorical_features(self, data, mode, columns, encoding_function):
             try:
                 if data is None or mode is None or columns is None:

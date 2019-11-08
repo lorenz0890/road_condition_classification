@@ -148,3 +148,14 @@ class Preprocessor(ABC, RCTCComponent):
         :return: pandas.DataFrame
         """
         pass
+
+    @abstractmethod
+    def encode_categorical_features(self, data, mode, columns, encoding_function):
+        """
+        :param data:
+        :param mode:
+        :param columns:
+        :param encoding_function:
+        :return:
+        """
+        pass
