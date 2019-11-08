@@ -54,14 +54,14 @@ class SussexHuaweiPreprocessor(Preprocessor):
             os._exit(2)
 
     @overrides
-    def de_segment_data(self, data_segments, selected_columns=None):
+    def de_segment_data(self, data_segments, selected_columns=None, axis = 0):
         try:
             data = None
             for ind in range(len(data_segments)):
                 if data is None:
                     data = data_segments[ind][selected_columns]
                 else:
-                    data = pandas.concat([data, data_segments[ind][selected_columns]], axis=1)
+                    data = pandas.concat([data, data_segments[ind][selected_columns]], axis=axis)
                     data = data.reset_index(drop=True)
 
             return data

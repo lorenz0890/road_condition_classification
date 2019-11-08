@@ -18,7 +18,7 @@ class Preprocessor(ABC, RCTCComponent):
         pass
 
     @abstractmethod
-    def de_segment_data(self, data_segments, selected_columns=None):
+    def de_segment_data(self, data_segments, selected_columns=None, axis = 0):
         """
         Reformat data
         :param data: pandas.DataFrame
