@@ -15,7 +15,7 @@ class SklearnModelFactory(ModelFactory):
 
     @overrides
     def _create_random_forrest(self, X, y, model_params, selection_params):
-        clf = RandomForestClassifier(n_estimators=model_params[0], max_depth=model_params[1], random_state=model_params[3])
+        clf = RandomForestClassifier(n_estimators=model_params[0], max_depth=model_params[1], random_state=model_params[2])
         tscv = TimeSeriesSplit(n_splits=selection_params[0])
         evaluated_estimators = cross_validate(clf, X, y, cv=tscv, return_estimator=True)
         return evaluated_estimators
@@ -39,7 +39,7 @@ class SklearnModelFactory(ModelFactory):
                             hidden_layer_sizes=model_params[2], random_state=model_params[3])
 
         tscv = TimeSeriesSplit(n_splits=selection_params[0])
-        evaluated_estimators = cross_validate(clf, X, y, cv=tscv)
+        evaluated_estimators = cross_validate(clf, X, y, cv=tscv, return_estimator=True)
         return evaluated_estimators
 
     @overrides
