@@ -3,6 +3,7 @@ from overrides import overrides
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import cross_validate
 from sklearn.model_selection import TimeSeriesSplit
+from sklearn.model_selection import ShuffleSplit
 from sklearn.model_selection import learning_curve
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
@@ -16,14 +17,14 @@ class SklearnModelFactory(ModelFactory):
     @overrides
     def _create_random_forrest(self, X, y, model_params, selection_params):
         clf = RandomForestClassifier(n_estimators=model_params[0], max_depth=model_params[1], random_state=model_params[2])
-        tscv = TimeSeriesSplit(n_splits=selection_params[0])
+        tscv = ShuffleSplit(n_splits=selection_params[0])#TimeSeriesSplit(n_splits=selection_params[0])
         evaluated_estimators = cross_validate(clf, X, y, cv=tscv, return_estimator=True)
         return evaluated_estimators
 
     @overrides
     def _create_CART_tree(self, X, y, model_params, selection_params):
         clf = DecisionTreeClassifier(random_state=model_params[0])
-        tscv = TimeSeriesSplit(n_splits=selection_params[0])
+        tscv = ShuffleSplit(n_splits=selection_params[0])# TimeSeriesSplit(n_splits=selection_params[0])
         evaluated_estimators = cross_validate(clf, X, y, cv=tscv, return_estimator=True)
         return evaluated_estimators
 
@@ -38,7 +39,7 @@ class SklearnModelFactory(ModelFactory):
         clf = MLPClassifier(solver=model_params[0], alpha=model_params[1],
                             hidden_layer_sizes=model_params[2], random_state=model_params[3])
 
-        tscv = TimeSeriesSplit(n_splits=selection_params[0])
+        tscv = ShuffleSplit(n_splits=selection_params[0])# TimeSeriesSplit(n_splits=selection_params[0])
         evaluated_estimators = cross_validate(clf, X, y, cv=tscv, return_estimator=True)
         return evaluated_estimators
 
