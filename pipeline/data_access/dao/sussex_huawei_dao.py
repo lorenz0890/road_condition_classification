@@ -93,7 +93,7 @@ class SussexHuaweiDAO(DAO):
 
                 labels = self.read_data(
                     label_string,
-                    column_names=column_names[1],
+                    column_names=column_names[0],
                     use_columns=use_columns[1])
 
                 all_labels.append(labels)
