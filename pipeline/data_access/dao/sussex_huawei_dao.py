@@ -62,6 +62,56 @@ class SussexHuaweiDAO(DAO):
             self.logger.error(traceback.format_exc())
             os._exit(2)
 
+    @overrides
+    def bulk_read_data(self, file_path, identifiers, column_names, use_columns):
+        """
+        Load a multiple datasets from data directory on disk, return concatenated pandas dataframe.
+        :param file_path: list(), paths to data files
+        :param column_names: list(string)
+        :param identifiers: list()
+        :param use_columns: list(), column names
+        :return: pandas.DataFrame, labeled and loaded data
+        """
+        try:
+            # 1. validate input
+            if file_path is None or identifiers is None or column_names is None or use_columns is None:
+                raise TypeError(self.messages.ILLEGAL_ARGUMENT_NONE_TYPE.value)
+            if not isinstance(file_path, str): raise TypeError(self.messages.ILLEGAL_ARGUMENT_TYPE.value)
+            if not path.exists(file_path): raise FileNotFoundError(self.messages.FILE_NOT_FOUND.value)
+
+            all_labels = []
+            all_data = []
+            for trip in identifiers:
+                data_string = file_path[0].format(trip)
+                label_string = file_path[1].format(trip)
+
+                data = self.read_data(
+                    data_string,
+                    column_names=column_names[0],
+                    use_columns=use_columns[1])  # 4,5,6,7,8,9,17,18,19
+
+                all_data.append(data)
+
+                labels = self.read_data(
+                    label_string,
+                    column_names=column_names[1],
+                    use_columns=use_columns[1])
+
+                all_labels.append(labels)
+
+            import pandas
+            labels = pandas.concat(all_labels, axis=0)
+            data = pandas.concat(all_data, axis=0)
+            return labels, data
+
+        except (FileNotFoundError, ValueError, TypeError):
+            self.logger.error(traceback.format_exc())
+            os._exit(1)
+
+        except Exception:
+            self.logger.error(traceback.format_exc())
+            os._exit(2)
+
 
     @overrides
     def write_features(self, file_path, data_dict):

@@ -12,9 +12,21 @@ class DAO(ABC, RCTCComponent):
         """
         Load a dataset from disk. start_row and end_row can be used in case the data has to be loaded chunk-wise.
         :param file_path: string, path to data file
-        :param column_names: array[string]
+        :param column_names: list(string)
         :param use_rows: (int, int), (start index, end_index)
         :param use_columns: array[], column names
+        :return: pandas.DataFrame, labeled and loaded data
+        """
+        pass
+
+    @abstractmethod
+    def bulk_read_data(self, file_path, identifiers, column_names, use_columns):
+        """
+        Load a multiple datasets from data directory on disk, return concatenated pandas dataframe.
+        :param file_path: list(), path(s) to data files
+        :param column_names: list()
+        :param identifiers: list(), identifiers in the path to the datafiles
+        :param use_columns: list(), column names
         :return: pandas.DataFrame, labeled and loaded data
         """
         pass
