@@ -32,11 +32,11 @@ class DAO(ABC, RCTCComponent):
         pass
 
     @abstractmethod
-    def write_features(self, file_path, data_dict):
+    def write_features(self, file_path, features):
         """
         Write extracted features to disk
         :param file_path:
-        :param data_dict:
+        :param features:
         :return:
         """
         pass

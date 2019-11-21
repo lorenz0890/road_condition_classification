@@ -102,7 +102,7 @@ class SussexHuaweiDAO(DAO):
             data = pandas.concat(all_data, axis=0)
             return labels, data
 
-        except (FileNotFoundError, ValueError, TypeError):
+        except (ValueError, TypeError):
             self.logger.error(traceback.format_exc())
             os._exit(1)
 
@@ -112,14 +112,28 @@ class SussexHuaweiDAO(DAO):
 
 
     @overrides
-    def write_features(self, file_path, data_dict):
+    def write_features(self, file_path, features):
         """
         Write extracted features to disk
         :param file_path:
-        :param data_dict:
+        :param features:
         :return:
         """
-        raise NotImplementedError(self.messages.NOT_IMPLEMENTED.value)
+        try:
+            # 1. validate input
+            if file_path is None: raise TypeError(self.messages.ILLEGAL_ARGUMENT_NONE_TYPE.value)
+            if not isinstance(file_path, str): raise TypeError(self.messages.ILLEGAL_ARGUMENT_TYPE.value)
+            if not isinstance(features, pandas.DataFrame): raise TypeError(self.messages.ILLEGAL_ARGUMENT_TYPE.value)
+
+            features.to_pickle(file_path)
+
+        except (ValueError, TypeError):
+            self.logger.error(traceback.format_exc())
+            os._exit(1)
+
+        except Exception:
+            self.logger.error(traceback.format_exc())
+            os._exit(2)
 
     @overrides
     def load_features(self, file_path):
