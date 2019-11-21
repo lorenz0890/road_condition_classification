@@ -76,14 +76,13 @@ class SussexHuaweiDAO(DAO):
             # 1. validate input
             if file_path is None or identifiers is None or column_names is None or use_columns is None:
                 raise TypeError(self.messages.ILLEGAL_ARGUMENT_NONE_TYPE.value)
-            if not isinstance(file_path, str): raise TypeError(self.messages.ILLEGAL_ARGUMENT_TYPE.value)
-            if not path.exists(file_path): raise FileNotFoundError(self.messages.FILE_NOT_FOUND.value)
+            if not isinstance(file_path, list): raise TypeError(self.messages.ILLEGAL_ARGUMENT_TYPE.value)
 
             all_labels = []
             all_data = []
-            for trip in identifiers:
-                data_string = file_path[0].format(trip)
-                label_string = file_path[1].format(trip)
+            for identifier in identifiers:
+                data_string = file_path[0].format(identifier)
+                label_string = file_path[1].format(identifier)
 
                 data = self.read_data(
                     data_string,
