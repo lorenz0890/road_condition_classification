@@ -123,7 +123,9 @@ class SussexHuaweiDAO(DAO):
             # 1. validate input
             if file_path is None: raise TypeError(self.messages.ILLEGAL_ARGUMENT_NONE_TYPE.value)
             if not isinstance(file_path, str): raise TypeError(self.messages.ILLEGAL_ARGUMENT_TYPE.value)
-            if not isinstance(features, pandas.DataFrame) and not isinstance(features, pandas.core.frame.DataFrame):
+            if (not isinstance(features, pandas.DataFrame) and
+                    not isinstance(features, pandas.core.frame.DataFrame) \
+                    and not isinstance(features, pandas.core.series.Series)):
                 raise TypeError(self.messages.ILLEGAL_ARGUMENT_TYPE.value)
 
             features.to_pickle(file_path)
