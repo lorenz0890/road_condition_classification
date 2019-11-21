@@ -87,18 +87,17 @@ class SussexHuaweiDAO(DAO):
                 data = self.read_data(
                     data_string,
                     column_names=column_names[0],
-                    use_columns=use_columns[1])  # 4,5,6,7,8,9,17,18,19
+                    use_columns=use_columns[0])  # 4,5,6,7,8,9,17,18,19
 
                 all_data.append(data)
 
                 labels = self.read_data(
                     label_string,
-                    column_names=column_names[0],
+                    column_names=column_names[1],
                     use_columns=use_columns[1])
 
                 all_labels.append(labels)
 
-            import pandas
             labels = pandas.concat(all_labels, axis=0)
             data = pandas.concat(all_data, axis=0)
             return labels, data
