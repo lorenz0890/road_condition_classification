@@ -8,6 +8,9 @@ from sklearn.model_selection import learning_curve
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.neural_network import MLPClassifier
+import os
+import traceback
+import pandas
 
 class SklearnModelFactory(ModelFactory):
 
@@ -16,10 +19,35 @@ class SklearnModelFactory(ModelFactory):
 
     @overrides
     def _create_random_forrest(self, X, y, model_params, selection_params):
-        clf = RandomForestClassifier(n_estimators=model_params[0], max_depth=model_params[1], random_state=model_params[2])
-        tscv = ShuffleSplit(n_splits=selection_params[0])#TimeSeriesSplit(n_splits=selection_params[0])
-        evaluated_estimators = cross_validate(clf, X, y, cv=tscv, return_estimator=True)
-        return evaluated_estimators
+
+        try:
+            if X is None or y is None or model_params is None or selection_params is None:
+                raise TypeError(self.messages.ILLEGAL_ARGUMENT_NONE_TYPE.value)
+            if (not isinstance(X, pandas.DataFrame) and
+                    not isinstance(X, pandas.core.frame.DataFrame) \
+                    and not isinstance(X, pandas.core.series.Series)):
+                raise TypeError(self.messages.ILLEGAL_ARGUMENT_TYPE.value)
+            if (not isinstance(y, pandas.DataFrame) and
+                    not isinstance(y, pandas.core.frame.DataFrame) \
+                    and not isinstance(y, pandas.core.series.Series)):
+                raise TypeError(self.messages.ILLEGAL_ARGUMENT_TYPE.value)
+
+            if not isinstance(model_params, list) or not isinstance(selection_params, list):
+                raise TypeError(self.messages.ILLEGAL_ARGUMENT_TYPE.value)
+
+            clf = RandomForestClassifier(n_estimators=model_params[0], max_depth=model_params[1], random_state=model_params[2])
+            tscv = ShuffleSplit(n_splits=selection_params[0])#TimeSeriesSplit(n_splits=selection_params[0])
+            evaluated_estimators = cross_validate(clf, X, y, cv=tscv, return_estimator=True)
+            return evaluated_estimators
+
+        except (TypeError, NotImplementedError, ValueError):
+            self.logger.error(traceback.format_exc())
+            os._exit(1)
+
+        except Exception:
+            self.logger.error(traceback.format_exc())
+            os._exit(2)
+
 
     @overrides
     def _create_CART_tree(self, X, y, model_params, selection_params):

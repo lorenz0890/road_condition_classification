@@ -145,7 +145,24 @@ class SussexHuaweiDAO(DAO):
         :param file_path:
         :return:
         """
-        raise NotImplementedError(self.messages.NOT_IMPLEMENTED.value)
+        try:
+            # 1. validate input
+            if file_path is None: raise TypeError(self.messages.ILLEGAL_ARGUMENT_NONE_TYPE.value)
+            if not path.exists(file_path): raise FileNotFoundError(self.messages.FILE_NOT_FOUND.value)
+
+            data = pandas.read_pickle(file_path)
+            return data
+
+        except (FileNotFoundError, ValueError, TypeError):
+            self.logger.error(traceback.format_exc())
+            os._exit(1)
+
+        except Exception:
+            self.logger.error(traceback.format_exc())
+            os._exit(2)
+
+
+
 
     @overrides
     def write_model(self, file_path, mode, model):
