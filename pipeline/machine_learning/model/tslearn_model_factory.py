@@ -73,7 +73,7 @@ class TslearnModelFactory(ModelFactory):
                 with open(r"{}".format(search_params[5]), "wb") as output_file:
                     pickle.dump(clf, output_file)
 
-            return clf
+            return clf, X_test, y_test
 
         except (TypeError, ValueError):
             self.logger.error(traceback.format_exc())
