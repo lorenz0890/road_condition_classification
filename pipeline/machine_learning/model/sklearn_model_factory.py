@@ -67,7 +67,12 @@ class SklearnModelFactory(ModelFactory):
             if model is None:
                 raise ValueError(self.messages.PROVIDED_MODE_DOESNT_EXIST.value)
 
-            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=search_params[6])
+            X_train, X_test, y_train, y_test = train_test_split(X,
+                                                                y,
+                                                                test_size=search_params[6],
+                                                                stratify=y
+                                                                )
+
             clf = RandomizedSearchCV(model,
                                      model_params,
                                      n_jobs=search_params[0],
