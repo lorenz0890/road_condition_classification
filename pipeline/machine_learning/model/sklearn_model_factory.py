@@ -108,9 +108,7 @@ class SklearnModelFactory(ModelFactory):
             if not isinstance(model_params, dict) or not isinstance(search_params, list):
                 raise TypeError(self.messages.ILLEGAL_ARGUMENT_TYPE.value)
 
-            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
-            n_iter = search_params[0]
-            cv = search_params[1]
+            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size)
 
             clf = RandomizedSearchCV(SVC(),
                                      model_params,
