@@ -1,17 +1,15 @@
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.svm import SVC
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.neural_network import MLPClassifier
-from sklearn.model_selection import RandomizedSearchCV
-import pickle
+from tslearn.svm import TimeSeriesSVC
+from tslearn.neighbors import KNeighborsTimeSeriesClassifier
 import pandas
 import os
 import traceback
 from pipeline.machine_learning.model.abstract_model_factory import ModelFactory
 from overrides import overrides
 from sklearn.model_selection import train_test_split
+from sklearn.model_selection import RandomizedSearchCV
+import pickle
 
-class SklearnModelFactory(ModelFactory):
+class TslearnModelFactory(ModelFactory):
 
     def __init__(self):
         super().__init__()
@@ -21,7 +19,7 @@ class SklearnModelFactory(ModelFactory):
     def create_model(self, model_type, X, y, model_params, search_params):
         """
         Executes random search hyper parameter optimization for the specified model. Refer to sklearn
-        documentation for details.
+        and tslearn documentation for details.
         Sources:
         # https://www.kaggle.com/hatone/mlpclassifier-with-gridsearchcv
         # https://en.wikipedia.org/wiki/Hyperparameter_optimization#Grid_search
@@ -52,17 +50,12 @@ class SklearnModelFactory(ModelFactory):
                 raise TypeError(self.messages.ILLEGAL_ARGUMENT_TYPE.value)
 
             model = None
-            if model_type == 'random_forrest':
-                model = RandomForestClassifier()
 
-            if model_type == 'cart_tree':
-                model = DecisionTreeClassifier()
+            if model_type == 'tssvc':
+                model = TimeSeriesSVC(search_params[0])
 
-            if model_type == 'svc':
-                model = SVC()
-
-            if model_type == 'mlp_classifier':
-                model = MLPClassifier()
+            if model_type == 'knn_classifier':
+                model = KNeighborsTimeSeriesClassifier(search_params[0])
 
             if model is None:
                 raise ValueError(self.messages.PROVIDED_MODE_DOESNT_EXIST.value)
