@@ -44,6 +44,48 @@ class SussexHuaweiPreprocessor(Preprocessor):
 
                 return data_segments
 
+            if mode == 'fixed_intervals':
+                segment_length = args[0]
+                aggregate = args[1]
+                exact_length = args[1]
+                segments_aggregated = []
+                split = lambda df, chunk_size : numpy.array_split(df, len(df) // chunk_size + 1, axis=0)
+
+                # 1. Ensure index is datetime index and standardize type
+                data.index = pandas.DatetimeIndex(data.index.astype('datetime64[1s]'))
+
+                #2. Segment data
+                segments = split(data, segment_length)
+                if not exact_length: return segments
+
+                #3. Remove segments that are too long or too short after splitting
+                min_length_subsegements = []
+                for segment in segments:
+                    if segment.shape[0] == segment_length:
+                        min_length_subsegements.append(segment)
+
+                if not aggregate: return min_length_subsegements
+
+                #3. Resample and aggregate data
+                segments_combined = None
+                for segment in min_length_subsegements:
+                    segment = segment.reset_index()
+                    segment.index = pandas.DatetimeIndex(segment.index.astype('datetime64[1s]'))
+                    segment = self.resample_quantitative_data(segment, freq="{}s".format(segment_length))
+
+                    if segments_combined is None:
+                        segments_combined = segment
+                    else:
+                        segments_combined = pandas.concat([segments_combined, segment], axis=0)
+
+                if segments_combined is not None:
+                    segments_combined = segments_combined.reset_index()
+                    segments_combined.index = pandas.DatetimeIndex(
+                        segments_combined.index.astype('datetime64[1s]'))
+                    segments_aggregated.append(segments_combined)
+
+                return segments_aggregated
+
         except (TypeError, NotImplementedError, ValueError):
             self.logger.error(traceback.format_exc())
             os._exit(1)

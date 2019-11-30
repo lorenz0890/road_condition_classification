@@ -20,6 +20,6 @@ class BaselineExtractor(Extractor):
         X = extract_features(data, column_id = args[0], n_jobs = args[2], chunksize=args[3])
         X = impute(X)
         y = args[1]
-        X_filtered = select_features(X, y)
+        X_filtered = select_features(X, y, args[4])
 
         return X_filtered
