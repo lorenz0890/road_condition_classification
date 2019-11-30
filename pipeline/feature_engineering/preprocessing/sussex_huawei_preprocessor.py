@@ -44,10 +44,10 @@ class SussexHuaweiPreprocessor(Preprocessor):
 
                 return data_segments
 
-            if mode == 'fixed_intervals':
+            if mode == 'fixed_interval':
                 segment_length = args[0]
                 aggregate = args[1]
-                exact_length = args[1]
+                exact_length = args[2]
                 segments_aggregated = []
                 split = lambda df, chunk_size : numpy.array_split(df, len(df) // chunk_size + 1, axis=0)
 
