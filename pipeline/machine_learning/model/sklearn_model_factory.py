@@ -168,6 +168,17 @@ class SklearnModelFactory(ModelFactory):
 
     @overrides
     def create_model(self, model_type, X, y, model_params, search_params, test_size=0.3):
+        """
+        Executes random search hyper parameter optimization for the specified model. Refer to sklearn
+        documentation for details.
+        :param model_type:
+        :param X:
+        :param y:
+        :param model_params:
+        :param search_params:
+        :param test_size:
+        :return:
+        """
 
         try:
 
