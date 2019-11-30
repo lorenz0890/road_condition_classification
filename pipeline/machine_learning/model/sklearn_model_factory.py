@@ -72,7 +72,7 @@ class SklearnModelFactory(ModelFactory):
                                                                 test_size=search_params[6],
                                                                 stratify=y
                                                                 )
-            
+
             clf = RandomizedSearchCV(model,
                                      model_params,
                                      n_jobs=search_params[0],
