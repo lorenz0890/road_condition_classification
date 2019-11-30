@@ -25,7 +25,7 @@ class SklearnModelFactory(ModelFactory):
         super().__init__()
 
     @overrides
-    def _create_random_forrest(self, X, y, model_params, search_params, test_size=0.3):
+    def _create_random_forrest(self, X, y, model_params, search_params):
 
         try:
             if X is None or y is None or model_params is None or search_params is None:
@@ -57,40 +57,7 @@ class SklearnModelFactory(ModelFactory):
 
 
     @overrides
-    def _create_CART_tree(self, X, y, model_params, search_params, test_size=0.3):
-
-        try:
-
-            if X is None or y is None or model_params is None or search_params is None:
-                raise TypeError(self.messages.ILLEGAL_ARGUMENT_NONE_TYPE.value)
-            if (not isinstance(X, pandas.DataFrame) and
-                    not isinstance(X, pandas.core.frame.DataFrame) \
-                    and not isinstance(X, pandas.core.series.Series)):
-                raise TypeError(self.messages.ILLEGAL_ARGUMENT_TYPE.value)
-            if (not isinstance(y, pandas.DataFrame) and
-                    not isinstance(y, pandas.core.frame.DataFrame) \
-                    and not isinstance(y, pandas.core.series.Series)):
-                raise TypeError(self.messages.ILLEGAL_ARGUMENT_TYPE.value)
-
-            if not isinstance(model_params, list) or not isinstance(search_params, list):
-                raise TypeError(self.messages.ILLEGAL_ARGUMENT_TYPE.value)
-
-            clf = DecisionTreeClassifier(random_state=model_params[0])
-            tscv = ShuffleSplit(n_splits=search_params[0])# TimeSeriesSplit(n_splits=selection_params[0])
-            evaluated_estimators = cross_validate(clf, X, y, cv=tscv, return_estimator=True)
-            return evaluated_estimators
-
-        except (TypeError, NotImplementedError, ValueError):
-            self.logger.error(traceback.format_exc())
-            os._exit(1)
-
-        except Exception:
-            self.logger.error(traceback.format_exc())
-            os._exit(2)
-
-
-    @overrides
-    def _create_SVC(self, X, y, model_params, search_params, test_size=0.3):
+    def _create_CART_tree(self, X, y, model_params, search_params):
 
         try:
 
@@ -108,8 +75,51 @@ class SklearnModelFactory(ModelFactory):
             if not isinstance(model_params, dict) or not isinstance(search_params, list):
                 raise TypeError(self.messages.ILLEGAL_ARGUMENT_TYPE.value)
 
-            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size)
+            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=search_params[6])
 
+            clf = RandomizedSearchCV(DecisionTreeClassifier(),
+                                     model_params,
+                                     n_jobs=search_params[0],
+                                     verbose=search_params[1],
+                                     cv=search_params[2],
+                                     n_iter=search_params[3]
+                                     )
+            clf.fit(X_train, y_train)
+            if search_params[4]:
+                with open(r"{}".format(search_params[5]), "wb") as output_file:
+                    pickle.dump(clf, output_file)
+
+            return clf
+
+        except (TypeError, NotImplementedError, ValueError):
+            self.logger.error(traceback.format_exc())
+            os._exit(1)
+
+        except Exception:
+            self.logger.error(traceback.format_exc())
+            os._exit(2)
+
+
+    @overrides
+    def _create_SVC(self, X, y, model_params, search_params):
+
+        try:
+
+            if X is None or y is None or model_params is None or search_params is None:
+                raise TypeError(self.messages.ILLEGAL_ARGUMENT_NONE_TYPE.value)
+            if (not isinstance(X, pandas.DataFrame) and
+                    not isinstance(X, pandas.core.frame.DataFrame) \
+                    and not isinstance(X, pandas.core.series.Series)):
+                raise TypeError(self.messages.ILLEGAL_ARGUMENT_TYPE.value)
+            if (not isinstance(y, pandas.DataFrame) and
+                    not isinstance(y, pandas.core.frame.DataFrame) \
+                    and not isinstance(y, pandas.core.series.Series)):
+                raise TypeError(self.messages.ILLEGAL_ARGUMENT_TYPE.value)
+
+            if not isinstance(model_params, dict) or not isinstance(search_params, list):
+                raise TypeError(self.messages.ILLEGAL_ARGUMENT_TYPE.value)
+
+            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=search_params[6])
             clf = RandomizedSearchCV(SVC(),
                                      model_params,
                                      n_jobs=search_params[0],
@@ -133,7 +143,7 @@ class SklearnModelFactory(ModelFactory):
             os._exit(2)
 
     @overrides
-    def _create_MLP_classifier(self, X, y, model_params, search_params, test_size=0.3):
+    def _create_MLP_classifier(self, X, y, model_params, search_params):
 
         try:
 
@@ -167,7 +177,7 @@ class SklearnModelFactory(ModelFactory):
             os._exit(2)
 
     @overrides
-    def create_model(self, model_type, X, y, model_params, search_params, test_size=0.3):
+    def create_model(self, model_type, X, y, model_params, search_params):
         """
         Executes random search hyper parameter optimization for the specified model. Refer to sklearn
         documentation for details.

@@ -8,7 +8,7 @@ class ModelFactory(ABC, RCTCComponent):
         super().__init__()
 
     @abstractmethod
-    def _create_random_forrest(self, X, y, model_params, search_params, test_size):
+    def _create_random_forrest(self, X, y, model_params, search_params):
         """
         :param X:
         :param y:
@@ -19,7 +19,7 @@ class ModelFactory(ABC, RCTCComponent):
         pass
 
     @abstractmethod
-    def _create_CART_tree(self, X, y, model_params, search_params, test_size):
+    def _create_CART_tree(self, X, y, model_params, search_params):
         """
         :param X:
         :param y:
@@ -30,7 +30,7 @@ class ModelFactory(ABC, RCTCComponent):
         pass
 
     @abstractmethod
-    def _create_SVC(self, X, y, model_params, search_params, test_size):
+    def _create_SVC(self, X, y, model_params, search_params):
         """
         :param X:
         :param y:
@@ -41,7 +41,7 @@ class ModelFactory(ABC, RCTCComponent):
         pass
 
     @abstractmethod
-    def _create_MLP_classifier(self, X, y, model_params, search_params, test_size):
+    def _create_MLP_classifier(self, X, y, model_params, search_params):
         """
         :param X:
         :param y:
@@ -51,7 +51,7 @@ class ModelFactory(ABC, RCTCComponent):
         """
         pass
 
-    def create_model(self, model_type, X, y, model_params, search_params, test_size):
+    def create_model(self, model_type, X, y, model_params, search_params):
         """
         :param X:
         :param y:
