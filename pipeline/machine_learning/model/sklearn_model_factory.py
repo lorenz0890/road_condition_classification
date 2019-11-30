@@ -182,7 +182,7 @@ class SklearnModelFactory(ModelFactory):
                     and not isinstance(y, pandas.core.series.Series)):
                 raise TypeError(self.messages.ILLEGAL_ARGUMENT_TYPE.value)
 
-            if not isinstance(model_params, list) or not isinstance(search_params, list):
+            if not isinstance(model_params, dict) or not isinstance(search_params, list):
                 raise TypeError(self.messages.ILLEGAL_ARGUMENT_TYPE.value)
 
             if model_type == 'random_forrest':
