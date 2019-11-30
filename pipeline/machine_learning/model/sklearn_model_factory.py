@@ -1,15 +1,8 @@
-
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import cross_validate
-from sklearn.model_selection import TimeSeriesSplit
-from sklearn.model_selection import ShuffleSplit
-from sklearn.model_selection import learning_curve
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.neural_network import MLPClassifier
-from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import RandomizedSearchCV
-import numpy as np
 import pickle
 import pandas
 import os
@@ -30,6 +23,11 @@ class SklearnModelFactory(ModelFactory):
         """
         Executes random search hyper parameter optimization for the specified model. Refer to sklearn
         documentation for details.
+        Sources:
+        # https://www.kaggle.com/hatone/mlpclassifier-with-gridsearchcv
+        # https://en.wikipedia.org/wiki/Hyperparameter_optimization#Grid_search
+        # https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.RandomizedSearchCV.html
+        # alternative to grid search: https://github.com/sahilm89/lhsmdu
         :param model_type:
         :param X:
         :param y:
@@ -38,7 +36,6 @@ class SklearnModelFactory(ModelFactory):
         :param test_size:
         :return:
         """
-
         try:
 
             if X is None or y is None or model_params is None or search_params is None:
