@@ -56,7 +56,10 @@ class SussexHuaweiPreprocessor(Preprocessor):
 
                 #2. Segment data
                 segments = split(data, segment_length)
-                if not exact_length: return segments
+                if not exact_length:
+                    for segment in segments:
+                        segment.index = pandas.DatetimeIndex(segment.index.astype('datetime64[1s]'))
+                    return segments
 
                 #3. Remove segments that are too long or too short after splitting
                 min_length_subsegements = []
@@ -64,7 +67,10 @@ class SussexHuaweiPreprocessor(Preprocessor):
                     if segment.shape[0] == segment_length:
                         min_length_subsegements.append(segment)
 
-                if not aggregate: return min_length_subsegements
+                if not aggregate:
+                    for segment in min_length_subsegements:
+                        segment.index = pandas.DatetimeIndex(segment.index.astype('datetime64[1s]'))
+                    return min_length_subsegements
 
                 #3. Resample and aggregate data
                 segments_combined = None
