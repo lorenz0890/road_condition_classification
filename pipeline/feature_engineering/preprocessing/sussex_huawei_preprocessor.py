@@ -77,7 +77,7 @@ class SussexHuaweiPreprocessor(Preprocessor):
                 for segment in min_length_subsegements:
                     segment = segment.reset_index()
                     segment.index = pandas.DatetimeIndex(segment.index.astype('datetime64[1s]'))
-                    segment = segment.sum()# self.resample_quantitative_data(segment, freq="{}s".format(segment_length))
+                    segment = self.resample_quantitative_data(segment, freq="{}s".format(segment_length))
 
                     if segments_combined is None:
                         segments_combined = segment
@@ -203,7 +203,7 @@ class SussexHuaweiPreprocessor(Preprocessor):
 
 
     @overrides
-    def resample_quantitative_data(self, data, freq):
+    def resample_quantitative_data(self, data, freq, mode = None):
         # Source:
         # https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.resample.html
         # https://jakevdp.github.io/PythonDataScienceHandbook/03.11-working-with-time-series.html
@@ -213,7 +213,11 @@ class SussexHuaweiPreprocessor(Preprocessor):
             if not isinstance(data, pandas.DataFrame) or not isinstance(freq, str):
                 raise TypeError(self.messages.ILLEGAL_ARGUMENT_TYPE.value)
 
-            return data.resample(freq).mean()
+            if mode == 'mean' or None:
+                return data.resample(freq).mean()
+
+            if mode == 'sum':
+                return data.resample(freq).sum()
 
         except (TypeError, NotImplementedError, ValueError):
             self.logger.error(traceback.format_exc())
