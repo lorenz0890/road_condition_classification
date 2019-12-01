@@ -22,6 +22,6 @@ class BaselineExtractor(Extractor):
         y = args[1]
         X_filtered = select_features(X, y,
                                      ml_task='classification', n_jobs = args[2],
-                                     chunksize=args[3], fdr_level=0.85)
+                                     chunksize=args[3], fdr_level=0.25)
 
         return X_filtered
