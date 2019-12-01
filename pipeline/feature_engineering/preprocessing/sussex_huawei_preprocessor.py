@@ -79,7 +79,7 @@ class SussexHuaweiPreprocessor(Preprocessor):
                     segment.index = pandas.DatetimeIndex(segment.index.astype('datetime64[1s]'))
                     segment = self.resample_quantitative_data(segment,
                                                               freq="{}s".format(segment_length),
-                                                              mode = 'sum')
+                                                              mode = 'mean')
 
                     if segments_combined is None:
                         segments_combined = segment
