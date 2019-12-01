@@ -213,7 +213,7 @@ class SussexHuaweiPreprocessor(Preprocessor):
             if not isinstance(data, pandas.DataFrame) or not isinstance(freq, str):
                 raise TypeError(self.messages.ILLEGAL_ARGUMENT_TYPE.value)
 
-            if mode == 'mean' or None:
+            if mode == 'mean' or mode is None:
                 return data.resample(freq).mean()
 
             if mode == 'sum':

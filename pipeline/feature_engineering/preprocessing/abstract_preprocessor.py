@@ -52,7 +52,7 @@ class Preprocessor(ABC, RCTCComponent):
         pass
 
     @abstractmethod
-    def resample_quantitative_data(self, data, freq):
+    def resample_quantitative_data(self, data, freq,  mode = None):
         """
         Apply a low/high pass filter to the dataset
         :param data: pandas.DataFrame
