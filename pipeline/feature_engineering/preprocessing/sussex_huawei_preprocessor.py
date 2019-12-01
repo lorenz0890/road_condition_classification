@@ -77,7 +77,9 @@ class SussexHuaweiPreprocessor(Preprocessor):
                 for segment in min_length_subsegements:
                     segment = segment.reset_index()
                     segment.index = pandas.DatetimeIndex(segment.index.astype('datetime64[1s]'))
-                    segment = self.resample_quantitative_data(segment, freq="{}s".format(segment_length))
+                    segment = self.resample_quantitative_data(segment,
+                                                              freq="{}s".format(segment_length),
+                                                              mode = 'sum')
 
                     if segments_combined is None:
                         segments_combined = segment
