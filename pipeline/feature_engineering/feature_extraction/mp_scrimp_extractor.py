@@ -43,3 +43,13 @@ class MPScrimpExtractor(Extractor):
         y = pandas.DataFrame(y)
 
         return X, y
+
+    @overrides
+    def select_features(self, data, args=None):
+        """
+        Select features
+        :param data: pandas.DataFrame
+        :param args:
+        :return: pandas.DataFrame
+        """
+        pass
