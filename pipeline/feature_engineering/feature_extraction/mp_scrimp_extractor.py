@@ -41,16 +41,13 @@ class MPScrimpExtractor(Extractor):
                 elem = numpy.array(data[args[3]].values[index:index + args[0]])
                 for pos, x in enumerate(elem):
                     attr_vec[count + pos][0] = x
-                    attr_vec[count + pos][1] = i
-                    #attr_vec[count + pos][2] = x[1]
+                    if args[1] == 2:
+                        attr_vec[count + pos][1] = i
 
                 count += args[0]
             i += 1.0
 
         X = attr_vec#.transpose()
-        #y = attr_vec.transpose()[1]
-        # print(X_train.shape)
         X = pandas.DataFrame(X)
-        #y = pandas.DataFrame(y)
 
         return X#, y
