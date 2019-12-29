@@ -25,7 +25,8 @@ class BaselineExtractor(Extractor):
     def select_features(self, data, args=None):
         """
         Select features
-        :param data:
+        :param data: pandas.DataFrame
+        :param args:
         :return: pandas.DataFrame
         """
         y = args[0]

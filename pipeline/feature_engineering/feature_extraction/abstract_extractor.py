@@ -11,7 +11,8 @@ class Extractor(ABC, RCTCComponent):
     def extract_features(self, data, args = None):
         """
         Extract features
-        :param data:
+        :param data: pandas.DataFrame
+        :param args:
         :return: pandas.DataFrame
         """
         pass
@@ -20,7 +21,8 @@ class Extractor(ABC, RCTCComponent):
     def select_features(self, data, args=None):
         """
         Select features
-        :param data:
+        :param data: pandas.DataFrame
+        :param args:
         :return: pandas.DataFrame
         """
         pass
