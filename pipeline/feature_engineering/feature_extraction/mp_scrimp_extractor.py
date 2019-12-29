@@ -47,7 +47,7 @@ class MPScrimpExtractor(Extractor):
                 count += args[0]
             i += 1.0
 
-        X = attr_vec.transpose()
+        X = attr_vec#.transpose()
         #y = attr_vec.transpose()[1]
         # print(X_train.shape)
         X = pandas.DataFrame(X)
