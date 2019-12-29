@@ -17,6 +17,9 @@ class BaselineExtractor(Extractor):
         :param args:
         :return: pandas.DataFrame
         """
+        print(args[0])
+        print(args[1])
+        print(args[2])
         X = extract_features(data, column_id = args[0], n_jobs = args[1], chunksize=args[2])
         X = impute(X)
         return X
