@@ -17,7 +17,7 @@ class BaselineExtractor(Extractor):
         :param args:
         :return: pandas.DataFrame
         """
-        X = extract_features(data, column_id = args[0], n_jobs = args[2], chunksize=args[3])
+        X = extract_features(data, column_id = args[0], n_jobs = args[1], chunksize=args[2])
         X = impute(X)
         return X
 
@@ -28,9 +28,9 @@ class BaselineExtractor(Extractor):
         :param data:
         :return: pandas.DataFrame
         """
-        y = args[1]
-        X_filtered = select_features(data, y,
-                                     ml_task='classification', n_jobs=args[2],
-                                     chunksize=args[3], fdr_level=args[4])
+        y = args[0]
+        X_selected = select_features(data, y,
+                                     ml_task='classification', n_jobs=args[1],
+                                     chunksize=args[2], fdr_level=args[3])
 
-        return X_filtered
+        return X_selected

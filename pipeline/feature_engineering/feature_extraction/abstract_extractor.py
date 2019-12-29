@@ -15,3 +15,12 @@ class Extractor(ABC, RCTCComponent):
         :return: pandas.DataFrame
         """
         pass
+
+    @abstractmethod
+    def select_features(self, data, args=None):
+        """
+        Select features
+        :param data:
+        :return: pandas.DataFrame
+        """
+        pass
