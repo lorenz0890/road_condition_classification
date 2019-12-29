@@ -40,7 +40,7 @@ class MPScrimpExtractor(Extractor):
             for index in motif:  # ['acceleration_abs', 'road_label']
                 elem = numpy.array(data[args[3]].values[index:index + args[0]])
                 for pos, x in enumerate(elem):
-                    attr_vec[count + pos][0] = x[0]
+                    attr_vec[count + pos][0] = x
                     attr_vec[count + pos][1] = i
                     #attr_vec[count + pos][2] = x[1]
 
