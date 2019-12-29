@@ -17,7 +17,7 @@ class MPScrimpExtractor(Extractor):
         :param args:
         :return: pandas.DataFrame
         """
-        mp = matrixProfile.scrimp_plus_plus(data[args[4]].values[:1500], args[0]) #6 or 32
+        mp = matrixProfile.scrimp_plus_plus(data[args[3]].values[:1500], args[0]) #6 or 32
         mtfs, motif_d = motifs.motifs(data, mp, max_motifs=args[1], radius=args[2])  # 2, 23
 
         return mtfs
