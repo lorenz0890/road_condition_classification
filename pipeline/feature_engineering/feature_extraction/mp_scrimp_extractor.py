@@ -30,7 +30,7 @@ class MPScrimpExtractor(Extractor):
         :param args:
         :return: pandas.DataFrame
         """
-        mtfs = args[3]
+        mtfs = args[2]
         sz = len([item for sublist in mtfs for item in sublist]) * args[0]
         attr_vec = numpy.ndarray(shape=(sz, args[1]), dtype=float) #3
         # print(mtfs)
