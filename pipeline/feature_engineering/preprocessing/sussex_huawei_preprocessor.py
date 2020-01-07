@@ -350,8 +350,12 @@ class SussexHuaweiPreprocessor(Preprocessor):
 
             if mean is None and std is None:
                 if columns is not None:
+                    mean = data[columns].mean()
+                    std = data[columns].std()
                     data[columns] = (data[columns] - data[columns].mean()) / data[columns].std()
                 else:
+                    mean = data.mean()
+                    std = data.std()
                     data = (data - data.mean()) / data.std()
             elif mean is not None and std is not None:
                 if columns is not None:
@@ -360,7 +364,7 @@ class SussexHuaweiPreprocessor(Preprocessor):
                     data = (data - mean) / std
             else:
                 raise TypeError(self.messages.ILLEGAL_ARGUMENT_NONE_TYPE.value)
-            return data
+            return data, mean, std
 
         except (TypeError, NotImplementedError, ValueError):
             self.logger.error(traceback.format_exc())
@@ -546,3 +550,35 @@ class SussexHuaweiPreprocessor(Preprocessor):
             data_test_segments[ind] = data_test_segments[ind].set_index('time')
             data_test_segments[ind] = self.resample_quantitative_data(data_test_segments[ind],
                                                                          freq=freq)
+
+        print('dimensionality reduction')
+        for ind in range(len(data_train_segments)):
+            data_train_segments[ind] = self.reduce_quantitativ_data_dimensionality(
+                data=data_train_segments[ind],
+                mode='euclidean',  # works better than euclidean for motif
+                columns=acelerometer_columns,
+                reduced_column_name='acceleration_abs'
+            )
+
+        for ind in range(len(data_test_segments)):
+            data_test_segments[ind] = self.reduce_quantitativ_data_dimensionality(
+                data=data_test_segments[ind],
+                mode='euclidean',  # works better than euclidean for motif
+                columns=acelerometer_columns,
+                reduced_column_name='acceleration_abs'
+            )
+
+        print('normalizing, outlier removal')
+        selected_columns = ['acceleration_abs',
+                            'road_label']  # 'acceleration_abs'
+        data_train_segments = self.de_segment_data(data_train_segments, selected_columns)
+        data_train_segments = self.znormalize_quantitative_data(data_train_segments, selected_columns[:-1])
+        # data = preprocessor.min_max_normalize_quantitative_data(data, selected_columns[:-1])
+        print(data.shape)
+
+        data_train_segments = self.remove_outliers_from_quantitative_data(
+            data_train_segments,
+            replacement_mode='quantile',
+            columns=selected_columns[:-1],
+            quantile=0.99  # current run @0.95 for classical approach via TS Fresh
+        )[:-1]
