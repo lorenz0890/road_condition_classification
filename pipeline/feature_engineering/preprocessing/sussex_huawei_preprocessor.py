@@ -491,7 +491,7 @@ class SussexHuaweiPreprocessor(Preprocessor):
         :param params: List
         :return: pandas.DataFrame, pandas.DataFrame, pandas.DataFrame
         """
-        print('fetch params')
+        print('Fetch params')
         labels = params[0]
         test_sz = params[1]
         train_sz = params[2]
@@ -501,18 +501,18 @@ class SussexHuaweiPreprocessor(Preprocessor):
         selected_road_labels = params[7] #[1, 3]
         freq = params[8] #'1000ms'
 
-        print('convert time unit, label data, remove nans')
+        print('Convert time unit, label data, remove nans')
         data = self.convert_unix_to_datetime(data, column = 'time', unit = 'ms')
         data = self.label_data(data, labels)
         data = self.remove_nans(data, replacement_mode='del_row')
 
-        print('train, test, validation split')
+        print('Train, Test split')
         data_len = data.shape[0]
         test_len = int(data_len * test_sz)
         train_len = int(data_len * train_sz)
         data_train, data_test = data.head(train_len), data.tail(test_len)
 
-        print('segment by labels')
+        print('Segment by labels')
         #print('segment train')
         car_train_segments = self.segment_data(data_train, mode='labels',
                                                  label_column='coarse_label',
@@ -540,7 +540,7 @@ class SussexHuaweiPreprocessor(Preprocessor):
             for road_segment in road_segments:
                 data_test_segments.append(road_segment)
 
-        print('resample')
+        print('Resample')
         for ind in range(len(data_train_segments)):
             data_train_segments[ind] = data_train_segments[ind].set_index('time')
             data_train_segments[ind] = self.resample_quantitative_data(data_train_segments[ind],
@@ -551,7 +551,7 @@ class SussexHuaweiPreprocessor(Preprocessor):
             data_test_segments[ind] = self.resample_quantitative_data(data_test_segments[ind],
                                                                          freq=freq)
 
-        print('dimensionality reduction')
+        print('Dimensionality reduction')
         for ind in range(len(data_train_segments)):
             data_train_segments[ind] = self.reduce_quantitativ_data_dimensionality(
                 data=data_train_segments[ind],
@@ -568,7 +568,7 @@ class SussexHuaweiPreprocessor(Preprocessor):
                 reduced_column_name='acceleration_abs'
             )
 
-        print('normalizing, outlier removal')
+        print('Normalizing, outlier removal')
         selected_columns = ['acceleration_abs',
                             'road_label']  # 'acceleration_abs'
         data_train = self.de_segment_data(data_train_segments, selected_columns)
@@ -593,5 +593,5 @@ class SussexHuaweiPreprocessor(Preprocessor):
             quantile=0.99  # current run @0.95 for classical approach via TS Fresh
         )[:-1]
 
-        print(data_train)
+        #print(data_train)
         return data_train, mean_train, std_train, data_test
