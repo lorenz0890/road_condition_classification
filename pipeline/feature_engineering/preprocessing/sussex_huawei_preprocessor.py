@@ -339,7 +339,7 @@ class SussexHuaweiPreprocessor(Preprocessor):
             os._exit(2)
 
     @overrides
-    def znormalize_quantitative_data(self, data, columns = None):
+    def znormalize_quantitative_data(self, data, columns = None, mean = None, std = None):
         try:
             if data is None:
                 raise TypeError(self.messages.ILLEGAL_ARGUMENT_NONE_TYPE.value)
@@ -348,10 +348,18 @@ class SussexHuaweiPreprocessor(Preprocessor):
             if not all(column in data.keys() for column in columns):
                 raise TypeError(self.messages.PROVIDED_ARRAY_DOESNT_MATCH_DATA.value)
 
-            if columns is not None:
-                data[columns] = (data[columns] - data[columns].mean()) / data[columns].std()
+            if mean is None and std is None:
+                if columns is not None:
+                    data[columns] = (data[columns] - data[columns].mean()) / data[columns].std()
+                else:
+                    data = (data - data.mean()) / data.std()
+            elif mean is not None and std is not None:
+                if columns is not None:
+                    data[columns] = (data[columns] - mean) / std
+                else:
+                    data = (data - mean) / std
             else:
-                data = (data - data.mean()) / data.std()
+                raise TypeError(self.messages.ILLEGAL_ARGUMENT_NONE_TYPE.value)
             return data
 
         except (TypeError, NotImplementedError, ValueError):
@@ -481,14 +489,13 @@ class SussexHuaweiPreprocessor(Preprocessor):
         """
         print('fetch params')
         labels = params[0]
-        valid_sz = params[1]
-        test_sz = params[2]
-        train_sz = params[3]
+        test_sz = params[1]
+        train_sz = params[2]
         #acelerometer_columns = ['acceleration_x', 'acceleration_y', 'acceleration_z']
-        acelerometer_columns = [params[4], params[5], params[6]]
-        selected_coarse_labels = params[7] #[5]
-        selected_road_labels = params[8] #[1, 3]
-        freq = params[9] #'1000ms'
+        acelerometer_columns = [params[3], params[4], params[5]]
+        selected_coarse_labels = params[6] #[5]
+        selected_road_labels = params[7] #[1, 3]
+        freq = params[8] #'1000ms'
 
         print('convert time unit, label data, remove nans')
         data = self.convert_unix_to_datetime(data, column = 'time', unit = 'ms')
@@ -497,14 +504,12 @@ class SussexHuaweiPreprocessor(Preprocessor):
 
         print('train, test, validation split')
         data_len = data.shape[0]
-        valid_len = int(data_len * valid_sz)
         test_len = int(data_len * test_sz)
         train_len = int(data_len * train_sz)
-        data_train, data_valid_test = data.head(train_len), data.tail(test_len + valid_len)
-        data_valid, data_test = data_valid_test.head(valid_len), data_valid_test.tail(test_len)
+        data_train, data_test = data.head(train_len), data.tail(test_len)
 
         print('segment by labels')
-        # segment train
+        #print('segment train')
         car_train_segments = self.segment_data(data_train, mode='labels',
                                                  label_column='coarse_label',
                                                  args=selected_coarse_labels)
@@ -517,20 +522,8 @@ class SussexHuaweiPreprocessor(Preprocessor):
             for road_segment in road_segments:
                 data_train_segments.append(road_segment)
 
-        # segment valid
-        car_valid_segments = self.segment_data(data_valid, mode='labels',
-                                               label_column='coarse_label',
-                                               args=selected_coarse_labels)
-        data_valid_segments = []
-        for car_segment in car_valid_segments:
-            road_segments = self.segment_data(car_segment, mode='labels',
-                                              label_column='road_label',
-                                              args=selected_road_labels
-                                              )
-            for road_segment in road_segments:
-                data_valid_segments.append(road_segment)
 
-        # segment test
+        #print('segment test')
         car_test_segments = self.segment_data(data_test, mode='labels',
                                                label_column='coarse_label',
                                                args=selected_coarse_labels)
@@ -543,12 +536,13 @@ class SussexHuaweiPreprocessor(Preprocessor):
             for road_segment in road_segments:
                 data_test_segments.append(road_segment)
 
+        print('resample')
         for ind in range(len(data_train_segments)):
             data_train_segments[ind] = data_train_segments[ind].set_index('time')
             data_train_segments[ind] = self.resample_quantitative_data(data_train_segments[ind],
                                                                          freq=freq)  # 8000 1.25 Hz
 
-        for ind in range(len(data_valid_segments)):
-            data_valid_segments[ind] = data_valid_segments[ind].set_index('time')
-            data_valid_segments[ind] = self.resample_quantitative_data(data_valid_segments[ind],
-                                                                         freq=freq)  # 8000 1.25 Hz
+        for ind in range(len(data_test_segments)):
+            data_test_segments[ind] = data_test_segments[ind].set_index('time')
+            data_test_segments[ind] = self.resample_quantitative_data(data_test_segments[ind],
+                                                                         freq=freq)

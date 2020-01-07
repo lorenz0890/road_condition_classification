@@ -114,7 +114,7 @@ class Preprocessor(ABC, RCTCComponent):
         pass
 
     @abstractmethod
-    def znormalize_quantitative_data(self, data, columns = None):
+    def znormalize_quantitative_data(self, data, columns = None, mean = None, std = None):
         """
         Z-Normalize quantitative data
         Source:
@@ -182,6 +182,7 @@ class Preprocessor(ABC, RCTCComponent):
     #@abstractmethod
     #def inference_split_process(self, data, params):
     #    """
+    #    TODO: Required for real data
     #    :param data: pandas.DataFrame
     #    :param params: List
     #    :return: pandas.DataFrame, pandas.DataFrame, pandas.DataFrame
