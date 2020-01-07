@@ -571,13 +571,13 @@ class SussexHuaweiPreprocessor(Preprocessor):
         print('normalizing, outlier removal')
         selected_columns = ['acceleration_abs',
                             'road_label']  # 'acceleration_abs'
-        data_train_segments = self.de_segment_data(data_train_segments, selected_columns)
-        data_train_segments = self.znormalize_quantitative_data(data_train_segments, selected_columns[:-1])
+        data_train = self.de_segment_data(data_train_segments, selected_columns)
+        data_train, mean_train, std_train = self.znormalize_quantitative_data(data_train, selected_columns[:-1])
         # data = preprocessor.min_max_normalize_quantitative_data(data, selected_columns[:-1])
         print(data.shape)
 
-        data_train_segments = self.remove_outliers_from_quantitative_data(
-            data_train_segments,
+        data_train = self.remove_outliers_from_quantitative_data(
+            data_train,
             replacement_mode='quantile',
             columns=selected_columns[:-1],
             quantile=0.99  # current run @0.95 for classical approach via TS Fresh
