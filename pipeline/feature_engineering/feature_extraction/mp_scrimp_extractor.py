@@ -13,6 +13,8 @@ class MPScrimpExtractor(Extractor):
     def extract_features(self, data, args = None):
         """
         Extract features
+        Source:
+        https://github.com/target/matrixprofile-ts/blob/master/docs/examples/Motif%20Discovery.ipynb
         :param data: pandas.DataFrame
         :param args:
         :return: pandas.DataFrame

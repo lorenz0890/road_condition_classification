@@ -169,3 +169,21 @@ class Preprocessor(ABC, RCTCComponent):
         :return:
         """
         pass
+
+    @abstractmethod
+    def training_split_process(self, data, params):
+        """
+        :param data: pandas.DataFrame
+        :param params: List
+        :return: pandas.DataFrame, pandas.DataFrame, pandas.DataFrame
+        """
+        pass
+
+    #@abstractmethod
+    #def inference_split_process(self, data, params):
+    #    """
+    #    :param data: pandas.DataFrame
+    #    :param params: List
+    #    :return: pandas.DataFrame, pandas.DataFrame, pandas.DataFrame
+    #    """
+    #    pass
