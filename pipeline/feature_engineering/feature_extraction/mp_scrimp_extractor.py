@@ -63,6 +63,8 @@ class MPScrimpExtractor(Extractor):
         :param args:
         :return: list
         """
+
+        @staticmethod
         def worker(i):
             combis = []
             radii = [8, 12, 16, 20, 24, 32]  # 6
