@@ -73,7 +73,7 @@ class MPScrimpExtractor(object, Extractor):
                 for length in lengths:
                     combi = [radius, length]
                     combis.append(combi)
-            print("Motif extraction worker no: {0} length: {1}, radius: {2}".format(i, combis[i][1], combis[i][0]))
+            #print("Motif extraction worker no: {0} length: {1}, radius: {2}".format(i, combis[i][1], combis[i][0]))
             X_indices = self.extract_features(data=data,
                                                       args=[combis[i][1], 2, combis[i][0], 'acceleration_abs'])
             X = self.select_features(data=data,
@@ -81,7 +81,7 @@ class MPScrimpExtractor(object, Extractor):
             y = self.select_features(data=data,
                                              args=[combis[i][1], 1, X_indices, 'road_label'])
 
-            print("Motif extraction worker no: {0} returned".format(i))
+            #print("Motif extraction worker no: {0} returned".format(i))
             return {
                 'X': X,
                 'y': y,
