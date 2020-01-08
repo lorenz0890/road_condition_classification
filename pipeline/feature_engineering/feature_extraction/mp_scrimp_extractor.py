@@ -68,7 +68,7 @@ class MPScrimpExtractor(Extractor):
         self.data = data
         num_processors = 32  # create a pool of processors
         p = Pool(processes=num_processors)  # get them to work in parallel#
-        output = p.map(self.worker, [[i for i in range(0, 29)]])  # 6*5 = 30
+        output = p.map(self.worker, [i for i in range(0, 29)])  # 6*5 = 30
 
         result_list = []
         result_list.append(output[0].keys())
