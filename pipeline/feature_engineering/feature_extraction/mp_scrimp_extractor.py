@@ -90,8 +90,8 @@ class MPScrimpExtractor(Extractor):
         result_list.append(output.keys())
         for elem in output:
             templist = []
-            for key in elem.keys():
-                templist.append(elem[key])
+            for key in output[elem].keys():
+                templist.append(output[elem][key])
             result_list.append(templist)
 
         return result_list
