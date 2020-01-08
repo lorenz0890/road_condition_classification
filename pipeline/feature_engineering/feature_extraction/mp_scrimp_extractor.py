@@ -60,6 +60,9 @@ class MPScrimpExtractor(Extractor):
     def extract_select_features(self, data, args=None):
         """
         Find different combinations of motifs dependent on hyperparameters
+        Sources for mp:
+        https://stackoverflow.com/questions/29009790/python-how-to-do-multiprocessing-inside-of-a-class
+        https://stackoverflow.com/questions/8953119/python-waiting-for-external-launched-process-finish
         :param data: pandas.DataFrame
         :param args:
         :return: list
@@ -76,6 +79,8 @@ class MPScrimpExtractor(Extractor):
             processes.append(p)
 
         [x.start() for x in processes]
+        [x.join() for x in processes]
+        
         result_list = []
         result_list.append(output[0].keys())
         for elem in output:
