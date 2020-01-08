@@ -78,7 +78,7 @@ class MPScrimpExtractor(Extractor):
         lengths = [6, 12, 18, 24, 32]  # 5
         num_processors = len(radii)+len(lengths)
         for i in range(num_processors):
-            p = mp.Process(target=self.__worker, args=(i, data, output))
+            p = mp.Process(target=self.__worker, args=(i, data, output, radii, lengths))
             processes.append(p)
 
         [x.start() for x in processes]
