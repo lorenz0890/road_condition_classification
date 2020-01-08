@@ -1,7 +1,8 @@
 from pipeline.feature_engineering.feature_extraction.abstract_extractor import Extractor
 from overrides import overrides
 from matrixprofile import *
-from multiprocessing import Pool
+#from multiprocessing import Pool
+from pathos.multiprocessing import ProcessingPool as Pool
 import numpy
 import pandas
 
@@ -64,7 +65,6 @@ class MPScrimpExtractor(Extractor):
         :return: list
         """
 
-        @staticmethod
         def worker(i):
             combis = []
             radii = [8, 12, 16, 20, 24, 32]  # 6
