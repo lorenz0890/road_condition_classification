@@ -38,3 +38,13 @@ class BaselineExtractor(Extractor):
                                      chunksize=args[2], fdr_level=args[3])
 
         return X_selected
+
+    @overrides
+    def extract_select_features(self, data, args=None):
+        """
+        Extract-Select features
+        :param data: pandas.DataFrame
+        :param args:
+        :return: list
+        """
+        raise NotImplementedError(self.messages.NOT_IMPLEMENTED.value)
