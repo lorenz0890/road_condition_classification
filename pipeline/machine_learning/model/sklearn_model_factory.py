@@ -115,7 +115,7 @@ class SklearnModelFactory(ModelFactory):
             if int(len(X_train) * 0.2) < 100:
                 print('Test set too small')
                 continue
-            if not (0.35 < list(y_train[0]).count(1.0) / len(y_train) < 0.65):
+            if not (0.35 < list(y_train[0]).count(1.0) / len(y_train) < 0.65): #TODO distribution boundaries shgould be configureable
                 print('Class distribution not representative')
                 continue
 
@@ -148,9 +148,14 @@ class SklearnModelFactory(ModelFactory):
             print('------------------SVC-----------------')
             print(model['clf'].best_params_)
             X_test, y_test = model['X_test'], model['y_test']
-            print(model['clf'].score(X_test, y_test))
+            score = model['clf'].score(X_test, y_test)
             y_pred = model['clf'].predict(X_test)
             conf = confusion_matrix(y_test, y_pred, labels=None, sample_weight=None)
+            if score > best_score:
+                best_clf = model['clf']
+                best_score = score
+                best_conf = conf
+            print(score)
             print(conf)
             print("\n\n")
 
@@ -171,9 +176,15 @@ class SklearnModelFactory(ModelFactory):
             )
             print('------------------CART-Tree-----------------')
             print(model['clf'].best_params_)
-            print(model['clf'].score(X_test, y_test))
+            X_test, y_test = model['X_test'], model['y_test']
+            score = model['clf'].score(X_test, y_test)
             y_pred = model['clf'].predict(X_test)
             conf = confusion_matrix(y_test, y_pred, labels=None, sample_weight=None)
+            if score > best_score:
+                best_clf = model['clf']
+                best_score = score
+                best_conf = conf
+            print(score)
             print(conf)
             print("\n\n")
 
@@ -195,9 +206,15 @@ class SklearnModelFactory(ModelFactory):
             )
             print('------------------Random Forrest----------------')
             print(model['clf'].best_params_)
-            print(model['clf'].score(X_test, y_test))
+            X_test, y_test = model['X_test'], model['y_test']
+            score = model['clf'].score(X_test, y_test)
             y_pred = model['clf'].predict(X_test)
             conf = confusion_matrix(y_test, y_pred, labels=None, sample_weight=None)
+            if score > best_score:
+                best_clf = model['clf']
+                best_score = score
+                best_conf = conf
+            print(score)
             print(conf)
             print("\n\n")
 
@@ -237,10 +254,17 @@ class SklearnModelFactory(ModelFactory):
                 },
                 search_params=[-1, 0, 10, 25, True, "mlp_rs.pickle", 0.2]
             )
-            print('------------------MLP----------------')
             print(model['clf'].best_params_)
-            print(model['clf'].score(X_test, y_test))
+            X_test, y_test = model['X_test'], model['y_test']
+            score = model['clf'].score(X_test, y_test)
             y_pred = model['clf'].predict(X_test)
             conf = confusion_matrix(y_test, y_pred, labels=None, sample_weight=None)
+            if score > best_score:
+                best_clf = model['clf']
+                best_score = score
+                best_conf = conf
+            print(score)
             print(conf)
             print("\n\n")
+
+        return best_clf, best_score, best_conf

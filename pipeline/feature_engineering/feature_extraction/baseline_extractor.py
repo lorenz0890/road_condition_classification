@@ -40,7 +40,17 @@ class BaselineExtractor(Extractor):
         return X_selected
 
     @overrides
-    def extract_select_features(self, data, args=None):
+    def extract_select_training_features(self, data, args=None):
+        """
+        Extract-Select features
+        :param data: pandas.DataFrame
+        :param args:
+        :return: list
+        """
+        raise NotImplementedError(self.messages.NOT_IMPLEMENTED.value)
+
+    @overrides
+    def extract_select_inference_features(self, data, args=None):
         """
         Extract-Select features
         :param data: pandas.DataFrame

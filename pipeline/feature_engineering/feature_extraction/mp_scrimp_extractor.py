@@ -114,3 +114,13 @@ class MPScrimpExtractor(Extractor):
             'length': combis[i][1],
             'motifs': 2
         }
+
+    @overrides
+    def extract_select_inference_features(self, data, args=None):
+        """
+        Extract-Select features
+        :param data: pandas.DataFrame
+        :param args:
+        :return: list
+        """
+        raise NotImplementedError(self.messages.NOT_IMPLEMENTED.value)
