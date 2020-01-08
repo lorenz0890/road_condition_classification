@@ -1,8 +1,8 @@
 from pipeline.feature_engineering.feature_extraction.abstract_extractor import Extractor
 from overrides import overrides
 from matrixprofile import *
-from multiprocessing import Pool
-#from pathos.multiprocessing import ProcessingPool as Pool
+#from multiprocessing import Pool
+from pathos.multiprocessing import ProcessingPool as Pool
 import numpy
 import pandas
 
@@ -67,7 +67,7 @@ class MPScrimpExtractor(Extractor):
 
         num_processors = 32  # create a pool of processors
         p = Pool(processes=num_processors)  # get them to work in parallel#
-        output = p.map(self.worker, [i for i in range(0, 29)], data)  # 6*5 = 30
+        output = p.map(self.worker, [[i for i in range(0, 29)], data])  # 6*5 = 30
 
         result_list = []
         result_list.append(output[0].keys())
