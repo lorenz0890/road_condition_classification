@@ -72,7 +72,8 @@ class MPScrimpExtractor(Extractor):
         #p = Pool(processes=num_processors)  # get them to work in parallel#
         #output = p.map(worker, [i for i in range(0, 29)])  # 6*5 = 30
 
-        output = {}
+        manager = mp.Manager()
+        output = manager.dict()
         processes = []
         radii = [8, 12, 16, 20, 24, 32]  # 6
         lengths = [6, 12, 18, 24, 32]  # 5
