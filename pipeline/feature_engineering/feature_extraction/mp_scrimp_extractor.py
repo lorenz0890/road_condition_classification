@@ -6,7 +6,7 @@ from pathos.multiprocessing import ProcessingPool as Pool
 import numpy
 import pandas
 
-class MPScrimpExtractor(object, Extractor):
+class MPScrimpExtractor(Extractor):
 
     def __init__(self):
         super().__init__()
