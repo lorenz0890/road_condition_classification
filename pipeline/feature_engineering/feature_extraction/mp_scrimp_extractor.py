@@ -84,6 +84,7 @@ class MPScrimpExtractor(Extractor):
         [x.start() for x in processes]
         [x.join() for x in processes]
 
+        print(output)
         result_list = []
         result_list.append(output.keys())
         for elem in output:
