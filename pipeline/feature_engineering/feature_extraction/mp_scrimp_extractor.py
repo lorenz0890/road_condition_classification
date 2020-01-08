@@ -1,8 +1,8 @@
 from pipeline.feature_engineering.feature_extraction.abstract_extractor import Extractor
 from overrides import overrides
 from matrixprofile import *
-#from multiprocessing import Pool
-from pathos.multiprocessing import ProcessingPool as Pool
+from multiprocessing import Pool
+#from pathos.multiprocessing import ProcessingPool as Pool
 import numpy
 import pandas
 
