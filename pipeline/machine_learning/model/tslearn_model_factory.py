@@ -86,3 +86,7 @@ class TslearnModelFactory(ModelFactory):
         except Exception:
             self.logger.error(traceback.format_exc())
             os._exit(2)
+
+    @overrides
+    def find_optimal_model(self, mode, motif_list=None):
+        raise NotImplementedError(self.messages.NOT_IMPLEMENTED.value)

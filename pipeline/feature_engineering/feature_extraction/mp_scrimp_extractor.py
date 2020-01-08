@@ -63,29 +63,25 @@ class MPScrimpExtractor(Extractor):
         Sources for mp:
         https://stackoverflow.com/questions/29009790/python-how-to-do-multiprocessing-inside-of-a-class
         https://stackoverflow.com/questions/8953119/python-waiting-for-external-launched-process-finish
+        https://stackoverflow.com/questions/10415028/how-can-i-recover-the-return-value-of-a-function-passed-to-multiprocessing-proce
         :param data: pandas.DataFrame
         :param args:
         :return: list
         """
 
-        # num_processors = 32  # create a pool of processors
-        #p = Pool(processes=num_processors)  # get them to work in parallel#
-        #output = p.map(worker, [i for i in range(0, 29)])  # 6*5 = 30
-
         manager = mp.Manager()
         output = manager.dict()
         processes = []
-        radii = [8, 12, 16, 20, 24, 32]  # 6
-        lengths = [6, 12, 18, 24, 32]  # 5
+        radii = args[0] #[8, 12, 16, 20, 24, 32]  # 6 TODO: if args is None use these values
+        lengths = args[1] #[6, 12, 18, 24, 32]  # 5
         num_processors = len(radii)*len(lengths)
         for i in range(num_processors):
-            p = mp.Process(target=self.__worker, args=(i, data, output, radii, lengths))
+            p = mp.Process(target=self.__extract_select_worker, args=(i, data, output, radii, lengths))
             processes.append(p)
 
         [x.start() for x in processes]
         [x.join() for x in processes]
 
-        print(output)
         result_list = []
         result_list.append(output.keys())
         for elem in output:
@@ -96,7 +92,7 @@ class MPScrimpExtractor(Extractor):
 
         return result_list
 
-    def __worker(self, i, data, output, radii, lengths):
+    def __extract_select_worker(self, i, data, output, radii, lengths):
         combis = []
         for radius in radii:
             for length in lengths:

@@ -1,7 +1,6 @@
 from abc import ABC, abstractmethod
 from utils.rctc_component import RCTCComponent
 
-
 class ModelFactory(ABC, RCTCComponent):
 
     def __init__(self):
@@ -17,5 +16,12 @@ class ModelFactory(ABC, RCTCComponent):
         :return:
         """
 
+    def find_optimal_model(self, mode, motif_list = None):
+        """
+        :return:
+        """
+        best_clf = None
+        best_score = 0.0
+        best_conf = None
 
 
