@@ -68,12 +68,15 @@ class MPScrimpExtractor(Extractor):
         :return: list
         """
 
-        num_processors = 32  # create a pool of processors
+        # num_processors = 32  # create a pool of processors
         #p = Pool(processes=num_processors)  # get them to work in parallel#
         #output = p.map(worker, [i for i in range(0, 29)])  # 6*5 = 30
 
         output = {}
         processes = []
+        radii = [8, 12, 16, 20, 24, 32]  # 6
+        lengths = [6, 12, 18, 24, 32]  # 5
+        num_processors = len(radii)+len(lengths)
         for i in range(num_processors):
             p = mp.Process(target=self.__worker, args=(i, data, output))
             processes.append(p)
@@ -91,10 +94,8 @@ class MPScrimpExtractor(Extractor):
 
         return result_list
 
-    def __worker(self, i, data, output):
+    def __worker(self, i, data, output, radii, lengths):
         combis = []
-        radii = [8, 12, 16, 20, 24, 32]  # 6
-        lengths = [6, 12, 18, 24, 32]  # 5
         for radius in radii:
             for length in lengths:
                 combi = [radius, length]
