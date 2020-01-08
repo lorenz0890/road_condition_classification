@@ -1,7 +1,8 @@
 from pipeline.feature_engineering.feature_extraction.abstract_extractor import Extractor
 from overrides import overrides
 from matrixprofile import *
-from multiprocessing import Pool
+#from multiprocessing import Pool
+import multiprocessing as mp
 import numpy
 import pandas
 
@@ -63,38 +64,18 @@ class MPScrimpExtractor(Extractor):
         :param args:
         :return: list
         """
-        def worker(i):
-            combis = []
-            radii = [8, 12, 16, 20, 24, 32]  # 6
-            lengths = [6, 12, 18, 24, 32]  # 5
-            for radius in radii:
-                for length in lengths:
-                    combi = [radius, length]
-                    combis.append(combi)
-            print("Motif extraction worker no: {0} length: {1}, radius: {2}".format(i, combis[i][1], combis[i][0]))
-            X_indices = self.extract_features(data=data,
-                                                      args=[combis[i][1], 2, combis[i][0], 'acceleration_abs'])
-            X = self.select_features(data=data,
-                                             args=[combis[i][1], 2, X_indices, 'acceleration_abs'])
-            y = self.select_features(data=data,
-                                             args=[combis[i][1], 1, X_indices, 'road_label'])
-
-            print("Motif extraction worker no: {0} returned".format(i))
-            return {
-                'X': X,
-                'y': y,
-                'radius': combis[i][0],
-                'length': combis[i][1],
-                'motifs': 2
-            }
 
         num_processors = 32  # create a pool of processors
-        p = Pool(processes=num_processors)  # get them to work in parallel#
-        global sz
-        global _func
-        _func = worker
-        output = p.map(_func, sz)  # 6*5 = 30
+        #p = Pool(processes=num_processors)  # get them to work in parallel#
+        #output = p.map(worker, [i for i in range(0, 29)])  # 6*5 = 30
 
+        output = {}
+        processes = []
+        for i in range(num_processors):
+            p = mp.Process(target=self.__worker, args=(i, data, output))
+            processes.append(p)
+
+        [x.start() for x in processes]
         result_list = []
         result_list.append(output[0].keys())
         for elem in output:
@@ -105,5 +86,27 @@ class MPScrimpExtractor(Extractor):
 
         return result_list
 
-sz = [i for i in range(0, 29)]
-_func = None
+    def __worker(self, i, data, output):
+        combis = []
+        radii = [8, 12, 16, 20, 24, 32]  # 6
+        lengths = [6, 12, 18, 24, 32]  # 5
+        for radius in radii:
+            for length in lengths:
+                combi = [radius, length]
+                combis.append(combi)
+        print("Motif extraction worker no: {0} length: {1}, radius: {2}".format(i, combis[i][1], combis[i][0]))
+        X_indices = self.extract_features(data=data,
+                                          args=[combis[i][1], 2, combis[i][0], 'acceleration_abs'])
+        X = self.select_features(data=data,
+                                 args=[combis[i][1], 2, X_indices, 'acceleration_abs'])
+        y = self.select_features(data=data,
+                                 args=[combis[i][1], 1, X_indices, 'road_label'])
+
+        print("Motif extraction worker no: {0} returned".format(i))
+        output[i] = {
+            'X': X,
+            'y': y,
+            'radius': combis[i][0],
+            'length': combis[i][1],
+            'motifs': 2
+        }
