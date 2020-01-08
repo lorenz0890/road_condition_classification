@@ -76,7 +76,7 @@ class MPScrimpExtractor(Extractor):
         processes = []
         radii = [8, 12, 16, 20, 24, 32]  # 6
         lengths = [6, 12, 18, 24, 32]  # 5
-        num_processors = len(radii)+len(lengths)
+        num_processors = len(radii)*len(lengths)
         for i in range(num_processors):
             p = mp.Process(target=self.__worker, args=(i, data, output, radii, lengths))
             processes.append(p)
@@ -85,7 +85,7 @@ class MPScrimpExtractor(Extractor):
         [x.join() for x in processes]
 
         result_list = []
-        result_list.append(output[0].keys())
+        result_list.append(output.keys())
         for elem in output:
             templist = []
             for key in elem.keys():
