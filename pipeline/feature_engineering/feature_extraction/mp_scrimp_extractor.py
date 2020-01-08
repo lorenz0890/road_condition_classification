@@ -57,7 +57,7 @@ class MPScrimpExtractor(Extractor):
         return X#, y
 
     @overrides
-    def extract_select_features(self, data, args=None):
+    def extract_select_training_features(self, data, args=None):
         """
         Find different combinations of motifs dependent on hyperparameters
         Sources for mp:
