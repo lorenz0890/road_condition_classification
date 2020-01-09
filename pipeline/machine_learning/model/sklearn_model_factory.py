@@ -109,12 +109,14 @@ class SklearnModelFactory(ModelFactory):
         best_conf = None
         best_X_train = None
         best_y_train = None
+        best_motif_len = -1
+        best_motif_count -1
 
         for i in range(1, len(motif_list)):
             X_train = motif_list[i][0]  # [:3000]
             y_train = motif_list[i][1]  # [:3000]
             print("------------------Iteration: {}-----------------".format(i))
-            if int(len(X_train) * 0.2) < 100:
+            if int(len(X_train) * 0.2) < 50:
                 print('Test set too small')
                 continue
             if not (0.35 < list(y_train[0]).count(1.0) / len(y_train) < 0.65): #TODO distribution boundaries shgould be configureable
@@ -159,6 +161,8 @@ class SklearnModelFactory(ModelFactory):
                 best_conf = conf
                 best_X_train = X_train
                 best_y_train = y_train
+                best_motif_len = motif_list[i][3]
+                best_motif_count = motif_list[i][4]
             print(score)
             print(conf)
             print("\n\n")
@@ -190,6 +194,8 @@ class SklearnModelFactory(ModelFactory):
                 best_conf = conf
                 best_X_train = X_train
                 best_y_train = y_train
+                best_motif_len = motif_list[i][3]
+                best_motif_count = motif_list[i][4]
             print(score)
             print(conf)
             print("\n\n")
@@ -222,6 +228,8 @@ class SklearnModelFactory(ModelFactory):
                 best_conf = conf
                 best_X_train = X_train
                 best_y_train = y_train
+                best_motif_len = motif_list[i][3]
+                best_motif_count = motif_list[i][4]
             print(score)
             print(conf)
             print("\n\n")
@@ -273,8 +281,10 @@ class SklearnModelFactory(ModelFactory):
                 best_conf = conf
                 best_X_train = X_train
                 best_y_train = y_train
+                best_motif_len = motif_list[i][3]
+                best_motif_count = motif_list[i][4]
             print(score)
             print(conf)
             print("\n\n")
 
-        return best_clf, best_score, best_conf, best_X_train, best_y_train
+        return best_clf, best_score, best_conf, best_X_train, best_y_train, best_motif_len, best_motif_count
