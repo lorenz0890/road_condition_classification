@@ -483,6 +483,15 @@ class SussexHuaweiPreprocessor(Preprocessor):
             self.logger.error(traceback.format_exc())
             os._exit(2)
 
+    @overrides
+    def inference_split_process(self, data, params):
+        """
+        TODO: Required for real data
+        :param data: pandas.DataFrame
+        :param params: List
+        :return: pandas.DataFrame, pandas.DataFrame, pandas.DataFrame
+        """
+        pass
 
     @overrides
     def training_split_process(self, data, params):

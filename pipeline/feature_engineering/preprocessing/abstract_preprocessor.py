@@ -179,12 +179,12 @@ class Preprocessor(ABC, RCTCComponent):
         """
         pass
 
-    #@abstractmethod
-    #def inference_split_process(self, data, params):
-    #    """
-    #    TODO: Required for real data
-    #    :param data: pandas.DataFrame
-    #    :param params: List
-    #    :return: pandas.DataFrame, pandas.DataFrame, pandas.DataFrame
-    #    """
-    #    pass
+    @abstractmethod
+    def inference_split_process(self, data, params):
+        """
+        TODO: Required for real data
+        :param data: pandas.DataFrame
+        :param params: List
+        :return: pandas.DataFrame, pandas.DataFrame, pandas.DataFrame
+        """
+        pass
