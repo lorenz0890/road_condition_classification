@@ -486,12 +486,44 @@ class SussexHuaweiPreprocessor(Preprocessor):
     @overrides
     def inference_split_process(self, data, params):
         """
-        TODO: Required for real data
         :param data: pandas.DataFrame
         :param params: List
         :return: pandas.DataFrame, pandas.DataFrame, pandas.DataFrame
         """
-        raise NotImplementedError(self.messages.NOT_IMPLEMENTED.value)
+        print('Fetch params')
+        acelerometer_columns = [params[0], params[1], params[2]]
+        freq = params[3]  # '1000ms'
+        mean_train = params[4]
+        std_train = params[5]
+
+        print('Convert time unit, remove nans')
+        data = self.convert_unix_to_datetime(data, column='time', unit='ms')
+        data = self.remove_nans(data, replacement_mode='del_row')
+
+        print('Resample')
+        data = self.resample_quantitative_data(data,
+                                        freq=freq)  # 8000 1.25 Hz
+
+        print('Dimensionality reduction')
+        data = self.reduce_quantitativ_data_dimensionality(
+            data=data,
+            mode='euclidean',  # works better than euclidean for motif
+            columns=acelerometer_columns,
+            reduced_column_name='acceleration_abs'
+        )
+
+        print('Normalizing, outlier removal')
+        selected_columns = ['acceleration_abs']
+        data, mean, std = self.znormalize_quantitative_data(data, selected_columns[:-1])
+        data = self.remove_outliers_from_quantitative_data(
+            data,
+            replacement_mode='quantile',
+            columns=selected_columns[:-1],
+            quantile=0.99  # current run @0.95 for classical approach via TS Fresh
+        )[:-1]
+
+        return data
+
 
     @overrides
     def training_split_process(self, data, params):
