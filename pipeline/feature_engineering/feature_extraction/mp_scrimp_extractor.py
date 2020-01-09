@@ -1,7 +1,8 @@
 from pipeline.feature_engineering.feature_extraction.abstract_extractor import Extractor
 from overrides import overrides
 from matrixprofile import *
-#from multiprocessing import Pool
+from IPython.display import clear_output
+from multiprocessing import Pool
 import multiprocessing as mp
 import numpy
 import pandas
@@ -76,7 +77,7 @@ class MPScrimpExtractor(Extractor):
         lengths = args[1] #[6, 12, 18, 24, 32]  # 5
         num_processors = len(radii)*len(lengths)
         for i in range(num_processors):
-            p = mp.Process(target=self.__extract_select_worker, args=(i, data, output, radii, lengths))
+            p = mp.Process(target=self.__extract_select_training_worker, args=(i, data, output, radii, lengths))
             processes.append(p)
 
         [x.start() for x in processes]
@@ -92,7 +93,7 @@ class MPScrimpExtractor(Extractor):
 
         return result_list
 
-    def __extract_select_worker(self, i, data, output, radii, lengths):
+    def __extract_select_training_worker(self, i, data, output, radii, lengths):
         combis = []
         for radius in radii:
             for length in lengths:
@@ -115,6 +116,27 @@ class MPScrimpExtractor(Extractor):
             'motifs': 2
         }
 
+    def __extract_select_inference_worker(self, i, data, X_train, output, length):
+        distances_valid = []
+        motifs_valid = []
+        motif_ids_valid = []
+
+        split_sz = int(len(X_train) / 32)
+        i = i * split_sz
+
+        motif = X_train[i:i + 32][0].values
+        motif_id = X_train[i:i + 32][1].values
+
+        for j in range(0, len(data['acceleration_abs']) - 32, 1):
+            window = data['acceleration_abs'][j:j + 32]
+            diff = motif - window
+            if not True in numpy.isnan(diff):
+                distances_valid.append(numpy.sqrt(numpy.sum(numpy.square(diff))))
+                motifs_valid.append(j)
+                motif_ids_valid.append(motif_id[0])
+
+        output[i] = motifs_valid, motif_ids_valid, distances_valid
+
     @overrides
     def extract_select_inference_features(self, data, args=None):
         """
@@ -123,4 +145,26 @@ class MPScrimpExtractor(Extractor):
         :param args:
         :return: list
         """
-        raise NotImplementedError(self.messages.NOT_IMPLEMENTED.value)
+
+        X_train = args[0]
+        length = args[1]
+
+        manager = mp.Manager()
+        output = manager.dict()
+        processes = []
+        num_processors = 32
+        for i in range(num_processors):
+            p = mp.Process(target=self.__extract_select_inference_worker, args=(i, i, data, X_train, output, length))
+            processes.append(p)
+
+        [x.start() for x in processes]
+        [x.join() for x in processes]
+
+        distances_valid_full = []
+        motifs_valid_full = []
+        motif_ids_valid_full = []
+        for o in output:
+            motifs_valid_full += o[0]
+            motif_ids_valid_full += o[1]
+            distances_valid_full += o[2]
+

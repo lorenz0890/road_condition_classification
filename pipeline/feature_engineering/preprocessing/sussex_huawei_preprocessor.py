@@ -491,7 +491,7 @@ class SussexHuaweiPreprocessor(Preprocessor):
         :param params: List
         :return: pandas.DataFrame, pandas.DataFrame, pandas.DataFrame
         """
-        pass
+        raise NotImplementedError(self.messages.NOT_IMPLEMENTED.value)
 
     @overrides
     def training_split_process(self, data, params):
