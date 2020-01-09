@@ -110,7 +110,7 @@ class SklearnModelFactory(ModelFactory):
         best_X_train = None
         best_y_train = None
         best_motif_len = -1
-        best_motif_count -1
+        best_motif_count = -1
 
         for i in range(1, len(motif_list)):
             X_train = motif_list[i][0]  # [:3000]
