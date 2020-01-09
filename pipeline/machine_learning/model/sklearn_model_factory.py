@@ -160,7 +160,7 @@ class SklearnModelFactory(ModelFactory):
                 best_score = score
                 best_conf = conf
                 best_X_train = X_train
-                best_y_train = y_train
+                #best_y_train = y_train
                 best_motif_len = motif_list[i][3]
                 best_motif_count = motif_list[i][4]
             print(score)
@@ -193,7 +193,7 @@ class SklearnModelFactory(ModelFactory):
                 best_score = score
                 best_conf = conf
                 best_X_train = X_train
-                best_y_train = y_train
+                #best_y_train = y_train
                 best_motif_len = motif_list[i][3]
                 best_motif_count = motif_list[i][4]
             print(score)
@@ -227,7 +227,7 @@ class SklearnModelFactory(ModelFactory):
                 best_score = score
                 best_conf = conf
                 best_X_train = X_train
-                best_y_train = y_train
+                #best_y_train = y_train
                 best_motif_len = motif_list[i][3]
                 best_motif_count = motif_list[i][4]
             print(score)
@@ -280,11 +280,11 @@ class SklearnModelFactory(ModelFactory):
                 best_score = score
                 best_conf = conf
                 best_X_train = X_train
-                best_y_train = y_train
+                #best_y_train = y_train
                 best_motif_len = motif_list[i][3]
                 best_motif_count = motif_list[i][4]
             print(score)
             print(conf)
             print("\n\n")
 
-        return best_clf, best_score, best_conf, best_X_train, best_y_train, best_motif_len, best_motif_count
+        return best_clf, best_score, best_conf, best_X_train, best_motif_len, best_motif_count
