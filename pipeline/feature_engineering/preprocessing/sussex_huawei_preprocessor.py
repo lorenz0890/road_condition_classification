@@ -534,7 +534,7 @@ class SussexHuaweiPreprocessor(Preprocessor):
         :return: pandas.DataFrame, pandas.DataFrame, pandas.DataFrame
         """
         print('Fetch params')
-        print(params)
+        #print(params)
         labels = params[0]
         test_sz = params[1]
         train_sz = params[2]
