@@ -1,14 +1,3 @@
-def warn(*args, **kwargs):
-    """
-    Hack sklearn warnings away, temporary fix
-    https://stackoverflow.com/questions/32612180/eliminating-warnings-from-scikit-learn
-    :param args:
-    :param kwargs:
-    :return:
-    """
-    pass
-import warnings
-warnings.warn = warn
 
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
@@ -26,6 +15,17 @@ from scipy.stats import randint as sp_randint
 from sklearn.metrics import confusion_matrix
 import numpy
 
+def warn(*args, **kwargs):
+    """
+    Hack sklearn warnings away, temporary fix, also prevents my own warnings from display
+    https://stackoverflow.com/questions/32612180/eliminating-warnings-from-scikit-learn
+    :param args:
+    :param kwargs:
+    :return:
+    """
+    pass
+import warnings
+warnings.warn = warn
 
 class SklearnModelFactory(ModelFactory):
 
