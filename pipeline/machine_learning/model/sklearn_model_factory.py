@@ -1,3 +1,8 @@
+import warnings
+from sklearn.exceptions import ConvergenceWarning
+from sklearn.exceptions import DataConversionWarning
+warnings.simplefilter("once", ConvergenceWarning)
+warnings.simplefilter("once", DataConversionWarning)
 
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
@@ -14,18 +19,6 @@ from sklearn.model_selection import train_test_split
 from scipy.stats import randint as sp_randint
 from sklearn.metrics import confusion_matrix
 import numpy
-
-def warn(*args, **kwargs):
-    """
-    Hack sklearn warnings away, temporary fix, also prevents my own warnings from display
-    https://stackoverflow.com/questions/32612180/eliminating-warnings-from-scikit-learn
-    :param args:
-    :param kwargs:
-    :return:
-    """
-    pass
-import warnings
-warnings.warn = warn
 
 class SklearnModelFactory(ModelFactory):
 
