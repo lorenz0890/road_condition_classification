@@ -1,18 +1,5 @@
 #https://www.sicara.ai/blog/2018-12-18-perfect-command-line-interfaces-python
 #https://pypi.org/project/python-dotenv/
-
-def warn(*args, **kwargs):
-    """
-    Hack sklearn warnings away, temporary fix
-    https://stackoverflow.com/questions/32612180/eliminating-warnings-from-scikit-learn
-    :param args:
-    :param kwargs:
-    :return:
-    """
-    pass
-import warnings
-warnings.warn = warn
-
 import click
 import json
 from pipeline.data_access.dao.sussex_huawei_dao import SussexHuaweiDAO
