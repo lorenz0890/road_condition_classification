@@ -55,9 +55,11 @@ def execute_training(config):
 
     # 2. Load data
     print('--------------------LOAD DATA------------------------')
+    import random #for debugging
     labels, data = dao.bulk_read_data(
         file_path=[config['data_set_path'], config['data_labels_path']],
-        identifiers=config['data_set_trips'],
+        #identifiers=config['data_set_trips'],
+        identifiers=random.sample(config['data_set_trips'], len(config['data_set_trips'])//8),
         column_names=[config['data_set_column_names'], config['data_label_column_names']],
         use_columns=[config['data_set_columns'], config['data_label_columns']]
     )
@@ -81,21 +83,60 @@ def execute_training(config):
             [config['feature_eng_mp_extractor_radii'], config['feature_eng_mp_extractor_lengths']]
         )
     if config['feature_eng_extractor_type'] == "tsfresh":
-        pass #TODO
+        #TODO migrate the preperation for extraction to extract_select_training_features
+        data_train = preprocessor.encode_categorical_features(data=data_train,
+                                                        mode='custom_function',
+                                                        columns=['road_label'],
+                                                        encoding_function=lambda x: (x > 2.0).astype(int)
+                                                        )  # 0 City, 1 Countryside
+        y_train = data[['road_label']].reset_index(drop=True)
+        data['id'] = range(1, len(data) + 1)
+        y_train['id'] = data['id']
+        y_train['road_label'].index = list(y_train['id'])
+
+        X_train = extractor.extract_select_training_features(
+            data_train,
+            args = ['id', 32, None, y['road_label'], 0.1]
+
+        )
+
+        keys = X_train.keys()
+        keys = list(filter(lambda x: "acceleration_abs" in x, keys))
+
+        import pandas
+        X_join = pandas.concat([X_train, y_train], axis=1)
+        X_join = preprocessor.remove_nans(X_join, replacement_mode='del_row')
+        X_join[['road_label']] = X_join[['road_label']].astype('int')
+        X_segments = preprocessor.segment_data(X_join, mode='labels',
+                                               label_column='road_label',
+                                               args=[0, 1])
+
+        segment_length = 30  # 60s best in paper, 90 best in my evaluation, tested 30, 60, 90, 120
+        X_segments_new = []
+        for ind in range(0, len(X_segments)):
+            X_segments_new = X_segments_new + preprocessor.segment_data(
+                X_segments[ind],
+                mode='fixed_interval',
+                args=[segment_length, True, True]
+            )
+
+        print(len(X_segments_new))
+        keys.append('road_label')
+        X_combined = preprocessor.de_segment_data(X_segments_new, keys)
+        X_train, y_train = X_combined[keys[:-1]], X_combined[keys[-1]]
+        X_train = ['placeholder',[X_train, y_train, 'N/A', 'N/A', 'N/A']] #required for further processing. TODO: Unifiy naming!
+
     if X_train is None:
         pass#TODO Raise Error
 
     # 5. Find optimal classifier for given training set
     print('--------------------TRAINING PHASE----------------------')
     clf, score, conf, X_train, motif_len, motif_count = None, None, None, None, None, None
-    if config['feature_eng_extractor_type'] == "motif":
-        clf, score, conf, X_train, motif_len, motif_count = model_factory.find_optimal_model(
-            'motif',
-            X_train,
-            config['classifier_optimal_search_space']
-    )
-    if config['feature_eng_extractor_type'] == "tsfresh":
-        pass  # TODO
+    clf, score, conf, X_train, motif_len, motif_count = model_factory.find_optimal_model(
+        'motif',
+        X_train,
+        config['classifier_optimal_search_space']
+)
     if  clf is None or score is None or conf is None:
         pass#TODO Raise Error
 
@@ -154,6 +195,7 @@ def execute_inference(config):
         use_columns=[config['data_set_columns'], config['data_label_columns']]
     )
     #TODO: Delegate to DAO
+    meta_data, X_train, clf = None, None, None
     with open('./meta_data', 'rb') as meta_file:
         meta_data = pickle.load(meta_file)
 
