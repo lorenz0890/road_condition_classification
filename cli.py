@@ -2,7 +2,13 @@
 #https://pypi.org/project/python-dotenv/
 
 def warn(*args, **kwargs):
-    #https://stackoverflow.com/questions/32612180/eliminating-warnings-from-scikit-learn
+    """
+    Hack sklearn warnings away, temporary fix
+    https://stackoverflow.com/questions/32612180/eliminating-warnings-from-scikit-learn
+    :param args:
+    :param kwargs:
+    :return:
+    """
     pass
 import warnings
 warnings.warn = warn
