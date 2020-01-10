@@ -496,6 +496,7 @@ class SussexHuaweiPreprocessor(Preprocessor):
         mean_train = params[4]
         std_train = params[5]
 
+
         print('Convert time unit, remove nans')
         data = self.convert_unix_to_datetime(data, column='time', unit='ms')
         data = self.remove_nans(data, replacement_mode='del_row')
@@ -514,7 +515,7 @@ class SussexHuaweiPreprocessor(Preprocessor):
 
         print('Normalizing, outlier removal')
         selected_columns = ['acceleration_abs']
-        data, mean, std = self.znormalize_quantitative_data(data, selected_columns[:-1])
+        data, mean, std = self.znormalize_quantitative_data(data, selected_columns, mean_train, std_train)
         data = self.remove_outliers_from_quantitative_data(
             data,
             replacement_mode='quantile',

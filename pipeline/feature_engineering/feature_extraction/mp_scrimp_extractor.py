@@ -138,7 +138,7 @@ class MPScrimpExtractor(Extractor):
         output[i] = motifs_valid, motif_ids_valid, distances_valid
 
     @overrides
-    def extract_select_inference_features(self, data, args=None):
+    def extract_select_inference_features(self, data, args=None, debug=False):
         """
         Extract-Select features
         :param data: pandas.DataFrame
@@ -152,7 +152,7 @@ class MPScrimpExtractor(Extractor):
         manager = mp.Manager()
         output = manager.dict()
         processes = []
-        num_processors = 32
+        num_processors = length
         for i in range(num_processors):
             p = mp.Process(target=self.__extract_select_inference_worker, args=(i, i, data, X_train, output, length))
             processes.append(p)
@@ -193,7 +193,13 @@ class MPScrimpExtractor(Extractor):
         # mtfs[0] = list(set(mtfs[0]))
 
         X_valid = self.select_features(data=data,
-                                               args=[32, 2, mtfs, 'acceleration_abs'])
-        #y_valid = self.select_features(data=data,
-        #                                       args=[32, 1, mtfs, 'road_label'])
+                                               args=[length, 2, mtfs, 'acceleration_abs'])
 
+
+        if debug:
+            y_valid = self.select_features(data=data,
+                                                   args=[length, 1, mtfs, 'road_label'])
+
+            return X_valid, y_valid
+
+        return X_valid

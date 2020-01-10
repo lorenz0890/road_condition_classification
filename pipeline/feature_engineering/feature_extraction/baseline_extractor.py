@@ -47,12 +47,26 @@ class BaselineExtractor(Extractor):
         :param args:
         :return: list
         """
-        raise NotImplementedError(self.messages.NOT_IMPLEMENTED.value)
+        print(args[0])
+        print(args[1])
+        print(args[2])
+        print(args[3])
+        X = extract_features(data, column_id=args[0], n_jobs=args[1], chunksize=args[2])
+        X = impute(X)
+
+        y = args[3]
+        X_selected = select_features(X, y,
+                                     ml_task='classification', n_jobs=args[1],
+                                     chunksize=args[2], fdr_level=args[3])
+
+        return X_selected
 
     @overrides
     def extract_select_inference_features(self, data, args=None):
         """
         Extract-Select features
+        Only extract specific features passed via args, we want the same as in taining
+        https://stackoverflow.com/questions/50426458/retrieve-specific-features-by-using-tsfresh-in-python
         :param data: pandas.DataFrame
         :param args:
         :return: list
