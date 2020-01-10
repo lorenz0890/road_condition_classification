@@ -66,12 +66,13 @@ def execute_training(config):
 
     # 3. Preprocessing
     print('--------------------PRE PROCESSING--------------------')
+    params = [labels, config['pre_proc_validation_sz'], config['pre_proc_training_sz']]
+    params+=config['data_set_column_names'][1:] + config['pre_proc_movement_type_label']
+    params+=config['pre_proc_road_type_label']
+    params.append(config['pre_proc_resample_freq'])
     data_train, mean_train, std_train, data_valid = preprocessor.training_split_process(
         data=data,
-        params=[labels, config['pre_proc_validation_sz'], config['pre_proc_training_sz'],
-            config['data_set_column_names'][1:], config['pre_proc_movement_type_label'],
-            config['pre_proc_road_type_label'], config['pre_proc_resample_freq']
-        ]
+        params=params
     )
 
     #4. Feature extraction
