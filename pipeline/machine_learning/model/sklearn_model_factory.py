@@ -210,11 +210,11 @@ class SklearnModelFactory(ModelFactory):
                         'n_estimators': sp_randint(1, 100),
                         'max_depth': sp_randint(1, 128),
                         # 'max_features': sp_randint(1, X_train.shape[1]),
-                        'min_samples_split': sp_randint(2, X_train.shape[1]),
+                        #'min_samples_split': sp_randint(2, X_train.shape[1]),
                         'bootstrap': [True, False],
                         "criterion": ["gini", "entropy"],
                         'random_state': sp_randint(1, 10),
-                        #'min_samples_split': sp_randint(2, 10)
+                        'min_samples_split': sp_randint(2, 10)
                     },
                     search_params=[-1, 0, 10, 100, True, "rf_rs.pickle", 0.2]
                 )
