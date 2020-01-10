@@ -1,5 +1,12 @@
 #https://www.sicara.ai/blog/2018-12-18-perfect-command-line-interfaces-python
 #https://pypi.org/project/python-dotenv/
+
+def warn(*args, **kwargs):
+    #https://stackoverflow.com/questions/32612180/eliminating-warnings-from-scikit-learn
+    pass
+import warnings
+warnings.warn = warn
+
 import click
 import json
 from pipeline.data_access.dao.sussex_huawei_dao import SussexHuaweiDAO
@@ -25,12 +32,6 @@ def execute_command(config_path, training):
         execute_training(config)
     else:
         execute_inference(config)
-
-def warn(*args, **kwargs):
-    #https://stackoverflow.com/questions/32612180/eliminating-warnings-from-scikit-learn
-    pass
-import warnings
-warnings.warn = warn
 
 def init_pipeline(config):
     dao = None
