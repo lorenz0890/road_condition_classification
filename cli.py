@@ -1,7 +1,11 @@
 #https://www.sicara.ai/blog/2018-12-18-perfect-command-line-interfaces-python
 #https://pypi.org/project/python-dotenv/
-from sklearn.utils.testing import ignore_warnings
-from sklearn.exceptions import ConvergenceWarning
+import sys
+import warnings
+import os
+if not sys.warnoptions:
+    warnings.simplefilter("ignore")
+    os.environ["PYTHONWARNINGS"] = "ignore" # Also affect subprocesses
 
 import click
 import json
@@ -51,7 +55,6 @@ def init_pipeline(config):
         pass
     return dao, preprocessor, extractor, model_factory
 
-@ignore_warnings(category=ConvergenceWarning)
 def execute_training(config):
     # 1. Init pipeline
     print('--------------------INIT PIPELINE--------------------')
