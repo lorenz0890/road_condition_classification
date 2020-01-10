@@ -16,7 +16,8 @@ from pipeline.machine_learning.model.tslearn_model_factory import TslearnModelFa
 def execute_command(config_path, training):
     # 1. Load config from path
     config = load_config(config_path[0])
-    print(config)
+    print(json.dumps(config))
+
     # 2. Execute training or Inference
     if training:
         execute_training(config)
@@ -51,7 +52,7 @@ def execute_training(config):
     dao, preprocessor, extractor, model_factory = init_pipeline(config)
 
     # 2. Load data
-    print('--------------------LOAD DATA--------------------')
+    print('--------------------LOAD DATA------------------------')
     labels, data = dao.bulk_read_data(
         file_path=[config['data_set_path'], config['data_labels_path']],
         identifiers=config['data_set_trips'],
@@ -70,7 +71,7 @@ def execute_training(config):
     )
 
     #4. Feature extraction
-    print('--------------------FEATURE EXTRACTION--------------------')
+    print('--------------------FEATURE EXTRACTION------------------')
     X_train = None
     if config['feature_eng_extractor_type'] == "motif":
         X_train = extractor.extract_select_training_features(
@@ -83,7 +84,7 @@ def execute_training(config):
         pass#TODO Raise Error
 
     # 5. Find optimal classifier for given training set
-    print('--------------------TRAINING PHASE--------------------')
+    print('--------------------TRAINING PHASE----------------------')
     clf, score, conf, X_train, motif_len, motif_count = None, None, None, None, None, None
     if config['feature_eng_extractor_type'] == "motif":
         clf, score, conf, X_train, motif_len, motif_count = model_factory.find_optimal_model(
@@ -96,15 +97,15 @@ def execute_training(config):
         pass#TODO Raise Error
 
     # 6. Prepare Validation
-    print('--------------------PREPARE VALIDATION--------------------')
+    print('--------------------PREPARE VALIDATION-------------------')
     #TODO
 
     #7. Prepare Validation
-    print('--------------------VALIDATION--------------------')
+    print('--------------------VALIDATION---------------------------')
     # TODO
 
     #8. Store Results
-    print('--------------------STORE RESULTS--------------------')
+    print('--------------------STORE RESULTS------------------------')
     # TODO
 
 def execute_inference(config):
