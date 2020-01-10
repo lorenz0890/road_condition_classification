@@ -16,7 +16,7 @@ from pipeline.machine_learning.model.tslearn_model_factory import TslearnModelFa
 def execute_command(config_path, training):
     # 1. Load config from path
     config = load_config(config_path[0])
-    print(json.dumps(config, ident=1))
+    print(json.dumps(config, indent=1))
 
     # 2. Execute training or Inference
     if training:
