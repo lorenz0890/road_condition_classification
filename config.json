@@ -18,13 +18,13 @@
   "data_set_path":"./data_sets/sussex_huawei/User1/{}/Hips_Motion.txt",
   "data_labels_path":"./data_sets/sussex_huawei/User1/{}/Label.txt",
   "data_set_columns": [
-    "0", "1", "2", "3"
+    0, 1, 2, 3
   ],
   "data_set_column_names" : [
     "time", "acceleration_x", "acceleration_y", "acceleration_z"
   ],
   "data_label_columns": [
-    "1", "2", "3"
+    1, 2, 3
   ],
   "data_label_column_names": [
     "coarse_label", "fine_label", "road_label"
