@@ -133,7 +133,6 @@ def execute_training(config):
 
     # 5. Find optimal classifier for given training set
     print('--------------------TRAINING PHASE----------------------')
-    clf, score, conf, X_train, motif_len, motif_count = None, None, None, None, None, None
     clf, score, conf, X_train, motif_len, motif_count = model_factory.find_optimal_model(
         'motif',
         X_train,
