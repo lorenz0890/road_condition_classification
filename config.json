@@ -41,8 +41,30 @@
   "feature_eng_mp_extractor_lengths": [
     [6, 12, 18, 24, 32]
   ],
+  "feature_eng_baseline_extractor_features": [
+    "TODO ADD FEATURES THAT TSFRESH SHOULD EXTRACT"
+  ],
   "feature_eng_dim_reduction_type": "euclidean",
   "feature_eng_dim_reduction_target_col_name": "acceleration_abs",
-  "feature_eng_label_target_col_name": "road_label"
-
+  "feature_eng_label_target_col_name": "road_label",
+  "classifier_model_factory_type": "sklearn",
+  "classifier_optimal_search_space": ["sklearn_mlp", "sklearn_svc", "sklearn_rf", "sklearn_cart"],
+  "classifier_hypermaram_space_sklearn_mlp": [
+    "TODO: ADD HYPER PARAM SEARCH SPACE"
+  ],
+  "classifier_hypermaram_space_sklearn_svc": [
+    "TODO: ADD HYPER PARAM SEARCH SPACE"
+  ],
+  "classifier_hypermaram_space_sklearn_rf": [
+    "TODO: ADD HYPER PARAM SEARCH SPACE"
+  ],
+  "classifier_hypermaram_space_sklearn_cart": [
+    "TODO: ADD HYPER PARAM SEARCH SPACE"
+  ],
+  "classifier_hypermaram_space_tslearn_knn": [
+    "TODO: ADD HYPER PARAM SEARCH SPACE"
+  ],
+  "classifier_hypermaram_space_tslearn_svc": [
+    "TODO: ADD HYPER PARAM SEARCH SPACE"
+  ]
 }
