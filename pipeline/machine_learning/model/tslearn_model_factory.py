@@ -88,5 +88,5 @@ class TslearnModelFactory(ModelFactory):
             os._exit(2)
 
     @overrides
-    def find_optimal_model(self, mode, motif_list=None):
+    def find_optimal_model(self, mode, motif_list=None, models_list = ['all']):
         raise NotImplementedError(self.messages.NOT_IMPLEMENTED.value)

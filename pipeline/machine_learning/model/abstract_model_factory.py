@@ -16,7 +16,7 @@ class ModelFactory(ABC, RCTCComponent):
         :return:
         """
 
-    def find_optimal_model(self, mode, motif_list = None):
+    def find_optimal_model(self, mode, motif_list = None, models_list = ['all']):
         """
         :return:
         """

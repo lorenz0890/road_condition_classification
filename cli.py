@@ -109,7 +109,54 @@ def execute_training(config):
     # TODO
 
 def execute_inference(config):
-    pass
+    # 1. Init pipeline
+    print('--------------------INIT PIPELINE--------------------')
+    dao, preprocessor, extractor, model_factory = init_pipeline(config)
+
+    # 2. Load data
+    print('--------------------LOAD DATA------------------------')
+    labels, data = dao.bulk_read_data(
+        file_path=[config['data_set_path'], config['data_labels_path']],
+        identifiers=config['data_set_trips'],
+        column_names=[config['data_set_column_names'], config['data_label_column_names']],
+        use_columns=[config['data_set_columns'], config['data_label_columns']]
+    )
+
+    # 3. Preprocessing
+    print('--------------------PRE PROCESSING--------------------')
+    #TODO Use std, mean from training phase
+    data_train, mean_train, std_train, data_valid = preprocessor.training_split_process(
+        data=data,
+        params=[labels, config['pre_proc_validation_sz'], config['pre_proc_training_sz'],
+                config['data_set_column_names'][1:], config['pre_proc_movement_type_label'],
+                config['pre_proc_road_type_label'], config['pre_proc_resample_freq']
+                ]
+    )
+
+    # 4. Feature extraction
+    print('--------------------FEATURE EXTRACTION------------------')
+    X_inference = None
+    if config['feature_eng_extractor_type'] == "motif":
+        #TODO: Load training motifs and motif length to search for from source
+        X_train = extractor.extract_select_inference_features(data_valid,
+                                              [
+                                                  #X_train,
+                                                  #motif_len
+                                              ]#, True
+        )
+    if config['feature_eng_extractor_type'] == "tsfresh":
+        pass  # TODO
+    if X_inference is None:
+        pass  # TODO Raise Error
+
+    # 5. Inference
+    print('--------------------INFERENCE PHASE----------------------')
+    #TODO: Load classifier found in training
+    #TODO: Inference
+
+    # 6. Store Results
+    print('--------------------STORE RESULTS------------------------')
+    # TODO Store best classifier, extracted features during training, preprocessing std, mean
 
 def load_config(config_path):
     config = None
