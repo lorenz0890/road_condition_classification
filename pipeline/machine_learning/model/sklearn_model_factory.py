@@ -1,6 +1,3 @@
-from sklearn.utils.testing import ignore_warnings
-from sklearn.exceptions import ConvergenceWarning
-
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
@@ -24,7 +21,6 @@ class SklearnModelFactory(ModelFactory):
 
 
     @overrides
-    @ignore_warnings(category=ConvergenceWarning)
     def create_model(self, model_type, X, y, model_params, search_params):
         """
         Executes random search hyper parameter optimization for the specified model. Refer to sklearn
