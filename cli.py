@@ -85,7 +85,7 @@ def execute_training(config):
             [config['feature_eng_mp_extractor_radii'], config['feature_eng_mp_extractor_lengths']]
         )
     if config['feature_eng_extractor_type'] == "tsfresh":
-        #TODO migrate the preperation for extraction to extract_select_training_features
+        #TODO migrate the preperation for extraction to extract_select_training_features, make label column name configureable
         data_train = preprocessor.encode_categorical_features(data=data_train,
                                                         mode='custom_function',
                                                         columns=['road_label'],
@@ -98,7 +98,7 @@ def execute_training(config):
 
         X_train = extractor.extract_select_training_features(
             data_train,
-            args = ['id', 32, None, y['road_label'], 0.1]
+            args = ['id', 32, None, y_train['road_label'], 0.1]
 
         )
 
