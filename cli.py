@@ -26,6 +26,12 @@ def execute_command(config_path, training):
     else:
         execute_inference(config)
 
+def warn(*args, **kwargs):
+    #https://stackoverflow.com/questions/32612180/eliminating-warnings-from-scikit-learn
+    pass
+import warnings
+warnings.warn = warn
+
 def init_pipeline(config):
     dao = None
     preprocessor = None
