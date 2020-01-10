@@ -65,7 +65,7 @@ def execute_training(config):
     labels, data = dao.bulk_read_data(
         file_path=[config['data_set_path'], config['data_labels_path']],
         #identifiers=config['data_set_trips'],
-        identifiers=random.sample(config['data_set_trips'], len(config['data_set_trips'])//8),
+        identifiers=random.sample(config['data_set_trips'], len(config['data_set_trips'])//4),
         column_names=[config['data_set_column_names'], config['data_label_column_names']],
         use_columns=[config['data_set_columns'], config['data_label_columns']]
     )
