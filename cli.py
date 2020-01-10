@@ -8,6 +8,8 @@ from pipeline.feature_engineering.feature_extraction.baseline_extractor import B
 from pipeline.feature_engineering.feature_extraction.mp_scrimp_extractor import MPScrimpExtractor
 from pipeline.machine_learning.model.sklearn_model_factory import SklearnModelFactory
 from pipeline.machine_learning.model.tslearn_model_factory import TslearnModelFactory
+from sklearn.metrics import confusion_matrix
+import pickle
 
 
 @click.command()
@@ -89,7 +91,8 @@ def execute_training(config):
     if config['feature_eng_extractor_type'] == "motif":
         clf, score, conf, X_train, motif_len, motif_count = model_factory.find_optimal_model(
             'motif',
-            X_train
+            X_train,
+            config['classifier_optimal_search_space']
     )
     if config['feature_eng_extractor_type'] == "tsfresh":
         pass  # TODO
@@ -98,15 +101,44 @@ def execute_training(config):
 
     # 6. Prepare Validation
     print('--------------------PREPARE VALIDATION-------------------')
-    #TODO
+    X_valid, y_valid = None, None
+    if config['feature_eng_extractor_type'] == "motif":
+        X_valid, y_valid = extractor.extract_select_inference_features(
+            data_valid, [X_train, motif_len], True
+        )
 
-    #7. Prepare Validation
+    #7. Run Validation
     print('--------------------VALIDATION---------------------------')
-    # TODO
+    score = clf.score(X_valid, y_valid)
+    print(score)
+    y_pred = clf.predict(X_valid)
+    conf = confusion_matrix(y_valid, y_pred, labels=None, sample_weight=None)
+    print(conf)
 
     #8. Store Results
     print('--------------------STORE RESULTS------------------------')
-    # TODO
+    #TODO: delegate to DAO, make storing configureable
+    with open('./X_train', 'wb') as X_train_file:
+        pickle.dump(X_train, X_train_file)
+
+    with open('./X_valid', 'wb') as X_valid_file:
+        pickle.dump(X_valid, X_valid_file)
+    with open('./y_valid', 'wb') as y_valid_file:
+        pickle.dump(y_valid, y_valid_file)
+
+    with open('./clf', 'wb') as clf_file:
+        pickle.dump(clf, clf_file)
+
+    meta_data ={
+        'mean_train': mean_train,
+        'std_train': std_train,
+        'motif_len': motif_len,
+        'motif_count':motif_count,
+        'clf_score': score,
+        'clf_conf': conf
+    }
+    with open('./meta_data', 'wb') as meta_file:
+        pickle.dump(meta_data, meta_file)
 
 def execute_inference(config):
     # 1. Init pipeline
@@ -121,15 +153,25 @@ def execute_inference(config):
         column_names=[config['data_set_column_names'], config['data_label_column_names']],
         use_columns=[config['data_set_columns'], config['data_label_columns']]
     )
+    #TODO: Delegate to DAO
+    with open('./meta_data', 'rb') as meta_file:
+        meta_data = pickle.load(meta_file)
+
+    with open('./X_train', 'rb') as X_train_file:
+        X_train = pickle.load(X_train_file)
+
+    with open('./clf', 'rb') as clf_file:
+        clf = pickle.load(clf_file)
+
 
     # 3. Preprocessing
     print('--------------------PRE PROCESSING--------------------')
     #TODO Use std, mean from training phase
-    data_train, mean_train, std_train, data_valid = preprocessor.training_split_process(
+    data_inference = preprocessor.inference_split_process(
         data=data,
-        params=[labels, config['pre_proc_validation_sz'], config['pre_proc_training_sz'],
+        params=[
                 config['data_set_column_names'][1:], config['pre_proc_movement_type_label'],
-                config['pre_proc_road_type_label'], config['pre_proc_resample_freq']
+                config['pre_proc_resample_freq'], meta_data['mean_train'], meta_data['std_train']
                 ]
     )
 
@@ -137,12 +179,11 @@ def execute_inference(config):
     print('--------------------FEATURE EXTRACTION------------------')
     X_inference = None
     if config['feature_eng_extractor_type'] == "motif":
-        #TODO: Load training motifs and motif length to search for from source
-        X_train = extractor.extract_select_inference_features(data_valid,
+        X_inference = extractor.extract_select_inference_features(data_inference,
                                               [
-                                                  #X_train,
-                                                  #motif_len
-                                              ]#, True
+                                                  X_train,
+                                                  meta_data['motif_len']
+                                              ], False
         )
     if config['feature_eng_extractor_type'] == "tsfresh":
         pass  # TODO
@@ -151,8 +192,7 @@ def execute_inference(config):
 
     # 5. Inference
     print('--------------------INFERENCE PHASE----------------------')
-    #TODO: Load classifier found in training
-    #TODO: Inference
+    y_pred = clf.predict(X_inference)
 
     # 6. Store Results
     print('--------------------STORE RESULTS------------------------')

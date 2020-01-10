@@ -215,7 +215,7 @@ class SklearnModelFactory(ModelFactory):
                         'bootstrap': [True, False],
                         "criterion": ["gini", "entropy"],
                         'random_state': sp_randint(1, 10),
-                        'min_samples_split': sp_randint(2, 10)
+                        #'min_samples_split': sp_randint(2, 10)
                     },
                     search_params=[-1, 0, 10, 100, True, "rf_rs.pickle", 0.2]
                 )
