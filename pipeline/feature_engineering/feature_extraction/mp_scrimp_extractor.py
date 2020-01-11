@@ -154,7 +154,7 @@ class MPScrimpExtractor(Extractor):
         processes = []
         num_processors = length
         for i in range(num_processors):
-            p = mp.Process(target=self.__extract_select_inference_worker, args=(i, i, data, X_train, output, length))
+            p = mp.Process(target=self.__extract_select_inference_worker, args=(i, data, X_train, output, length))
             processes.append(p)
 
         [x.start() for x in processes]
