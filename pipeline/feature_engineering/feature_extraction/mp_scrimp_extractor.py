@@ -164,9 +164,9 @@ class MPScrimpExtractor(Extractor):
         motifs_valid_full = []
         motif_ids_valid_full = []
         for o in output:
-            motifs_valid_full += o[0]
-            motif_ids_valid_full += o[1]
-            distances_valid_full += o[2]
+            motifs_valid_full += output[o][0]
+            motif_ids_valid_full += output[o][1]
+            distances_valid_full += output[o][2]
 
         #print(list(data_valid['road_label'].values).count(1.0)
         #      / len(data_valid.values), flush=True)
