@@ -121,14 +121,14 @@ class MPScrimpExtractor(Extractor):
         motifs_valid = []
         motif_ids_valid = []
 
-        split_sz = int(len(X_train) / 32)
+        split_sz = int(len(X_train) / length)
         i = i * split_sz
 
-        motif = X_train[i:i + 32][0].values
-        motif_id = X_train[i:i + 32][1].values
+        motif = X_train[i:i + length][0].values
+        motif_id = X_train[i:i + length][1].values
 
-        for j in range(0, len(data['acceleration_abs']) - 32, 1):
-            window = data['acceleration_abs'][j:j + 32]
+        for j in range(0, len(data['acceleration_abs']) - length, 1):
+            window = data['acceleration_abs'][j:j + length]
             diff = motif - window
             if not True in numpy.isnan(diff):
                 distances_valid.append(numpy.sqrt(numpy.sum(numpy.square(diff))))
