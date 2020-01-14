@@ -128,8 +128,17 @@ class MPScrimpExtractor(Extractor):
         motif_id = X_train[i:i + length][1].values
 
         for j in range(0, len(data['acceleration_abs']) - length, 1):
-            window = data['acceleration_abs'][j:j + length]
-            diff = motif - window
+            window = data['acceleration_abs'][j:j + length].values
+            diff = None
+            try:
+                diff = motif - window
+            except ValueError:
+                print("Motif and windows len differ")
+                print(len(motif))
+                print(type(motif))
+                print(len(window))
+                print(type(window))
+
             if not True in numpy.isnan(diff):
                 distances_valid.append(numpy.sqrt(numpy.sum(numpy.square(diff))))
                 motifs_valid.append(j)
