@@ -148,7 +148,7 @@ class MPScrimpExtractor(Extractor):
                 distances_valid.append(numpy.sqrt(numpy.sum(numpy.square(diff))))
                 motifs_valid.append(j)
                 motif_ids_valid.append(motif_id[0])
-                
+
         print("Motif extraction worker no: {0} returned".format(i))
         output[i] = motifs_valid, motif_ids_valid, distances_valid
 
