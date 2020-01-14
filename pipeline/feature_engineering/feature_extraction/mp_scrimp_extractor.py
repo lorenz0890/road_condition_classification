@@ -138,6 +138,9 @@ class MPScrimpExtractor(Extractor):
                 print(type(motif))
                 print(len(window))
                 print(type(window))
+                
+            except Exception as e:
+                print(e)
 
             if not True in numpy.isnan(diff):
                 distances_valid.append(numpy.sqrt(numpy.sum(numpy.square(diff))))
