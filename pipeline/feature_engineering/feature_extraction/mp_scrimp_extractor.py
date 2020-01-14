@@ -127,6 +127,8 @@ class MPScrimpExtractor(Extractor):
         motif = X_train[i:i + length][0].values
         motif_id = X_train[i:i + length][1].values
 
+        print("Motif extraction worker no: {0} length: {1}".format(i, length))
+
         for j in range(0, len(data['acceleration_abs']) - length, 1):
             window = data['acceleration_abs'][j:j + length].values
             diff = None
@@ -146,7 +148,8 @@ class MPScrimpExtractor(Extractor):
                 distances_valid.append(numpy.sqrt(numpy.sum(numpy.square(diff))))
                 motifs_valid.append(j)
                 motif_ids_valid.append(motif_id[0])
-
+                
+        print("Motif extraction worker no: {0} returned".format(i))
         output[i] = motifs_valid, motif_ids_valid, distances_valid
 
     @overrides
