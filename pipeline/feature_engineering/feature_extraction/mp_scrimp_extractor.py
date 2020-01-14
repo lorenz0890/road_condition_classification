@@ -138,7 +138,7 @@ class MPScrimpExtractor(Extractor):
                 print(type(motif))
                 print(len(window))
                 print(type(window))
-                
+
             except Exception as e:
                 print(e)
 
