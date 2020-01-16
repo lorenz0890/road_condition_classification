@@ -159,6 +159,7 @@ def execute_training(config):
 
     #7. Run Validation
     print('--------------------VALIDATION---------------------------')
+    print(X_valid.shape)
     score = clf.score(X_valid, y_valid)
     print(score)
     y_pred = clf.predict(X_valid)
