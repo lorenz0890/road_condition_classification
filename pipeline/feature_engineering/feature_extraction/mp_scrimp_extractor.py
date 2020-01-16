@@ -167,13 +167,18 @@ class MPScrimpExtractor(Extractor):
         manager = mp.Manager()
         output = manager.dict()
         processes = []
-        num_processors = length
-        for i in range(num_processors):
-            p = mp.Process(target=self.__extract_select_inference_worker, args=(i, data, X_train, output, length))
-            processes.append(p)
+        num_tasks = int(len(X_train) / length)
+        task_id = 0
+        num_processors = 32
+        while task_id < num_tasks:
+            for i in range(num_processors):
+                if num_processors >=0:
+                    p = mp.Process(target=self.__extract_select_inference_worker, args=(task_id, data, X_train, output, length))
+                    processes.append(p)
+                    task_id += 1
 
-        [x.start() for x in processes]
-        [x.join() for x in processes]
+            [x.start() for x in processes]
+            [x.join() for x in processes]
 
         distances_valid_full = []
         motifs_valid_full = []
