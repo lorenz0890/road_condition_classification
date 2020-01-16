@@ -29,8 +29,8 @@
   "data_label_column_names": [
     "coarse_label", "fine_label", "road_label"
   ],
-  "pre_proc_validation_sz": 0.3,
-  "pre_proc_training_sz": 0.7,
+  "pre_proc_validation_sz": 0.1,
+  "pre_proc_training_sz": 0.9,
   "pre_proc_resample_freq": "1000ms",
   "pre_proc_movement_type_label": [5],
   "pre_proc_road_type_label": [1,3],
