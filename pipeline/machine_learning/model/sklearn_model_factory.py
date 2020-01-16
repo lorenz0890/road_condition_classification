@@ -147,7 +147,7 @@ class SklearnModelFactory(ModelFactory):
                         'probability': [True, False],
                         'random_state': sp_randint(1, 10),
                     },
-                    search_params=[-1, 0, 10, 25, True, "svc_rs.pickle", 0.2]
+                    search_params=[-1, 0, 10, 10, True, "svc_rs.pickle", 0.2]
                 )
                 print('------------------SVC-----------------')
                 print(model['clf'].best_params_)
