@@ -180,6 +180,8 @@ class MPScrimpExtractor(Extractor):
             [x.start() for x in processes]
             [x.join() for x in processes]
 
+        print('1')
+
         distances_valid_full = []
         motifs_valid_full = []
         motif_ids_valid_full = []
@@ -188,10 +190,7 @@ class MPScrimpExtractor(Extractor):
             motif_ids_valid_full += output[o][1]
             distances_valid_full += output[o][2]
 
-        #print(list(data_valid['road_label'].values).count(1.0)
-        #      / len(data_valid.values), flush=True)
-        #print(list(data_valid['road_label'].values).count(3.0)
-        #     / len(data_valid.values), flush=True)
+        print('2')
 
         dm = list(zip(distances_valid_full, motifs_valid_full))
         dm.sort()
@@ -201,6 +200,8 @@ class MPScrimpExtractor(Extractor):
         dmid.sort()
         mid_sorted = [m for d, m in dmid]
 
+        print('3')
+
         mtfs = [[], []]
         k = list(set(list(mid_sorted)))
         for i in range(int(len(m_sorted))):
@@ -209,8 +210,7 @@ class MPScrimpExtractor(Extractor):
             else:
                 mtfs[1].append(m_sorted[i])
 
-        # mtfs[1] = list(set(mtfs[1]))
-        # mtfs[0] = list(set(mtfs[0]))
+        print('4')
 
         X_valid = self.select_features(data=data,
                                                args=[length, 2, mtfs, 'acceleration_abs'])
