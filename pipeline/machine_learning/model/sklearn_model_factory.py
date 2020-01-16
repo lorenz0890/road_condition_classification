@@ -147,7 +147,7 @@ class SklearnModelFactory(ModelFactory):
                         'probability': [True, False],
                         'random_state': sp_randint(1, 10),
                     },
-                    search_params=[-1, 0, 10, 100, True, "svc_rs.pickle", 0.2]
+                    search_params=[-1, 0, 10, 25, True, "svc_rs.pickle", 0.2]
                 )
                 print('------------------SVC-----------------')
                 print(model['clf'].best_params_)
@@ -181,7 +181,7 @@ class SklearnModelFactory(ModelFactory):
                         'splitter': ['best', 'random'],
                         'min_samples_split': sp_randint(2, 10)
                     },
-                    search_params=[-1, 0, 10, 100, True, "dt_rs.pickle", 0.2]
+                    search_params=[-1, 0, 10, 25, True, "dt_rs.pickle", 0.2]
                 )
                 print('------------------CART-Tree-----------------')
                 print(model['clf'].best_params_)
@@ -216,7 +216,7 @@ class SklearnModelFactory(ModelFactory):
                         'random_state': sp_randint(1, 10),
                         'min_samples_split': sp_randint(2, 10)
                     },
-                    search_params=[-1, 0, 10, 100, True, "rf_rs.pickle", 0.2]
+                    search_params=[-1, 0, 10, 25, True, "rf_rs.pickle", 0.2]
                 )
                 print('------------------Random Forrest----------------')
                 print(model['clf'].best_params_)
@@ -271,7 +271,7 @@ class SklearnModelFactory(ModelFactory):
                         'shuffle': [True, False],
                         'early_stopping': [True, False],
                     },
-                    search_params=[-1, 0, 10, 25, True, "mlp_rs.pickle", 0.2]
+                    search_params=[-1, 0, 10, 10, True, "mlp_rs.pickle", 0.2]
                 )
                 print(model['clf'].best_params_)
                 X_test, y_test = model['X_test'], model['y_test']
