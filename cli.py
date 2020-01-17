@@ -169,13 +169,16 @@ def execute_training(config):
     #8. Store Results
     print('--------------------STORE RESULTS------------------------')
     #TODO: delegate to DAO, make storing configureable
-    with open('./X_train', 'wb') as X_train_file:
-        pickle.dump(X_train, X_train_file)
+    #with open('./X_train', 'wb') as X_train_file:
+    #    pickle.dump(X_train, X_train_file)
 
-    with open('./X_valid', 'wb') as X_valid_file:
-        pickle.dump(X_valid, X_valid_file)
-    with open('./y_valid', 'wb') as y_valid_file:
-        pickle.dump(y_valid, y_valid_file)
+    X_train.to_pickle('X_train.pkl')
+    X_valid.to_pickle('X_valid.pkl')
+
+    #with open('./X_valid', 'wb') as X_valid_file:
+    #    pickle.dump(X_valid, X_valid_file)
+    #with open('./y_valid', 'wb') as y_valid_file:
+    #    pickle.dump(y_valid, y_valid_file)
 
     with open('./clf', 'wb') as clf_file:
         pickle.dump(clf, clf_file)
