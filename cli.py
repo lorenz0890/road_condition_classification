@@ -221,13 +221,15 @@ def execute_inference(config):
 
     # 3. Preprocessing
     print('--------------------PRE PROCESSING--------------------')
-    #TODO Use std, mean from training phase
+    params = []
+    params += config['data_set_column_names'][1:] + [config['pre_proc_movement_type_label']]
+    params.append(config['pre_proc_resample_freq'])
+    params.append(meta_data['mean_train'])
+    params.append(meta_data['std_train'])
+
     data_inference = preprocessor.inference_split_process(
         data=data.head(10000),
-        params=[
-                config['data_set_column_names'], config['pre_proc_movement_type_label'],
-                config['pre_proc_resample_freq'], meta_data['mean_train'], meta_data['std_train']
-                ]
+        params=params
     )
 
     # 4. Feature extraction
