@@ -501,6 +501,7 @@ class SussexHuaweiPreprocessor(Preprocessor):
         data = self.convert_unix_to_datetime(data, column='time', unit='ms')
         data = self.remove_nans(data, replacement_mode='del_row')
 
+        print(data)
         print('Resample')
         data = self.resample_quantitative_data(data,
                                         freq=freq)  # 8000 1.25 Hz

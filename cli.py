@@ -228,7 +228,7 @@ def execute_inference(config):
     params.append(meta_data['std_train'])
 
     data_inference = preprocessor.inference_split_process(
-        data=data.head(10000),
+        data=data,
         params=params
     )
 
