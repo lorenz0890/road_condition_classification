@@ -502,7 +502,6 @@ class SussexHuaweiPreprocessor(Preprocessor):
         data = self.remove_nans(data, replacement_mode='del_row')
 
         data.set_index(data['time'], drop=True, inplace=True)
-        print(data.index)
         print('Resample')
         data = self.resample_quantitative_data(data,
                                         freq=freq)  # 8000 1.25 Hz

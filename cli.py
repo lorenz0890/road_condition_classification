@@ -253,7 +253,7 @@ def execute_inference(config):
 
     # 6. Store Results
     print('--------------------STORE RESULTS------------------------')
-    # TODO Store best classifier, extracted features during training, preprocessing std, mean
+    y_pred.to_pickle('y_pred.pkl')
 
 def load_config(config_path):
     config = None
