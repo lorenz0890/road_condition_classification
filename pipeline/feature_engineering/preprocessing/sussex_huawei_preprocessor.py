@@ -521,7 +521,7 @@ class SussexHuaweiPreprocessor(Preprocessor):
         data = self.remove_outliers_from_quantitative_data(
             data,
             replacement_mode='quantile',
-            columns=selected_columns[:-1],
+            columns=selected_columns,
             quantile=0.99  # current run @0.95 for classical approach via TS Fresh
         )[:-1]
 
