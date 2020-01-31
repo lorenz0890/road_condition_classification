@@ -198,7 +198,7 @@ class MPScrimpExtractor(Extractor):
         """
 
         try:
-            
+
             X_train = args[0]
             length = args[1]
 
