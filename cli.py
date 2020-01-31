@@ -223,9 +223,9 @@ def execute_inference(config):
     print('--------------------PRE PROCESSING--------------------')
     #TODO Use std, mean from training phase
     data_inference = preprocessor.inference_split_process(
-        data=data,
+        data=data.head(10000),
         params=[
-                config['data_set_column_names'][1:], config['pre_proc_movement_type_label'],
+                config['data_set_column_names'], config['pre_proc_movement_type_label'],
                 config['pre_proc_resample_freq'], meta_data['mean_train'], meta_data['std_train']
                 ]
     )
