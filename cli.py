@@ -222,7 +222,7 @@ def execute_inference(config):
     # 3. Preprocessing
     print('--------------------PRE PROCESSING--------------------')
     params = []
-    params += config['data_set_column_names'][1:] + [config['pre_proc_movement_type_label']]
+    params += config['data_set_column_names'][1:]
     params.append(config['pre_proc_resample_freq'])
     params.append(meta_data['mean_train'])
     params.append(meta_data['std_train'])
