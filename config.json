@@ -39,16 +39,76 @@
   "classifier_model_factory_type": "sklearn",
   "classifier_optimal_search_space": ["sklearn_cart", "sklearn_rf", "sklearn_svc"],
   "classifier_hypermaram_space_sklearn_mlp": [
-    "TODO: ADD HYPER PARAM SEARCH SPACE"
+    {
+      "test_set_sz": 0.2,
+      "verbose": 0,
+      "cross_validation_k": 10,
+      "iterations": 100,
+      "save_classifier": true,
+      "save_classifier_file_name": "mlp_rs.pickle",
+      "solver" : ["adam", "lbfgs", "sgd"],
+      "max_iter" : [1, 250],
+      "alpha_exponent" : 10,
+      "architectures": [
+        [128, 128], [64, 64]
+      ],
+      "activation_function": ["logistic", "relu", "tanh"],
+      "learning_rate": ["constant", "invscaling", "adaptive"],
+      "learning_rate_init_exponent" : 10,
+      "batch_size" : [1, 10],
+      "shuffle" : [true, false],
+      "early_stopping" :  [true, false],
+      "random_state": [1, 10]
+    }
   ],
   "classifier_hypermaram_space_sklearn_svc": [
-    "TODO: ADD HYPER PARAM SEARCH SPACE"
+    {
+      "test_set_sz" : 0.2,
+      "verbose" : 0,
+      "cross_validation_k" : 10,
+      "iterations" : 100,
+      "save_classifier" : true,
+      "save_classifier_file_name" : "svc_rs.pickle",
+      "kernel" : ["rbf", "linear", "poly"],
+      "degree" : [2, 10],
+      "gamma_exponent" : 10,
+      "C" : [2, 5000],
+      "max_iter" : [2, 5000],
+      "shrinking" : [true, false],
+      "probability" : [true, false],
+      "random_state" : [1,10]
+    }
   ],
   "classifier_hypermaram_space_sklearn_rf": [
-    "TODO: ADD HYPER PARAM SEARCH SPACE"
+    {
+      "test_set_sz" : 0.2,
+      "verbose" : 0,
+      "cross_validation_k" : 10,
+      "iterations" : 250,
+      "save_classifier" : true,
+      "save_classifier_file_name" : "rf_rs.pickle",
+      "n_estimators" : [1, 100],
+      "max_depth" : [1, 128],
+      "min_samples_split" : [2, 10],
+      "bootstrap": [true, false],
+      "criterion": ["gini", "entropy"],
+      "random_state" : [1,10]
+    }
   ],
   "classifier_hypermaram_space_sklearn_cart": [
-    "TODO: ADD HYPER PARAM SEARCH SPACE"
+    {
+      "test_set_sz" : 0.2,
+      "verbose" : 0,
+      "cross_validation_k" : 10,
+      "iterations" : 250,
+      "save_classifier" : true,
+      "save_classifier_file_name" : "dt_rs.pickle",
+      "max_depth" : [1,128],
+      "random_state": [1, 10],
+      "criterion": ["gini", "entropy"],
+      "splitter": ["best", "random"],
+      "min_samples_split": [2,10]
+    }
   ],
   "classifier_hypermaram_space_tslearn_knn": [
     "TODO: ADD HYPER PARAM SEARCH SPACE"

@@ -143,9 +143,10 @@ def execute_training(config):
     print('--------------------TRAINING PHASE----------------------')
     clf, score, conf, X_train, motif_len, motif_count = model_factory.find_optimal_model(
         'motif',
+        config,
         X_train,
-        config['classifier_optimal_search_space'],
-        config['hw_num_processors']
+        #config['classifier_optimal_search_space'],
+        #config['hw_num_processors']
 )
     if  clf is None or score is None or conf is None:
         pass#TODO Raise Error
@@ -249,7 +250,7 @@ def execute_inference(config):
     # 6. Store Results
     print('--------------------STORE RESULTS------------------------')
     print(y_pred)
-    y_pred.to_pickle('y_pred.pkl')
+    pandas.DataFrame(y_pred).to_pickle('y_pred.pkl')
 
 def load_config(config_path):
     config = None
