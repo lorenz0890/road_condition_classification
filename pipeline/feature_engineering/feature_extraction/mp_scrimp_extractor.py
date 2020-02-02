@@ -173,6 +173,7 @@ class MPScrimpExtractor(Extractor):
                     print(type(window))
 
                 except Exception as e:
+                    self.logger.error(traceback.format_exc())
                     print(e)
 
                 if not True in numpy.isnan(diff):
@@ -187,7 +188,7 @@ class MPScrimpExtractor(Extractor):
         except Exception:
             self.logger.error(traceback.format_exc())
             gc.collect()
-            #os._exit(2) Single works should crash the program
+            #os._exit(2) Single workers should not crash the program
 
     @overrides
     def extract_select_inference_features(self, data, args=None, debug=False):
@@ -207,12 +208,13 @@ class MPScrimpExtractor(Extractor):
             output = manager.dict()
             num_tasks = int(len(X_train) / length)
             task_id = 0
-            num_processors = 32
+            num_processors = args[2]
             while task_id < num_tasks:
                 processes = []
                 for i in range(num_processors):
                     if num_processors >=0:
-                        p = mp.Process(target=self.__extract_select_inference_worker, args=(task_id, data, X_train, output, length))
+                        p = mp.Process(target=self.__extract_select_inference_worker, args=(task_id, data, X_train,
+                                                                                            output, length))
                         processes.append(p)
                         task_id += 1
 

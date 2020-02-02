@@ -17,6 +17,7 @@ from pipeline.machine_learning.model.sklearn_model_factory import SklearnModelFa
 from pipeline.machine_learning.model.tslearn_model_factory import TslearnModelFactory
 from sklearn.metrics import confusion_matrix
 import pickle
+import pandas
 
 
 @click.command()
@@ -106,14 +107,13 @@ def execute_training(config):
 
         X_train = extractor.extract_select_training_features(
             data_train,
-            args = ['id', 32, None, y_train['road_label'], 0.1]
+            args = ['id', config['hw_num_processors'], None, y_train['road_label'], 0.1]
 
         )
 
         keys = X_train.keys()
         keys = list(filter(lambda x: "acceleration_abs" in x, keys))
 
-        import pandas
         X_join = pandas.concat([X_train, y_train], axis=1)
         X_join = preprocessor.remove_nans(X_join, replacement_mode='del_row')
         X_join[['road_label']] = X_join[['road_label']].astype('int')
@@ -144,7 +144,8 @@ def execute_training(config):
     clf, score, conf, X_train, motif_len, motif_count = model_factory.find_optimal_model(
         'motif',
         X_train,
-        config['classifier_optimal_search_space']
+        config['classifier_optimal_search_space'],
+        config['hw_num_processors']
 )
     if  clf is None or score is None or conf is None:
         pass#TODO Raise Error
@@ -154,7 +155,7 @@ def execute_training(config):
     X_valid, y_valid = None, None
     if config['feature_eng_extractor_type'] == "motif":
         X_valid, y_valid = extractor.extract_select_inference_features(
-            data_valid, [X_train, motif_len], True
+            data_valid, [X_train, motif_len, config['hw_num_processors']], True
         )
 
     #7. Run Validation
@@ -169,16 +170,9 @@ def execute_training(config):
     #8. Store Results
     print('--------------------STORE RESULTS------------------------')
     #TODO: delegate to DAO, make storing configureable
-    #with open('./X_train', 'wb') as X_train_file:
-    #    pickle.dump(X_train, X_train_file)
 
     X_train.to_pickle('X_train.pkl')
     X_valid.to_pickle('X_valid.pkl')
-
-    #with open('./X_valid', 'wb') as X_valid_file:
-    #    pickle.dump(X_valid, X_valid_file)
-    #with open('./y_valid', 'wb') as y_valid_file:
-    #    pickle.dump(y_valid, y_valid_file)
 
     with open('./clf', 'wb') as clf_file:
         pickle.dump(clf, clf_file)
@@ -239,7 +233,8 @@ def execute_inference(config):
         X_inference = extractor.extract_select_inference_features(data_inference,
                                               [
                                                   X_train,
-                                                  meta_data['motif_len']
+                                                  meta_data['motif_len'],
+                                                  config['hw_num_processors']
                                               ], False
         )
     if config['feature_eng_extractor_type'] == "tsfresh":
