@@ -98,12 +98,12 @@ class SussexHuaweiDAO(DAO):
 
                 all_labels.append(labels)
 
-            if len(all_labels) > 1 and  len(all_data) > 1:
+            if len(all_labels) > 1 and len(all_data) > 1:
                 labels = pandas.concat(all_labels, axis=0)
                 data = pandas.concat(all_data, axis=0)
                 return labels, data
             else:
-                return all_labels[0], all_data[0]
+                return all_labels, all_data
 
         except (ValueError, TypeError):
             self.logger.error(traceback.format_exc())
