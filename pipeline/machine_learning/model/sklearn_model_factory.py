@@ -230,7 +230,7 @@ class SklearnModelFactory(ModelFactory):
                         'n_estimators': sp_randint(config['classifier_hypermaram_space_sklearn_rf']['n_estimators'][0],
                                                    config['classifier_hypermaram_space_sklearn_rf']['n_estimators'][1]),
                         'max_depth': sp_randint(config['classifier_hypermaram_space_sklearn_rf']['max_depth'][0],
-                                                config['classifier_hypermaram_space_sklearn_rf']['max_depth'][128]),
+                                                config['classifier_hypermaram_space_sklearn_rf']['max_depth'][1]),
                         'bootstrap': config['classifier_hypermaram_space_sklearn_rf']['bootstrap'],
                         'criterion': config['classifier_hypermaram_space_sklearn_rf']['criterion'],
                         'random_state': sp_randint(config['classifier_hypermaram_space_sklearn_rf']['random_state'][0],
