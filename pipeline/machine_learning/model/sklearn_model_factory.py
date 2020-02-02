@@ -274,7 +274,7 @@ class SklearnModelFactory(ModelFactory):
                     X=X_train,
                     y=y_train,
                     model_params={
-                        'solver': config['classifier_hypermaram_space_sklearn_mlp']['verbose'],
+                        'solver': config['classifier_hypermaram_space_sklearn_mlp']['solver'],
                         'max_iter': sp_randint(config['classifier_hypermaram_space_sklearn_mlp']['max_iter'][0],
                                                config['classifier_hypermaram_space_sklearn_mlp']['max_iter'][1]),
                         'alpha': numpy.concatenate((10.0 ** -numpy.arange(0, config['classifier_hypermaram_space_sklearn_mlp']['alpha_exponent']),
