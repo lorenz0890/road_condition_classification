@@ -253,6 +253,7 @@ def execute_inference(config):
 
     # 6. Store Results
     print('--------------------STORE RESULTS------------------------')
+    print(y_pred)
     y_pred.to_pickle('y_pred.pkl')
 
 def load_config(config_path):

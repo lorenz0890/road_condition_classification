@@ -2,7 +2,8 @@ from pipeline.feature_engineering.feature_extraction.abstract_extractor import E
 from overrides import overrides
 from matrixprofile import *
 from IPython.display import clear_output
-from multiprocessing import Pool
+#from multiprocessing import Pool
+#import pathos.multiprocessing
 import gc
 import traceback
 import os
