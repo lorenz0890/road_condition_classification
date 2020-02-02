@@ -124,12 +124,12 @@
       "alpha_exponent": 10,
       "architectures": [
         [
-          128,
-          128
+          32,
+          32
         ],
         [
-          64,
-          64
+          16,
+          16
         ]
       ],
       "activation_function": [
