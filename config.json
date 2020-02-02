@@ -101,8 +101,7 @@
   "classifier_optimal_search_space": [
     "sklearn_cart",
     "sklearn_rf",
-    "sklearn_svc",
-    "sklearn_mlp"
+    "sklearn_svc"
   ],
   "classifier_hypermaram_space_sklearn_mlp":
     {
