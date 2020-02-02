@@ -76,7 +76,7 @@
     1,
     3
   ],
-  "feature_eng_extractor_type": "motif",
+  "feature_eng_extractor_type": "tsfresh",
   "feature_eng_mp_extractor_radii": [
     10,
     100,
