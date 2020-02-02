@@ -103,6 +103,7 @@ class SussexHuaweiDAO(DAO):
                 data = pandas.concat(all_data, axis=0)
                 return labels, data
             else:
+                print(all_labels)
                 return all_labels, all_data
 
         except (ValueError, TypeError):
