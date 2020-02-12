@@ -2,21 +2,9 @@
   "hw_num_processors": 32,
   "data_set_type": "sussex_huawei",
   "data_set_trips": [
-    "010317",
-    "010617",
-    "020317",
-    "020517",
-    "020617",
-    "030317",
-    "030517",
-    "030617",
-    "030717",
-    "040517",
-    "040717",
-    "050617",
-    "050717",
-    "060317",
-    "060617"
+    "040517", "040717", "050617", "050717", "060317", "060617",
+    "070317", "070617", "080317", "080517", "080617", "090317",
+    "090617", "100317", "100517", "110517", "120517", "120617"
   ],
   "data_set_path": "./data_sets/sussex_huawei/User1/{}/Hips_Motion.txt",
   "data_labels_path": "./data_sets/sussex_huawei/User1/{}/Label.txt",
@@ -84,7 +72,7 @@
       "test_set_sz": 0.2,
       "verbose": 0,
       "cross_validation_k": 10,
-      "iterations": 50,
+      "iterations": 20,
       "save_classifier": true,
       "save_classifier_file_name": "mlp_rs.pickle",
       "solver": [
@@ -139,7 +127,7 @@
     "test_set_sz": 0.2,
     "verbose": 0,
     "cross_validation_k": 10,
-    "iterations": 50,
+    "iterations": 20,
     "save_classifier": true,
     "save_classifier_file_name": "svc_rs.pickle",
     "kernel": [
@@ -177,7 +165,7 @@
     "test_set_sz": 0.2,
     "verbose": 0,
     "cross_validation_k": 10,
-    "iterations": 50,
+    "iterations": 20,
     "save_classifier": true,
     "save_classifier_file_name": "rf_rs.pickle",
     "n_estimators": [
@@ -209,7 +197,7 @@
     "test_set_sz": 0.2,
     "verbose": 0,
     "cross_validation_k": 10,
-    "iterations": 50,
+    "iterations": 20,
     "save_classifier": true,
     "save_classifier_file_name": "dt_rs.pickle",
     "max_depth": [

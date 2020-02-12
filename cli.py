@@ -16,6 +16,7 @@ from pipeline.feature_engineering.feature_extraction.mp_scrimp_extractor import 
 from pipeline.machine_learning.model.sklearn_model_factory import SklearnModelFactory
 from pipeline.machine_learning.model.tslearn_model_factory import TslearnModelFactory
 from sklearn.metrics import confusion_matrix
+from sklearn.metrics import classification_report
 import pickle
 import pandas
 
@@ -142,7 +143,7 @@ def execute_training(config):
     # 5. Find optimal classifier for given training set
     print('--------------------TRAINING PHASE----------------------')
     clf, score, conf, X_train, motif_len, motif_count = model_factory.find_optimal_model(
-        'motif',
+        'motif', #TODO remove bc deprecated. X_train no decides mode.
         config,
         X_train,
         #config['classifier_optimal_search_space'],
@@ -166,7 +167,10 @@ def execute_training(config):
     print(score)
     y_pred = clf.predict(X_valid)
     conf = confusion_matrix(y_valid, y_pred, labels=None, sample_weight=None)
+    report = str(classification_report(y_valid, clf.predict(y_pred)))
+    best_params = clf.best_params_
     print(conf)
+    print(report)
 
     #8. Store Results
     print('--------------------STORE RESULTS------------------------')
@@ -184,7 +188,9 @@ def execute_training(config):
         'motif_len': motif_len,
         'motif_count':motif_count,
         'clf_score': score,
-        'clf_conf': conf
+        'clf_conf': conf,
+        'clf_report' : report,
+        'clf_best_params' : best_params
     }
     with open('./meta_data', 'wb') as meta_file:
         pickle.dump(meta_data, meta_file)
