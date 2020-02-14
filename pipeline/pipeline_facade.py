@@ -66,7 +66,7 @@ class ConcretePipelineFacade(PipelineFacade):
                                                                   encoding_function=lambda x: (x > 2.0).astype(int)
                                                                   )  # 0 City, 1 Countryside
             y_train = data[['road_label']].reset_index(drop=True)
-            data['id'] = range(1, len(data) + 1)
+            data['id'] = range(1, len(data) + 1) #what happens if i just set this to 1
             y_train['id'] = data['id']
             y_train['road_label'].index = list(y_train['id'])
 
