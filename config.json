@@ -132,7 +132,6 @@
     "save_classifier_file_name": "svc_rs.pickle",
     "kernel": [
       "rbf",
-      "linear",
       "poly"
     ],
     "degree": [
