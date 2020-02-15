@@ -151,6 +151,7 @@ class ConcretePipelineFacade(PipelineFacade):
             'mean_train': mean_train,
             'std_train': std_train,
             'motif_len': motif_len,
+            'motif_radius' : motif_radius,
             'motif_count': motif_count,
             'clf_score': score,
             'clf_conf': conf,
@@ -211,6 +212,7 @@ class ConcretePipelineFacade(PipelineFacade):
                                                                       [
                                                                           X_train,
                                                                           meta_data['motif_len'],
+                                                                          meta_data['motif_radius'],
                                                                           config['hw_num_processors']
                                                                       ], False
                                                                       )
