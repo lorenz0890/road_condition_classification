@@ -243,16 +243,19 @@ class MPScrimpExtractor(Extractor):
 
             print('3')
 
-            mtfs = [[], []]
             k = list(set(list(mid_sorted)))
+            mtfs = []
+            for i in range(len(k)):
+                mtfs.append([])
             for i in range(int(len(m_sorted))):
                 if int(mid_sorted[i]) == int(k[0]):
                     mtfs[0].append(m_sorted[i])
                 else:
                     mtfs[1].append(m_sorted[i])
 
-            mtfs[0] = [mtfs[0][0]]
-            mtfs[1] = [mtfs[1][0]]
+            for i in range(len(k)):
+                mtfs[i] = [mtfs[i][0]]
+
             print('4')
 
             X_valid = self.select_features(data=data,
