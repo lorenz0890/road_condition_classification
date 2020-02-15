@@ -204,9 +204,9 @@ class MPScrimpExtractor(Extractor):
 
         try:
 
-            X_train = args[0]
+            #X_train = args[0]
             length = args[1]
-
+            '''
             manager = mp.Manager()
             output = manager.dict()
             num_tasks = int(len(X_train) / length)
@@ -267,16 +267,19 @@ class MPScrimpExtractor(Extractor):
                 mtfs[i] = [mtfs[i][0]]
 
             print('4')
+            '''
+            motifs, motif_d = self.extract_features(data.values(), length)
+            X = self.select_features(data=data,
+                                     args=[length, 1, motifs, 'acceleration_abs'])
+            #X_valid = self.select_features(data=data,
+                                                   #args=[length, 2, mtfs, 'acceleration_abs'])
 
-            X_valid = self.select_features(data=data,
-                                                   args=[length, 2, mtfs, 'acceleration_abs'])
 
+            #if debug:
+            #    y_valid = self.select_features(data=data,
+                                                      # args=[length, 1, mtfs, 'road_label'])
 
-            if debug:
-                y_valid = self.select_features(data=data,
-                                                       args=[length, 1, mtfs, 'road_label'])
-
-                return X_valid, y_valid
+            #    return X_valid, y_valid
 
             return X_valid
 
