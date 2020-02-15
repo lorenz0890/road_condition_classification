@@ -99,7 +99,7 @@ class MPScrimpExtractor(Extractor):
             while task_id < num_tasks:
                 processes = []
                 for i in range(num_processors):
-                    if num_processors >= 0:#TODO: Consider removal
+                    if num_processors >= 0 and i < num_tasks:#TODO: Consider removal of first condition
                         p = mp.Process(target=self.__extract_select_training_worker, args=(task_id, data, output, radii, lengths))
                         processes.append(p)
                     task_id+=1
@@ -215,7 +215,7 @@ class MPScrimpExtractor(Extractor):
             while task_id < num_tasks:
                 processes = []
                 for i in range(num_processors):
-                    if num_processors >=0 and task_id < num_processors: #TODO: Consider removal of first confition
+                    if num_processors >=0 and i < num_tasks: #TODO: Consider removal of first confition
                         split_sz = int(len(X_train) / length)
                         i = i * split_sz
                         motif = X_train[i:i + length][0].values
