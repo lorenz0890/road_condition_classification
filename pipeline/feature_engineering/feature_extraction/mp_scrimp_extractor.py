@@ -261,7 +261,7 @@ class MPScrimpExtractor(Extractor):
                 else:
                     mtfs[1].append(m_sorted[i])
 
-            for i in range(len(k)):
+            for i in range(2): #2 is number of labels, make this configureable
                 import pdb; pdb.set_trace()
                 mtfs[i] = [mtfs[i][0]]
 
