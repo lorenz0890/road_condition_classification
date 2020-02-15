@@ -219,7 +219,7 @@ class MPScrimpExtractor(Extractor):
                 [x.start() for x in processes]
                 [x.join() for x in processes]
 
-            #print('1')
+            print('1')
 
             distances_valid_full = []
             motifs_valid_full = []
@@ -229,7 +229,7 @@ class MPScrimpExtractor(Extractor):
                 motif_ids_valid_full += output[o][1]
                 distances_valid_full += output[o][2]
 
-            #print('2')
+            print('2')
 
             dm = list(zip(distances_valid_full, motifs_valid_full))
             dm.sort()
@@ -239,7 +239,7 @@ class MPScrimpExtractor(Extractor):
             dmid.sort()
             mid_sorted = [m for d, m in dmid]
 
-            #print('3')
+            print('3')
 
             mtfs = [[], []]
             k = list(set(list(mid_sorted)))
@@ -249,7 +249,7 @@ class MPScrimpExtractor(Extractor):
                 else:
                     mtfs[1].append(m_sorted[i])
 
-            #print('4')
+            print('4')
 
             X_valid = self.select_features(data=data,
                                                    args=[length, 2, mtfs, 'acceleration_abs'])
