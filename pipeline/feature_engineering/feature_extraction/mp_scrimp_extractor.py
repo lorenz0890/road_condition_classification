@@ -52,6 +52,8 @@ class MPScrimpExtractor(Extractor):
             # print(mtfs)
             count = 0
             i = 1.0
+            print(len(mtfs))
+            print(sz)
             for motif in mtfs:
                 for index in motif:  # ['acceleration_abs', 'road_label']
                     elem = numpy.array(data[args[3]].values[index:index + args[0]])
