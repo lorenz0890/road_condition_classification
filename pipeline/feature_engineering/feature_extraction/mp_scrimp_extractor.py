@@ -269,7 +269,7 @@ class MPScrimpExtractor(Extractor):
             print('4')
             '''
             motifs, motif_d = self.extract_features(data.values(), length)
-            X = self.select_features(data=data,
+            X_valid = self.select_features(data=data,
                                      args=[length, 1, motifs, 'acceleration_abs'])
             #X_valid = self.select_features(data=data,
                                                    #args=[length, 2, mtfs, 'acceleration_abs'])
