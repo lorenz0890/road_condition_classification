@@ -251,9 +251,7 @@ class MPScrimpExtractor(Extractor):
             print('3')
 
             k = list(set(list(mid_sorted)))
-            mtfs = []
-            for i in range(len(k)):
-                mtfs.append([])
+            mtfs = [[], []]
 
             for i in range(int(len(m_sorted))):
                 if int(mid_sorted[i]) == int(k[0]):
@@ -261,9 +259,8 @@ class MPScrimpExtractor(Extractor):
                 else:
                     mtfs[1].append(m_sorted[i])
 
-            for i in range(2): #2 is number of labels, make this configureable
-                import pdb; pdb.set_trace()
-                mtfs[i] = [mtfs[i][0]]
+            mtfs[0] = [mtfs[0][0]]
+            mtfs[1] = [mtfs[1][0]]
 
             print('4')
 
