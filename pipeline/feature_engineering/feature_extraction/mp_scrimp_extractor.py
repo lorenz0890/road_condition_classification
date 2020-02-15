@@ -142,21 +142,15 @@ class MPScrimpExtractor(Extractor):
         except Exception:
             self.logger.error(traceback.format_exc())
             gc.collect()
-            #os._exit(2) Single works should crash the program
+            #os._exit(2) Single workers should not crash the program
 
 
-    def __extract_select_inference_worker(self, i, data, X_train, output, length):
+    def __extract_select_inference_worker(self, i, data, motif, motif_id, output, length):
         try:
 
             distances_valid = []
             motifs_valid = []
             motif_ids_valid = []
-
-            split_sz = int(len(X_train) / length)
-            i = i * split_sz
-
-            motif = X_train[i:i + length][0].values
-            motif_id = X_train[i:i + length][1].values
 
             print("Motif extraction worker no: {0} length: {1}".format(i, length))
 
@@ -213,7 +207,11 @@ class MPScrimpExtractor(Extractor):
                 processes = []
                 for i in range(num_processors):
                     if num_processors >=0:
-                        p = mp.Process(target=self.__extract_select_inference_worker, args=(task_id, data, X_train,
+                        split_sz = int(len(X_train) / length)
+                        i = i * split_sz
+                        motif = X_train[i:i + length][0].values  # TODO: More efficient to preselct and only hand one to worker
+                        motif_id = X_train[i:i + length][1].values
+                        p = mp.Process(target=self.__extract_select_inference_worker, args=(task_id, data, motif, motif_id,
                                                                                             output, length))
                         processes.append(p)
                         task_id += 1
