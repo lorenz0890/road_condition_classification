@@ -279,7 +279,7 @@ class MPScrimpExtractor(Extractor):
                 y_valid = self.select_features(data=data,
                                                        args=[length, 1, motifs, 'road_label'])
 
-            #    return X_valid, y_valid
+                return X_valid, y_valid
 
             return X_valid
 
