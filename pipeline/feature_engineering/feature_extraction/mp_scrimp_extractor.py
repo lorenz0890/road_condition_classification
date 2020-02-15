@@ -211,7 +211,7 @@ class MPScrimpExtractor(Extractor):
                     if num_processors >=0:
                         split_sz = int(len(X_train) / length)
                         i = i * split_sz
-                        motif = X_train[i:i + length][0].values  # TODO: More efficient to preselct and only hand one to worker
+                        motif = X_train[i:i + length][0].values
                         motif_id = X_train[i:i + length][1].values
                         p = mp.Process(target=self.__extract_select_inference_worker, args=(task_id, data, motif, motif_id,
                                                                                             output, length))
@@ -251,6 +251,8 @@ class MPScrimpExtractor(Extractor):
                 else:
                     mtfs[1].append(m_sorted[i])
 
+            mtfs[0] = [mtfs[0][0]]
+            mtfs[1] = [mtfs[1][0]]
             print('4')
 
             X_valid = self.select_features(data=data,
