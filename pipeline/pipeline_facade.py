@@ -107,7 +107,7 @@ class ConcretePipelineFacade(PipelineFacade):
 
         # 5. Find optimal classifier for given training set
         print('--------------------TRAINING PHASE----------------------')
-        clf, score, conf, X_train, motif_len, motif_count = model_factory.find_optimal_model(
+        clf, score, conf, X_train, motif_len, motif_radius, motif_count = model_factory.find_optimal_model(
             'motif',  # TODO remove bc deprecated. X_train no decides mode.
             config,
             X_train,
@@ -122,7 +122,7 @@ class ConcretePipelineFacade(PipelineFacade):
         X_valid, y_valid = None, None
         if config['feature_eng_extractor_type'] == "motif":
             X_valid, y_valid = extractor.extract_select_inference_features(
-                data_valid, [X_train, motif_len, config['hw_num_processors']], True
+                data_valid, [X_train, motif_len, motif_radius, config['hw_num_processors']], True
             )
 
         # 7. Run Validation

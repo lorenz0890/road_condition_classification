@@ -206,6 +206,7 @@ class MPScrimpExtractor(Extractor):
 
             #X_train = args[0]
             length = args[1]
+            radius=args[2]
             '''
             manager = mp.Manager()
             output = manager.dict()
@@ -268,7 +269,12 @@ class MPScrimpExtractor(Extractor):
 
             print('4')
             '''
-            motifs, motif_d = self.extract_features(data, length)
+            #X_indices = self.extract_features(data=data,
+            #                                  args=[combis[i][1], 2, combis[i][0], 'acceleration_abs'])
+            #X = self.select_features(data=data,
+            #                         args=[combis[i][1], 2, X_indices, 'acceleration_abs'])
+
+            motifs, self.extract_features(data=data, args=[length,2,radius,'acceleration_abs'])
             #X_valid = self.select_features(data=data,
             #                         args=[length, 1, motifs, 'acceleration_abs'])
             X_valid = self.select_features(data=data,
