@@ -132,7 +132,7 @@ class ConcretePipelineFacade(PipelineFacade):
         print(score)
         y_pred = clf.predict(X_valid)
         conf = confusion_matrix(y_valid, y_pred, labels=None, sample_weight=None)
-        report = str(classification_report(y_valid, clf.predict(y_pred)))
+        report = str(classification_report(y_valid, clf.predict(X_valid)))
         best_params = clf.best_params_
         print(conf)
         print(report)
