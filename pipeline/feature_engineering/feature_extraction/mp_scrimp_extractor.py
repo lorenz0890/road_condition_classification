@@ -90,16 +90,23 @@ class MPScrimpExtractor(Extractor):
 
             manager = mp.Manager()
             output = manager.dict()
-            processes = []
+
             radii = args[0] #[8, 12, 16, 20, 24, 32]  # 6 TODO: if args is None use these values
             lengths = args[1] #[6, 12, 18, 24, 32]  # 5
-            num_processors = len(radii)*len(lengths)
-            for i in range(num_processors):
-                p = mp.Process(target=self.__extract_select_training_worker, args=(i, data, output, radii, lengths))
-                processes.append(p)
+            num_tasks = len(radii)*len(lengths)
+            task_id = 0
+            num_processors = 32# args[2]
+            while task_id < num_tasks:
+                processes = []
+                for i in range(num_processors):
+                    if num_processors >= 0:#TODO: Consider removal
+                        p = mp.Process(target=self.__extract_select_training_worker, args=(task_id, data, output, radii, lengths))
+                        processes.append(p)
+                    task_id+=1
 
-            [x.start() for x in processes]
-            [x.join() for x in processes]
+                [x.start() for x in processes]
+                [x.join() for x in processes]
+
 
             result_list = []
             result_list.append(output.keys())
@@ -208,7 +215,7 @@ class MPScrimpExtractor(Extractor):
             while task_id < num_tasks:
                 processes = []
                 for i in range(num_processors):
-                    if num_processors >=0:
+                    if num_processors >=0: #TODO: Consider removal
                         split_sz = int(len(X_train) / length)
                         i = i * split_sz
                         motif = X_train[i:i + length][0].values
@@ -216,7 +223,7 @@ class MPScrimpExtractor(Extractor):
                         p = mp.Process(target=self.__extract_select_inference_worker, args=(task_id, data, motif, motif_id,
                                                                                             output, length))
                         processes.append(p)
-                        task_id += 1
+                    task_id += 1
 
                 [x.start() for x in processes]
                 [x.join() for x in processes]
