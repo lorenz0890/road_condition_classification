@@ -45,6 +45,7 @@ class ConcretePipelineFacade(PipelineFacade):
         #params += [config['pre_proc_road_type_label']]
         #params.append(config['pre_proc_resample_freq'])
 
+        print(data.head(10))
         data_train, mean_train, std_train, data_test, data_valid = preprocessor.training_split_process(
             data=data,
             config=config,
