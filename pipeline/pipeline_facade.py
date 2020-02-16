@@ -58,6 +58,9 @@ class ConcretePipelineFacade(PipelineFacade):
         X_train = None
         X_test = None
         if config['feature_eng_extractor_type'] == "motif":
+            data_train.drop(['id'], axis=1, inplace=True)
+            data_test.drop(['id'], axis=1, inplace=True)
+            data_valid.drop(['id'], axis=1, inplace=True)
             X_train = extractor.extract_select_training_features(
                 data_train,
                 [config['feature_eng_mp_extractor_radii'], config['feature_eng_mp_extractor_lengths']]
