@@ -57,6 +57,8 @@ class ConcretePipelineFacade(PipelineFacade):
         print('--------------------FEATURE EXTRACTION------------------')
         X_train = None
         X_test = None
+        print(data_train.shape)
+        print(data_test.shape)
         if config['feature_eng_extractor_type'] == "motif":
             #data_train.drop(['id'], axis=1, inplace=True)
             #data_test.drop(['id'], axis=1, inplace=True)

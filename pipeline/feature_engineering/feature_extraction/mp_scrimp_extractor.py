@@ -41,6 +41,7 @@ class MPScrimpExtractor(Extractor):
     def select_features(self, data, args=None):
         """
         Select features by first finding motifs in time series and tagging them
+        an then using PAA as approximation
         :param data: pandas.DataFrame
         :param args:
         :return: pandas.DataFrame
