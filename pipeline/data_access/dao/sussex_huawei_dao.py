@@ -80,6 +80,7 @@ class SussexHuaweiDAO(DAO):
 
             all_labels = []
             all_data = []
+            id = 0
             for identifier in identifiers:
                 data_string = file_path[0].format(identifier)
                 label_string = file_path[1].format(identifier)
@@ -89,6 +90,7 @@ class SussexHuaweiDAO(DAO):
                     column_names=column_names[0],
                     use_columns=use_columns[0])  # 4,5,6,7,8,9,17,18,19
 
+                data['id'] = id #Add id column
                 all_data.append(data)
 
                 labels = self.read_data(
@@ -96,7 +98,10 @@ class SussexHuaweiDAO(DAO):
                     column_names=column_names[1],
                     use_columns=use_columns[1])
 
+                labels['id'] = id
                 all_labels.append(labels)
+
+                id+=1
 
             if len(all_labels) > 1 or len(all_data) > 1:
                 #TODO: raise error if len not equal
