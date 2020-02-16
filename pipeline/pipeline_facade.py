@@ -138,6 +138,8 @@ class ConcretePipelineFacade(PipelineFacade):
         # 6. Prepare Validation
         print('--------------------PREPARE VALIDATION-------------------')
         #TODO: Adapat for TS Fresh
+        print(data_valid.shape)
+        print(data_valid.head(10))
         X_valid, y_valid = None, None
         #params = []
         #params += config['data_set_column_names'][1:]
