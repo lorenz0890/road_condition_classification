@@ -153,7 +153,7 @@ class ConcretePipelineFacade(PipelineFacade):
         #    meta_data={'mean_train': mean_train, 'std_train': std_train}
         #)
         if config['feature_eng_extractor_type'] == "motif":
-            X_valid, y_valid = extractor.extract_select_training_features(
+            X_valid, y_valid = extractor.extract_select_inference_features(
                 data_valid, [[motif_radius], [motif_len], config['hw_num_processors']], True
             )
 

@@ -341,4 +341,5 @@ class SklearnModelFactory(ModelFactory):
                 print(conf)
                 print("\n\n")
 
+        print("best len", best_motif_len, "best radius", best_motif_radius)
         return best_clf, best_score, best_conf, best_X_train, best_motif_len, best_motif_radius, best_motif_count
