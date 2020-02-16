@@ -21,7 +21,7 @@ class SklearnModelFactory(ModelFactory):
 
 
     @overrides
-    def create_model(self, model_type, X, y, model_params, search_params):
+    def create_model(self, model_type, X_train, y_train, X_test, y_test, model_params, search_params):
         """
         Executes random search hyper parameter optimization for the specified model. Refer to sklearn
         documentation for details.
@@ -40,15 +40,23 @@ class SklearnModelFactory(ModelFactory):
         """
         try:
 
-            if X is None or y is None or model_params is None or search_params is None:
+            if X_train is None or y_train or X_test is None or y_test is None or model_params is None or search_params is None:
                 raise TypeError(self.messages.ILLEGAL_ARGUMENT_NONE_TYPE.value)
-            if (not isinstance(X, pandas.DataFrame) and
-                    not isinstance(X, pandas.core.frame.DataFrame) \
-                    and not isinstance(X, pandas.core.series.Series)):
+            if (not isinstance(X_train, pandas.DataFrame) and
+                    not isinstance(X_train, pandas.core.frame.DataFrame) \
+                    and not isinstance(X_train, pandas.core.series.Series)):
                 raise TypeError(self.messages.ILLEGAL_ARGUMENT_TYPE.value)
-            if (not isinstance(y, pandas.DataFrame) and
-                    not isinstance(y, pandas.core.frame.DataFrame) \
-                    and not isinstance(y, pandas.core.series.Series)):
+            if (not isinstance(y_train, pandas.DataFrame) and
+                    not isinstance(y_train, pandas.core.frame.DataFrame) \
+                    and not isinstance(y_train, pandas.core.series.Series)):
+                raise TypeError(self.messages.ILLEGAL_ARGUMENT_TYPE.value)
+            if (not isinstance(X_test, pandas.DataFrame) and
+                    not isinstance(X_test, pandas.core.frame.DataFrame) \
+                    and not isinstance(X_test, pandas.core.series.Series)):
+                raise TypeError(self.messages.ILLEGAL_ARGUMENT_TYPE.value)
+            if (not isinstance(y_test, pandas.DataFrame) and
+                    not isinstance(y_test, pandas.core.frame.DataFrame) \
+                    and not isinstance(y_test, pandas.core.series.Series)):
                 raise TypeError(self.messages.ILLEGAL_ARGUMENT_TYPE.value)
 
             if not isinstance(model_params, dict) or not isinstance(search_params, list):
@@ -70,11 +78,11 @@ class SklearnModelFactory(ModelFactory):
             if model is None:
                 raise ValueError(self.messages.PROVIDED_MODE_DOESNT_EXIST.value)
 
-            X_train, X_test, y_train, y_test = train_test_split(X,
-                                                                y,
-                                                                test_size=search_params[6],
-                                                                stratify=y
-                                                                )
+            #X_train, X_test, y_train, y_test = train_test_split(X,
+            #                                                    y,
+            #                                                    test_size=search_params[6],
+            #                                                    stratify=y
+            #                                                    )
 
             clf = RandomizedSearchCV(model,
                                      model_params,
@@ -99,7 +107,7 @@ class SklearnModelFactory(ModelFactory):
             os._exit(2)
 
     @overrides
-    def find_optimal_model(self, mode, config, motif_list=None):
+    def find_optimal_model(self, mode, config, X_train_list=None, X_test_list=None):
         """
         :return:
         """
@@ -111,9 +119,11 @@ class SklearnModelFactory(ModelFactory):
         best_motif_len = -1
         best_motif_count = -1
 
-        for i in range(1, len(motif_list)):
-            X_train = motif_list[i][0]  # [:3000]
-            y_train = motif_list[i][1]  # [:3000]
+        for i in range(1, len(X_train_list)):
+            X_train = X_train_list[i][0]  # [:3000]
+            y_train = X_train_list[i][1]  # [:3000]
+            X_test = X_test_list[i][0]
+            y_test = X_test_list[i][1]
             print("------------------Iteration: {}-----------------".format(i))
             if int(len(X_train) * 0.2) < 50: #TODO Make configureable
                 print('Test set too small')
@@ -123,9 +133,9 @@ class SklearnModelFactory(ModelFactory):
                 continue
 
             print('------------------Motifs-----------------')
-            print("Motif radius: {}".format(motif_list[i][2]))
-            print("Motif length: {}".format(motif_list[i][3]))
-            print("Motif count: {}".format(motif_list[i][4]))
+            print("Motif radius: {}".format(X_train_list[i][2]))
+            print("Motif length: {}".format(X_train_list[i][3]))
+            print("Motif count: {}".format(X_train_list[i][4]))
             print("X shape: {}".format(X_train.shape))
             print("y label 1: {}".format(list(y_train[0]).count(1.0) / len(y_train))) #TODO: make configureable
             print("y label 3: {}\n\n".format(list(y_train[0]).count(3.0) / len(y_train)))
@@ -135,8 +145,10 @@ class SklearnModelFactory(ModelFactory):
                 print('------------------Sklearn-----------------')
                 model = self.create_model(
                     model_type='svc',
-                    X=X_train,
-                    y=y_train,
+                    X_train=X_train,
+                    y_train=y_train,
+                    X_test=X_test,
+                    y_test=y_test,
                     model_params={
                         'kernel': ['rbf', 'linear', 'poly'],
                         'degree': sp_randint(config['classifier_hypermaram_space_sklearn_svc']['degree'][0],
@@ -171,9 +183,9 @@ class SklearnModelFactory(ModelFactory):
                     best_score = score
                     best_conf = conf
                     best_X_train = X_train
-                    best_motif_radius = motif_list[i][2]
-                    best_motif_len = motif_list[i][3]
-                    best_motif_count = motif_list[i][4]
+                    best_motif_radius = X_train_list[i][2]
+                    best_motif_len = X_train_list[i][3]
+                    best_motif_count = X_train_list[i][4]
                 print(score)
                 print(conf)
                 print("\n\n")
@@ -181,8 +193,10 @@ class SklearnModelFactory(ModelFactory):
             if 'sklearn_cart' in config['classifier_optimal_search_space'] or 'all' in config['classifier_optimal_search_space']:
                 model = self.create_model(
                     model_type='cart_tree',
-                    X=X_train,
-                    y=y_train,
+                    X_train=X_train,
+                    y_train=y_train,
+                    X_test=X_test,
+                    y_test=y_test,
                     model_params={
                         "max_depth": sp_randint(config['classifier_hypermaram_space_sklearn_cart']['max_depth'][0],
                                                 config['classifier_hypermaram_space_sklearn_cart']['max_depth'][1]),
@@ -214,9 +228,9 @@ class SklearnModelFactory(ModelFactory):
                     best_score = score
                     best_conf = conf
                     best_X_train = X_train
-                    best_motif_radius = motif_list[i][2]
-                    best_motif_len = motif_list[i][3]
-                    best_motif_count = motif_list[i][4]
+                    best_motif_radius = X_train_list[i][2]
+                    best_motif_len = X_train_list[i][3]
+                    best_motif_count = X_train_list[i][4]
                 print(score)
                 print(conf)
                 print("\n\n")
@@ -224,8 +238,10 @@ class SklearnModelFactory(ModelFactory):
             if 'sklearn_rf' in config['classifier_optimal_search_space'] or 'all' in config['classifier_optimal_search_space']:
                 model = self.create_model(
                     model_type='random_forrest',
-                    X=X_train,
-                    y=y_train,
+                    X_train=X_train,
+                    y_train=y_train,
+                    X_test=X_test,
+                    y_test=y_test,
                     model_params={
                         'n_estimators': sp_randint(config['classifier_hypermaram_space_sklearn_rf']['n_estimators'][0],
                                                    config['classifier_hypermaram_space_sklearn_rf']['n_estimators'][1]),
@@ -257,9 +273,9 @@ class SklearnModelFactory(ModelFactory):
                     best_score = score
                     best_conf = conf
                     best_X_train = X_train
-                    best_motif_radius = motif_list[i][2]
-                    best_motif_len = motif_list[i][3]
-                    best_motif_count = motif_list[i][4]
+                    best_motif_radius = X_train_list[i][2]
+                    best_motif_len = X_train_list[i][3]
+                    best_motif_count = X_train_list[i][4]
                 print(score)
                 print(conf)
                 print("\n\n")
@@ -271,8 +287,10 @@ class SklearnModelFactory(ModelFactory):
 
                 model = self.create_model(
                     model_type='mlp_classifier',
-                    X=X_train,
-                    y=y_train,
+                    X_train=X_train,
+                    y_train=y_train,
+                    X_test=X_test,
+                    y_test=y_test,
                     model_params={
                         'solver': config['classifier_hypermaram_space_sklearn_mlp']['solver'],
                         'max_iter': sp_randint(config['classifier_hypermaram_space_sklearn_mlp']['max_iter'][0],
@@ -310,9 +328,9 @@ class SklearnModelFactory(ModelFactory):
                     best_score = score
                     best_conf = conf
                     best_X_train = X_train
-                    best_motif_radius = motif_list[i][2]
-                    best_motif_len = motif_list[i][3]
-                    best_motif_count = motif_list[i][4]
+                    best_motif_radius = X_train_list[i][2]
+                    best_motif_len = X_train_list[i][3]
+                    best_motif_count = X_train_list[i][4]
                 print(score)
                 print(conf)
                 print("\n\n")

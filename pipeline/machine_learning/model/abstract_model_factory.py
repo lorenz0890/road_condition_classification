@@ -6,7 +6,7 @@ class ModelFactory(ABC, RCTCComponent):
     def __init__(self):
         super().__init__()
 
-    def create_model(self, model_type, X, y, model_params, search_params):
+    def create_model(self, model_type, X_train, y_train, X_test, y_test, model_params, search_params):
         """
         :param X:
         :param y:
@@ -16,12 +16,9 @@ class ModelFactory(ABC, RCTCComponent):
         :return:
         """
 
-    def find_optimal_model(self, mode, config, motif_list = None):
+    def find_optimal_model(self, mode, config, X_train_list=None, X_test_list=None):
         """
         :return:
         """
-        best_clf = None
-        best_score = 0.0
-        best_conf = None
 
 

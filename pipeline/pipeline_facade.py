@@ -40,13 +40,13 @@ class ConcretePipelineFacade(PipelineFacade):
 
         # 3. Preprocessing
         print('--------------------PRE PROCESSING--------------------')
-        params = [labels, config['pre_proc_validation_sz'], config['pre_proc_training_sz']]
+        params = [labels, config['pre_proc_test_sz'], config['pre_proc_training_sz']]
         params += config['data_set_column_names'][1:] + [config['pre_proc_movement_type_label']]
         params += [config['pre_proc_road_type_label']]
         params.append(config['pre_proc_resample_freq'])
-        # print(params)
-        data_train, mean_train, std_train, data_valid = preprocessor.training_split_process(
-            data=data,
+        data_valid = data.tail(int(data.shape[0]*config['pre_proc_validation_sz']))
+        data_train, mean_train, std_train, data_test = preprocessor.training_split_process(
+            data=data.head(int(data.shape[0]*(1.0-config['pre_proc_validation_sz']))),
             params=params
         )
 
@@ -57,6 +57,10 @@ class ConcretePipelineFacade(PipelineFacade):
         if config['feature_eng_extractor_type'] == "motif":
             X_train = extractor.extract_select_training_features(
                 data_train,
+                [config['feature_eng_mp_extractor_radii'], config['feature_eng_mp_extractor_lengths']]
+            )
+            X_test = extractor.extract_select_training_features(
+                data_test,
                 [config['feature_eng_mp_extractor_radii'], config['feature_eng_mp_extractor_lengths']]
             )
         if config['feature_eng_extractor_type'] == "tsfresh":
@@ -103,7 +107,7 @@ class ConcretePipelineFacade(PipelineFacade):
             X_train = ['placeholder',
                        [X_train, y_train, 'N/A', 'N/A', 'N/A']]  # required for further processing. TODO: Unifiy naming!
 
-        if X_train is None:
+        if X_train is None or X_test is None:
             pass  # TODO Raise Error
 
         # 5. Find optimal classifier for given training set
@@ -112,6 +116,7 @@ class ConcretePipelineFacade(PipelineFacade):
             'motif',  # TODO remove bc deprecated. X_train no decides mode.
             config,
             X_train,
+            X_test,
             # config['classifier_optimal_search_space'],
             # config['hw_num_processors']
         )
