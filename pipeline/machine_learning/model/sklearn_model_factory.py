@@ -122,12 +122,14 @@ class SklearnModelFactory(ModelFactory):
         for i in range(1, len(X_train_list)):
             X_train = X_train_list[i][0]  # [:3000]
             y_train = X_train_list[i][1]  # [:3000]
-            X_test = X_test_list[i][0]
-            y_test = X_test_list[i][1]
+            X_test, y_test = None, None
+            for j in range(1, len(X_test_list)):
+                if X_train_list[i][2] == X_test_list[j][2] and X_train_list[i][3] == X_test_list[j][3]:
+                    X_test = X_test_list[j][0]
+                    y_test = X_test_list[j][1]
+
             print("------------------Iteration: {}-----------------".format(i))
-            if int(len(X_train) * 0.2) < 50: #TODO Make configureable
-                print('Test set too small')
-                continue
+            print(list(y_train[0]).count(1.0) / len(y_train))
             if not (config['classifier_rep_class_distribution'][0] <
                     list(y_train[0]).count(1.0) / len(y_train) <
                     config['classifier_rep_class_distribution'][1]):
