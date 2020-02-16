@@ -129,7 +129,7 @@ class SklearnModelFactory(ModelFactory):
                     y_test = X_test_list[j][1]
 
             print("------------------Iteration: {}-----------------".format(i))
-            print(list(y_train[0]).count(1.0) / len(y_train))
+            #print(list(y_train[0]).count(1.0) / len(y_train))
             if not (config['classifier_rep_class_distribution'][0] <
                     list(y_train[0]).count(1.0) / len(y_train) <
                     config['classifier_rep_class_distribution'][1]):

@@ -65,8 +65,8 @@
     "sklearn_cart"
   ],
   "classifier_rep_class_distribution": [
-    0.1,
-    0.9
+    0.4,
+    0.6
   ],
   "classifier_hypermaram_space_sklearn_mlp":
     {

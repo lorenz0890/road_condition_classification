@@ -136,20 +136,20 @@ class ConcretePipelineFacade(PipelineFacade):
         print('--------------------PREPARE VALIDATION-------------------')
         #TODO: Adapat for TS Fresh
         X_valid, y_valid = None, None
-        params = []
-        params += config['data_set_column_names'][1:]
-        params.append(config['pre_proc_resample_freq'])
-        params.append(mean_train)
-        params.append(std_train)
+        #params = []
+        #params += config['data_set_column_names'][1:]
+        #params.append(config['pre_proc_resample_freq'])
+        #params.append(mean_train)
+        #params.append(std_train)
 
-        data_inference= preprocessor.inference_split_process(
-            data=data_valid,
-            config=config,
-            meta_data={'mean_train': mean_train, 'std_train': std_train}
-        )
+        #data_inference= preprocessor.inference_split_process(
+        #    data=data_valid,
+        #    config=config,
+        #    meta_data={'mean_train': mean_train, 'std_train': std_train}
+        #)
         if config['feature_eng_extractor_type'] == "motif":
             X_valid, y_valid = extractor.extract_select_inference_features(
-                data_inference, [motif_len, motif_radius, config['hw_num_processors']], True
+                data_valid, [motif_len, motif_radius, config['hw_num_processors']], True
             )
 
         # 7. Run Validation
