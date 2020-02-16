@@ -40,14 +40,15 @@ class ConcretePipelineFacade(PipelineFacade):
 
         # 3. Preprocessing
         print('--------------------PRE PROCESSING--------------------')
-        params = [labels, config['pre_proc_test_sz'], config['pre_proc_training_sz']]
-        params += config['data_set_column_names'][1:] + [config['pre_proc_movement_type_label']]
-        params += [config['pre_proc_road_type_label']]
-        params.append(config['pre_proc_resample_freq'])
-        data_valid = data.tail(int(data.shape[0]*config['pre_proc_validation_sz']))
-        data_train, mean_train, std_train, data_test = preprocessor.training_split_process(
-            data=data.head(int(data.shape[0]*(1.0-config['pre_proc_validation_sz']))),
-            params=params
+        #params = [labels, config['pre_proc_test_sz'], config['pre_proc_training_sz'], config['pre_proc_validation_sz']]
+        #params += config['data_set_column_names'][1:] + [config['pre_proc_movement_type_label']]
+        #params += [config['pre_proc_road_type_label']]
+        #params.append(config['pre_proc_resample_freq'])
+
+        data_train, mean_train, std_train, data_test, data_valid = preprocessor.training_split_process(
+            data=data,
+            config=config,
+            labels=labels
         )
 
         # 4. Feature extraction
@@ -127,9 +128,19 @@ class ConcretePipelineFacade(PipelineFacade):
         print('--------------------PREPARE VALIDATION-------------------')
         #TODO: Adapat for TS Fresh
         X_valid, y_valid = None, None
+        params = []
+        params += config['data_set_column_names'][1:]
+        params.append(config['pre_proc_resample_freq'])
+        params.append(mean_train)
+        params.append(std_train)
+
+        data_inference= preprocessor.inference_split_process(
+            data=data_valid,
+            params=params
+        )
         if config['feature_eng_extractor_type'] == "motif":
             X_valid, y_valid = extractor.extract_select_inference_features(
-                data_valid, [motif_len, motif_radius, config['hw_num_processors']], True
+                data_inference, [motif_len, motif_radius, config['hw_num_processors']], True
             )
 
         # 7. Run Validation

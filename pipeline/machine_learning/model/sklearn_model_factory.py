@@ -96,7 +96,7 @@ class SklearnModelFactory(ModelFactory):
                 with open(r"{}".format(search_params[5]), "wb") as output_file:
                     pickle.dump(clf, output_file)
 
-            return {'clf' : clf, 'X_test' : X_test, 'y_test' : y_test}
+            return {'clf' : clf, 'X_test' : X_test, 'y_test' : y_test} #TODO returning X_test not necessary anymore
 
         except (TypeError, ValueError):
             self.logger.error(traceback.format_exc())

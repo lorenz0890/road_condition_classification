@@ -171,20 +171,20 @@ class Preprocessor(ABC, RCTCComponent):
         pass
 
     @abstractmethod
-    def training_split_process(self, data, params):
+    def training_split_process(self, data, config, labels):
         """
         :param data: pandas.DataFrame
-        :param params: List
-        :return: pandas.DataFrame, pandas.DataFrame, pandas.DataFrame
+        :param config: dict
+        :return: pandas.DataFrame, pandas.DataFrame, pandas.DataFrame, pandas.DataFrame
         """
         pass
 
     @abstractmethod
-    def inference_split_process(self, data, params):
+    def inference_split_process(self, data, config):
         """
         TODO: Required for real data
         :param data: pandas.DataFrame
         :param params: List
-        :return: pandas.DataFrame, pandas.DataFrame, pandas.DataFrame
+        :return: pandas.DataFrame
         """
         pass

@@ -528,7 +528,7 @@ class SussexHuaweiPreprocessor(Preprocessor):
 
 
     @overrides
-    def training_split_process(self, data, params):
+    def training_split_process(self, data, config, labels):
         """
         :param data: pandas.DataFrame
         :param params: List
@@ -536,14 +536,15 @@ class SussexHuaweiPreprocessor(Preprocessor):
         """
         print('Fetch params')
         #print(params)
-        labels = params[0]
-        test_sz = params[1]
-        train_sz = params[2]
+        labels = labels
+        test_sz = config['pre_proc_test_sz']
+        train_sz = config['pre_proc_training_sz']
+        valid_sz = config['pre_proc_validation_sz']
         #acelerometer_columns = ['acceleration_x', 'acceleration_y', 'acceleration_z']
-        acelerometer_columns = [params[3], params[4], params[5]]
-        selected_coarse_labels = params[6] #[5]
-        selected_road_labels = params[7] #[1, 3]
-        freq = params[8] #'1000ms'
+        acelerometer_columns = [config['data_set_column_names'][1:][3], config['data_set_column_names'][1:][4], config['data_set_column_names'][1:][5]]
+        selected_coarse_labels = config['pre_proc_movement_type_label'] #[5]
+        selected_road_labels = config['pre_proc_road_type_label'] #[1, 3]
+        freq = config['pre_proc_resample_freq'] #'1000ms'
 
         print('Convert time unit, label data, remove nans')
         data = self.convert_unix_to_datetime(data, column = 'time', unit = 'ms')
