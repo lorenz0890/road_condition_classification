@@ -68,6 +68,7 @@ class MPScrimpExtractor(Extractor):
 
             X = attr_vec#.transpose()
             X = pandas.DataFrame(X)
+            X.groupby(X.index // args[0]).mean()
             #print("asd")
             #print(X.head(10))
 
