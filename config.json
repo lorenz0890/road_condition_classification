@@ -66,6 +66,10 @@
   "classifier_optimal_search_space": [
     "sklearn_cart"
   ],
+  "classifier_rep_class_distribution": [
+    0.1,
+    0.9
+  ],
   "classifier_hypermaram_space_sklearn_mlp":
     {
       "test_set_sz": 0.2,

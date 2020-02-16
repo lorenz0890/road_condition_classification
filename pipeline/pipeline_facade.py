@@ -65,6 +65,7 @@ class ConcretePipelineFacade(PipelineFacade):
                 [config['feature_eng_mp_extractor_radii'], config['feature_eng_mp_extractor_lengths']]
             )
         if config['feature_eng_extractor_type'] == "tsfresh":
+            """
             # TODO migrate the preperation for extraction to extract_select_training_features, make label column name configureable
             data_train = preprocessor.encode_categorical_features(data=data_train,
                                                                   mode='custom_function',
@@ -107,19 +108,18 @@ class ConcretePipelineFacade(PipelineFacade):
             X_train, y_train = X_combined[keys[:-1]], X_combined[keys[-1]]
             X_train = ['placeholder',
                        [X_train, y_train, 'N/A', 'N/A', 'N/A']]  # required for further processing. TODO: Unifiy naming!
-
+            """
+            pass
         if X_train is None or X_test is None:
             pass  # TODO Raise Error
 
         # 5. Find optimal classifier for given training set
         print('--------------------TRAINING PHASE----------------------')
         clf, score, conf, X_train, motif_len, motif_radius, motif_count = model_factory.find_optimal_model(
-            'motif',  # TODO remove bc deprecated. X_train no decides mode.
+            'motif',  # TODO remove bc deprecated. X_train now decides mode.
             config,
             X_train,
             X_test,
-            # config['classifier_optimal_search_space'],
-            # config['hw_num_processors']
         )
         if clf is None or score is None or conf is None:
             pass  # TODO Raise Error

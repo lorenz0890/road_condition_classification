@@ -128,7 +128,9 @@ class SklearnModelFactory(ModelFactory):
             if int(len(X_train) * 0.2) < 50: #TODO Make configureable
                 print('Test set too small')
                 continue
-            if not (0.35 < list(y_train[0]).count(1.0) / len(y_train) < 0.65): #TODO distribution boundaries shgould be configureable
+            if not (config['classifier_rep_class_distribution'][0] <
+                    list(y_train[0]).count(1.0) / len(y_train) <
+                    config['classifier_rep_class_distribution'][1]):
                 print('Class distribution not representative')
                 continue
 
