@@ -2,7 +2,7 @@
   "hw_num_processors": 32,
   "data_set_type": "sussex_huawei",
   "data_set_trips": [
-    "040517"
+    "040517","040717", "050617", "050717", "060317", "060617"
   ],
   "data_set_path": "./data_sets/sussex_huawei/User1/{}/Hips_Motion.txt",
   "data_labels_path": "./data_sets/sussex_huawei/User1/{}/Label.txt",

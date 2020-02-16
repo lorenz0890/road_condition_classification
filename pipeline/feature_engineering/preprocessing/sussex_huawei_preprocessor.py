@@ -612,7 +612,7 @@ class SussexHuaweiPreprocessor(Preprocessor):
                 reduced_column_name='acceleration_abs'
             )
 
-        print(data_train_segments[0])
+        print(data_train_segments)
         print('Normalizing, outlier removal')
         selected_columns = ['acceleration_abs',
                             'road_label', 'id']  # 'acceleration_abs'
