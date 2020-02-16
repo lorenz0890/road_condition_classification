@@ -51,6 +51,7 @@ class ConcretePipelineFacade(PipelineFacade):
             labels=labels
         )
 
+        print(data_train.head(10))
         # 4. Feature extraction
         print('--------------------FEATURE EXTRACTION------------------')
         X_train = None
@@ -113,11 +114,11 @@ class ConcretePipelineFacade(PipelineFacade):
         if X_train is None or X_test is None:
             pass  # TODO Raise Error
 
-        print(X_train)
-        print(X_train[0][0].head(10))
-        print(X_train[0][1].head(10))
-        print(X_test[0][0].head(10))
-        print(X_test[0][1].head(10))
+        #print(X_train)
+        print(X_train[1][0].head(10))
+        print(X_train[1][1].head(10))
+        #print(X_test[1][0].head(10))
+        #print(X_test[1][1].head(10))
 
         # 5. Find optimal classifier for given training set
         print('--------------------TRAINING PHASE----------------------')
