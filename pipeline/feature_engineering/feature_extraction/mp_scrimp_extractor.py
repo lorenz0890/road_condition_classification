@@ -40,8 +40,7 @@ class MPScrimpExtractor(Extractor):
     @overrides
     def select_features(self, data, args=None):
         """
-        Select features by concatenating motifs to an attribute vector and addind a column that determines which
-        data points belong togather (to a distinct motif). Tag vector
+        Select features by first finding motifs in time series and tagging them
         :param data: pandas.DataFrame
         :param args:
         :return: pandas.DataFrame
