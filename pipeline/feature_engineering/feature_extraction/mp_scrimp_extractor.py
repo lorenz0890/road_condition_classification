@@ -67,7 +67,6 @@ class MPScrimpExtractor(Extractor):
 
             X = attr_vec#.transpose()
             X = pandas.DataFrame(X)
-            X=X.groupby(X.index // args[0]).mean()
             #print("asd")
             #print(X.head(10))
 
@@ -166,6 +165,7 @@ class MPScrimpExtractor(Extractor):
         """
 
         try:
+            X_train = args[2]
             length = args[0]
             radius=args[1]
 
