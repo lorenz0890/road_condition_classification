@@ -541,7 +541,7 @@ class SussexHuaweiPreprocessor(Preprocessor):
         train_sz = config['pre_proc_training_sz']
         valid_sz = config['pre_proc_validation_sz']
         #acelerometer_columns = ['acceleration_x', 'acceleration_y', 'acceleration_z']
-        acelerometer_columns = [config['data_set_column_names'][1:][3], config['data_set_column_names'][1:][4], config['data_set_column_names'][1:][5]]
+        acelerometer_columns = [config['data_set_column_names'][1:][0], config['data_set_column_names'][1:][1], config['data_set_column_names'][1:][2]]
         selected_coarse_labels = config['pre_proc_movement_type_label'] #[5]
         selected_road_labels = config['pre_proc_road_type_label'] #[1, 3]
         freq = config['pre_proc_resample_freq'] #'1000ms'
@@ -551,12 +551,13 @@ class SussexHuaweiPreprocessor(Preprocessor):
         data = self.label_data(data, labels)
         data = self.remove_nans(data, replacement_mode='del_row')
 
-        print('Train, Test split')
+        print('Train, Test, Validation split')
         data_len = data.shape[0]
         test_len = int(data_len * test_sz)
         train_len = int(data_len * train_sz)
-        data_train, data_test = data.head(train_len), data.tail(test_len)
-
+        valid_len = int(data_len * test_sz)
+        data_train, data_test_valid = data.head(train_len), data.tail(test_len+valid_len)
+        data_test = data_test_valid
         print('Segment by labels')
         #print('segment train')
         car_train_segments = self.segment_data(data_train, mode='labels',
