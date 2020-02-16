@@ -113,6 +113,8 @@ class ConcretePipelineFacade(PipelineFacade):
         if X_train is None or X_test is None:
             pass  # TODO Raise Error
 
+        print(X_train.head(10))
+        print(X_test.head(10))
         # 5. Find optimal classifier for given training set
         print('--------------------TRAINING PHASE----------------------')
         clf, score, conf, X_train, motif_len, motif_radius, motif_count = model_factory.find_optimal_model(
