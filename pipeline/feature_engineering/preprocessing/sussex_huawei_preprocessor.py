@@ -663,7 +663,7 @@ class SussexHuaweiPreprocessor(Preprocessor):
         )[:-2]
 
         #Test
-        data_test = self.de_segment_data(data_train_segments, selected_columns)
+        data_test = self.de_segment_data(data_test_segments, selected_columns)
         data_test, mean_test, std_test = self.znormalize_quantitative_data(data_test,
                                                                           selected_columns[:-2],
                                                                           mean_train, std_train)
