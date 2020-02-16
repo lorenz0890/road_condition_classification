@@ -555,7 +555,7 @@ class SussexHuaweiPreprocessor(Preprocessor):
         data_len = data.shape[0]
         test_len = int(data_len * test_sz)
         train_len = int(data_len * train_sz)
-        valid_len = int(data_len * test_sz)
+        valid_len = int(data_len * valid_sz)
         data_train, data_test_valid = data.head(train_len), data.tail(test_len+valid_len)
         data_test = data_test_valid.head(test_len)
         data_valid = data_test_valid.head(valid_len)
@@ -620,6 +620,7 @@ class SussexHuaweiPreprocessor(Preprocessor):
             data_valid_segments[ind] = self.resample_quantitative_data(data_valid_segments[ind],
                                                                       freq=freq)
 
+        print(data_train.head(10))
         print('Dimensionality reduction')
         #Train
         for ind in range(len(data_train_segments)):
