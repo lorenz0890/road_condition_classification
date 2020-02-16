@@ -203,76 +203,8 @@ class MPScrimpExtractor(Extractor):
         """
 
         try:
-
-            #X_train = args[0]
-            length = args[1]
-            radius=args[2]
-            '''
-            manager = mp.Manager()
-            output = manager.dict()
-            num_tasks = int(len(X_train) / length)
-            task_id = 0
-            num_processors = args[2]
-            while task_id < num_tasks:
-                processes = []
-                for i in range(num_processors):
-                    if num_processors >=0 and i < num_tasks: #TODO: Consider removal of first confition
-                        split_sz = int(len(X_train) / length)
-                        i = i * split_sz
-                        motif = X_train[i:i + length][0].values
-                        motif_id = X_train[i:i + length][1].values
-                        p = mp.Process(target=self.__extract_select_inference_worker, args=(task_id, data, motif, motif_id,
-                                                                                            output, length))
-                        processes.append(p)
-                    task_id += 1
-
-                [x.start() for x in processes]
-                [x.join() for x in processes]
-
-            print('1')
-
-            distances_valid_full = []
-            motifs_valid_full = []
-            motif_ids_valid_full = []
-            for o in output:
-                motifs_valid_full += output[o][0]
-                motif_ids_valid_full += output[o][1]
-                distances_valid_full += output[o][2]
-
-            print('2')
-
-            dm = list(zip(distances_valid_full, motifs_valid_full))
-            dm.sort()
-            m_sorted = [m for d, m in dm]
-
-            dmid = list(zip(distances_valid_full, motifs_valid_full))
-            dmid.sort()
-            mid_sorted = [m for d, m in dmid]
-
-            print('3')
-
-            k = list(set(list(mid_sorted)))
-            mtfs = []
-            for i in range(len(k)): #2 is number of labels, make this configureable
-                mtfs.append([])
-
-            for i in range(int(len(m_sorted))):
-                mtfs[k.index(mid_sorted[i])].append(m_sorted[i])
-                #if int(mid_sorted[i]) == int(k[0]):
-                #    mtfs[0].append(m_sorted[i])
-                #else:
-                #    mtfs[1].append(m_sorted[i])
-
-            for i in range(len(k)): #2 is number of labels, make this configureable
-                #import pdb; pdb.set_trace()
-                mtfs[i] = [mtfs[i][0]]
-
-            print('4')
-            '''
-            #X_indices = self.extract_features(data=data,
-            #                                  args=[combis[i][1], 2, combis[i][0], 'acceleration_abs'])
-            #X = self.select_features(data=data,
-            #                         args=[combis[i][1], 2, X_indices, 'acceleration_abs'])
+            length = args[0]
+            radius=args[1]
 
             motifs = self.extract_features(data=data, args=[length,2,radius,'acceleration_abs'])
             #X_valid = self.select_features(data=data,

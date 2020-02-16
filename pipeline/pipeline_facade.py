@@ -29,7 +29,7 @@ class ConcretePipelineFacade(PipelineFacade):
 
         # 2. Load data
         print('--------------------LOAD DATA------------------------')
-        import random  # for debugging
+        #import random  # for debugging
         labels, data = dao.bulk_read_data(
             file_path=[config['data_set_path'], config['data_labels_path']],
             identifiers=config['data_set_trips'],
@@ -119,10 +119,11 @@ class ConcretePipelineFacade(PipelineFacade):
 
         # 6. Prepare Validation
         print('--------------------PREPARE VALIDATION-------------------')
+        #TODO: Adapat for TS Fresh
         X_valid, y_valid = None, None
         if config['feature_eng_extractor_type'] == "motif":
             X_valid, y_valid = extractor.extract_select_inference_features(
-                data_valid, [X_train, motif_len, motif_radius, config['hw_num_processors']], True
+                data_valid, [motif_len, motif_radius, config['hw_num_processors']], True
             )
 
         # 7. Run Validation
@@ -210,7 +211,6 @@ class ConcretePipelineFacade(PipelineFacade):
         if config['feature_eng_extractor_type'] == "motif":
             X_inference = extractor.extract_select_inference_features(data_inference,
                                                                       [
-                                                                          X_train,
                                                                           meta_data['motif_len'],
                                                                           meta_data['motif_radius'],
                                                                           config['hw_num_processors']

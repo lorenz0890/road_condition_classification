@@ -615,7 +615,7 @@ class SussexHuaweiPreprocessor(Preprocessor):
         print(data_train_segments[0])
         print('Normalizing, outlier removal')
         selected_columns = ['acceleration_abs',
-                            'road_label']  # 'acceleration_abs'
+                            'road_label', 'id']  # 'acceleration_abs'
         data_train = self.de_segment_data(data_train_segments, selected_columns)
         data_train, mean_train, std_train = self.znormalize_quantitative_data(data_train, selected_columns[:-1])
 
