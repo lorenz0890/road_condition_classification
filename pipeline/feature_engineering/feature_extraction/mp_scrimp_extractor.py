@@ -153,46 +153,6 @@ class MPScrimpExtractor(Extractor):
             gc.collect()
             #os._exit(2) Single workers should not crash the program
 
-
-    def __extract_select_inference_worker(self, i, data, motif, motif_id, output, length):
-        try:
-
-            distances_valid = []
-            motifs_valid = []
-            motif_ids_valid = []
-
-            print("Motif extraction worker no: {0} length: {1}".format(i, length))
-
-            for j in range(0, len(data['acceleration_abs']) - length, 1):
-                window = data['acceleration_abs'][j:j + length].values
-                diff = None
-                try:
-                    diff = motif - window
-                except ValueError:
-                    print("Motif and windows len differ")
-                    print(len(motif))
-                    print(type(motif))
-                    print(len(window))
-                    print(type(window))
-
-                except Exception as e:
-                    self.logger.error(traceback.format_exc())
-                    print(e)
-
-                if not True in numpy.isnan(diff):
-                    distances_valid.append(numpy.sqrt(numpy.sum(numpy.square(diff))))
-                    motifs_valid.append(j)
-                    motif_ids_valid.append(motif_id[0])
-
-            print("Motif extraction worker no: {0} returned".format(i))
-            output[i] = motifs_valid, motif_ids_valid, distances_valid
-
-            gc.collect()
-        except Exception:
-            self.logger.error(traceback.format_exc())
-            gc.collect()
-            #os._exit(2) Single workers should not crash the program
-
     @overrides
     def extract_select_inference_features(self, data, args=None, debug=False):
         """

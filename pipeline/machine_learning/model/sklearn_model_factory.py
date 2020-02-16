@@ -120,7 +120,7 @@ class SklearnModelFactory(ModelFactory):
         best_motif_count = -1
 
         for i in range(1, len(X_train_list)):
-            X_train = X_train_list[i][0]  # [:3000]
+            X_train = X_train_list[i][0][0] # [:3000]
             y_train = X_train_list[i][1]  # [:3000]
             X_test, y_test = None, None
             for j in range(1, len(X_test_list)):
@@ -128,8 +128,8 @@ class SklearnModelFactory(ModelFactory):
                     X_test = X_test_list[j][0]
                     y_test = X_test_list[j][1]
 
-            print(X_train.head(10))
-            print(y_train.head(10))
+            print(X_test.head(10))
+            print(y_test.head(10))
             print("------------------Iteration: {}-----------------".format(i))
             #print(list(y_train[0]).count(1.0) / len(y_train))
             if not (config['classifier_rep_class_distribution'][0] <
