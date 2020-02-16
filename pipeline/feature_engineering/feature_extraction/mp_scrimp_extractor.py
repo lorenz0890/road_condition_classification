@@ -40,7 +40,8 @@ class MPScrimpExtractor(Extractor):
     @overrides
     def select_features(self, data, args=None):
         """
-        Select features by selecting motifs with homogeneous labeling
+        Select features by concatenating motifs to an attribute vector and addind a column that determines which
+        data points belong togather (to a distinct motif)
         :param data: pandas.DataFrame
         :param args:
         :return: pandas.DataFrame
@@ -168,16 +169,16 @@ class MPScrimpExtractor(Extractor):
             length = args[0]
             radius=args[1]
 
-            motifs = self.extract_features(data=data, args=[length,2,radius,'acceleration_abs'])
+            X_indices = self.extract_features(data=data, args=[length,2,radius,'acceleration_abs'])
             #X_valid = self.select_features(data=data,
             #                         args=[length, 1, motifs, 'acceleration_abs'])
             X_valid = self.select_features(data=data,
-                                                   args=[length, 2, motifs, 'acceleration_abs'])
+                                                   args=[length, 2, X_indices, 'acceleration_abs'])
 
 
             if debug:
                 y_valid = self.select_features(data=data,
-                                                       args=[length, 1, motifs, 'road_label'])
+                                                       args=[length, 1, X_indices, 'road_label'])
 
                 return X_valid, y_valid
 
