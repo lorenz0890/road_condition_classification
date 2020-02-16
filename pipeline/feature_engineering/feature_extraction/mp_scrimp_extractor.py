@@ -60,8 +60,8 @@ class MPScrimpExtractor(Extractor):
                     elem = numpy.array(data[args[3]].values[index:index + args[0]])
                     for pos, x in enumerate(elem):
                         attr_vec[count + pos][0] = x
-                        if args[1] == 2:
-                            attr_vec[count + pos][1] = i
+                        #if args[1] == 2:
+                        #    attr_vec[count + pos][1] = i
 
                     count += args[0]
                 i += 1.0
@@ -136,7 +136,7 @@ class MPScrimpExtractor(Extractor):
                     combis.append(combi)
             print("Motif extraction worker no: {0} length: {1}, radius: {2}".format(i, combis[i][1], combis[i][0]))
             X_indices = self.extract_features(data=data,
-                                              args=[combis[i][1], 2, combis[i][0], 'acceleration_abs'])
+                                              args=[combis[i][1], 4, combis[i][0], 'acceleration_abs'])
             X = self.select_features(data=data,
                                      args=[combis[i][1], 2, X_indices, 'acceleration_abs'])
             y = self.select_features(data=data,
