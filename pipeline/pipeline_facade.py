@@ -116,10 +116,10 @@ class ConcretePipelineFacade(PipelineFacade):
             pass  # TODO Raise Error
 
         #print(X_train)
-        #print(X_train[1][0].head(10))
-        #print(X_train[1][1].head(10))
-        #print(X_test[1][0].head(10))
-        #print(X_test[1][1].head(10))
+        print(X_train[1][0].head(10))
+        print(X_train[1][1].head(10))
+        print(X_test[1][0].head(10))
+        print(X_test[1][1].head(10))
 
         # 5. Find optimal classifier for given training set
         print('--------------------TRAINING PHASE----------------------')

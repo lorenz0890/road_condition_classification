@@ -67,6 +67,8 @@ class MPScrimpExtractor(Extractor):
 
             X = attr_vec#.transpose()
             X = pandas.DataFrame(X)
+            print("asd")
+            print(X.head(10))
 
             return X#, y
 
