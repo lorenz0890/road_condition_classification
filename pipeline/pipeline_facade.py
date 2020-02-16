@@ -156,7 +156,7 @@ class ConcretePipelineFacade(PipelineFacade):
         #)
         if config['feature_eng_extractor_type'] == "motif":
             X_valid, y_valid = extractor.extract_select_inference_features(
-                data_valid, [[motif_radius], [motif_len], config['hw_num_processors']], True
+                data_valid, [motif_radius, motif_len, config['hw_num_processors']], True
             )
 
         print(X_valid.head(10))
