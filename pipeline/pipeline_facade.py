@@ -127,7 +127,7 @@ class ConcretePipelineFacade(PipelineFacade):
         # 5. Find optimal classifier for given training set
         print('--------------------TRAINING PHASE----------------------')
         clf, score, conf, X_train, motif_len, motif_radius, motif_count = model_factory.find_optimal_model(
-            'motif',  # TODO remove bc deprecated. X_train now decides mode(?)
+            'motif',  # TODO remove bc deprecated. X_train now decides mode.
             config,
             X_train,
             X_test,
@@ -153,12 +153,9 @@ class ConcretePipelineFacade(PipelineFacade):
         #    meta_data={'mean_train': mean_train, 'std_train': std_train}
         #)
         if config['feature_eng_extractor_type'] == "motif":
-            X_valid = extractor.extract_select_training_features(
-                data_valid, [[motif_radius], [motif_len], config['hw_num_processors']]
+            X_valid, y_valid = extractor.extract_select_training_features(
+                data_valid, [[motif_radius], [motif_len], config['hw_num_processors']], True
             )
-
-        y_valid = X_valid[1][1]
-        X_valid =  X_valid[1][0]
 
         print(X_valid.head(10))
         print(y_valid.head(10))
@@ -167,7 +164,7 @@ class ConcretePipelineFacade(PipelineFacade):
         # 7. Run Validation
         print('--------------------VALIDATION---------------------------')
         print(X_valid.shape)
-        score = clf.score(X_valid, y_valid)
+        score = clf.score(X_test, y_valid)
         print(score)
         y_pred = clf.predict(X_valid)
         conf = confusion_matrix(y_valid, y_pred, labels=None, sample_weight=None)

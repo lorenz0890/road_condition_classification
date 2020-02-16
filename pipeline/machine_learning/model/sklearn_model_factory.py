@@ -180,7 +180,7 @@ class SklearnModelFactory(ModelFactory):
                 )
                 print('------------------SVC-----------------')
                 print(model['clf'].best_params_)
-                X_test, y_test = model['X_test'], model['y_test']
+                #X_test, y_test = model['X_test'], model['y_test']
                 score = model['clf'].score(X_test, y_test)
                 y_pred = model['clf'].predict(X_test)
                 conf = confusion_matrix(y_test, y_pred, labels=None, sample_weight=None)
@@ -225,7 +225,7 @@ class SklearnModelFactory(ModelFactory):
                 )
                 print('------------------CART-Tree-----------------')
                 print(model['clf'].best_params_)
-                X_test, y_test = model['X_test'], model['y_test']
+                #X_test, y_test = model['X_test'], model['y_test']
                 score = model['clf'].score(X_test, y_test)
                 y_pred = model['clf'].predict(X_test)
                 conf = confusion_matrix(y_test, y_pred, labels=None, sample_weight=None)
@@ -270,7 +270,7 @@ class SklearnModelFactory(ModelFactory):
                 )
                 print('------------------Random Forrest----------------')
                 print(model['clf'].best_params_)
-                X_test, y_test = model['X_test'], model['y_test']
+                #X_test, y_test = model['X_test'], model['y_test']
                 score = model['clf'].score(X_test, y_test)
                 y_pred = model['clf'].predict(X_test)
                 conf = confusion_matrix(y_test, y_pred, labels=None, sample_weight=None)
@@ -325,7 +325,7 @@ class SklearnModelFactory(ModelFactory):
                                    config['classifier_hypermaram_space_sklearn_mlp']['test_set_sz']]
                 )
                 print(model['clf'].best_params_)
-                X_test, y_test = model['X_test'], model['y_test']
+                #X_test, y_test = model['X_test'], model['y_test']
                 score = model['clf'].score(X_test, y_test)
                 y_pred = model['clf'].predict(X_test)
                 conf = confusion_matrix(y_test, y_pred, labels=None, sample_weight=None)
