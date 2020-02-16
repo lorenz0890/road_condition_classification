@@ -558,7 +558,7 @@ class SussexHuaweiPreprocessor(Preprocessor):
         valid_len = int(data_len * valid_sz)
         data_train, data_test_valid = data.head(train_len), data.tail(test_len+valid_len)
         data_test = data_test_valid.head(test_len)
-        data_valid = data_test_valid.head(valid_len)
+        data_valid = data_test_valid.tail(valid_len)
 
         print('Segment by labels')
         #Segment Train
