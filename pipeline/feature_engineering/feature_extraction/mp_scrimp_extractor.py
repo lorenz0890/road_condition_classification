@@ -41,7 +41,7 @@ class MPScrimpExtractor(Extractor):
     def select_features(self, data, args=None):
         """
         Select features by concatenating motifs to an attribute vector and addind a column that determines which
-        data points belong togather (to a distinct motif)
+        data points belong togather (to a distinct motif). Tag vector
         :param data: pandas.DataFrame
         :param args:
         :return: pandas.DataFrame
@@ -68,7 +68,7 @@ class MPScrimpExtractor(Extractor):
 
             X = attr_vec#.transpose()
             X = pandas.DataFrame(X)
-            X=X.groupby(X.index // args[0]).sum()
+            #X=X.groupby(X.index // args[0]).sum()
             #print("asd")
             #print(X.head(10))
 
