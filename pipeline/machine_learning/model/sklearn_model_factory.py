@@ -31,7 +31,7 @@ class SklearnModelFactory(ModelFactory):
         # https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.RandomizedSearchCV.html
         # alternative to grid search: https://github.com/sahilm89/lhsmdu
         :param model_type:
-        :param X:
+        :param X_train:
         :param y:
         :param model_params:
         :param search_params:
@@ -40,7 +40,7 @@ class SklearnModelFactory(ModelFactory):
         """
         try:
 
-            if X_train is None or y_train or X_test is None or y_test is None or model_params is None or search_params is None:
+            if X_train is None or y_train is None or X_test is None or y_test is None or model_params is None or search_params is None:
                 raise TypeError(self.messages.ILLEGAL_ARGUMENT_NONE_TYPE.value)
             if (not isinstance(X_train, pandas.DataFrame) and
                     not isinstance(X_train, pandas.core.frame.DataFrame) \
