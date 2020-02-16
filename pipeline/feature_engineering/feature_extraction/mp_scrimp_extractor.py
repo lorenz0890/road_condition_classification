@@ -40,7 +40,7 @@ class MPScrimpExtractor(Extractor):
     @overrides
     def select_features(self, data, args=None):
         """
-        Select features
+        Select features by selecting motifs with homogeneous labeling
         :param data: pandas.DataFrame
         :param args:
         :return: pandas.DataFrame
@@ -52,8 +52,8 @@ class MPScrimpExtractor(Extractor):
             # print(mtfs)
             count = 0
             i = 1.0
-            print(len(mtfs))
-            print(sz)
+            #print(len(mtfs))
+            #print(sz)
             for motif in mtfs:
                 for index in motif:  # ['acceleration_abs', 'road_label']
                     elem = numpy.array(data[args[3]].values[index:index + args[0]])
