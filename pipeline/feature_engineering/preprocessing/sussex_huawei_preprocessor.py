@@ -640,7 +640,7 @@ class SussexHuaweiPreprocessor(Preprocessor):
             )
 
         #Valid
-        for ind in range(len(data_test_segments)):
+        for ind in range(len(data_valid_segments)):
             data_valid_segments[ind] = self.reduce_quantitativ_data_dimensionality(
                 data=data_valid_segments[ind],
                 mode=config['feature_eng_dim_reduction_type'],  # works better than euclidean for motif
