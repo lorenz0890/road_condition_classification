@@ -557,9 +557,11 @@ class SussexHuaweiPreprocessor(Preprocessor):
         train_len = int(data_len * train_sz)
         valid_len = int(data_len * test_sz)
         data_train, data_test_valid = data.head(train_len), data.tail(test_len+valid_len)
-        data_test = data_test_valid
+        data_test = data_test_valid.head(test_len)
+        data_valid = data_test_valid.head(valid_len)
+
         print('Segment by labels')
-        #print('segment train')
+        #Segment Train
         car_train_segments = self.segment_data(data_train, mode='labels',
                                                  label_column='coarse_label',
                                                  args=selected_coarse_labels)
@@ -573,7 +575,7 @@ class SussexHuaweiPreprocessor(Preprocessor):
                 data_train_segments.append(road_segment)
 
 
-        #print('segment test')
+        #Segment Test
         car_test_segments = self.segment_data(data_test, mode='labels',
                                                label_column='coarse_label',
                                                args=selected_coarse_labels)
@@ -586,18 +588,40 @@ class SussexHuaweiPreprocessor(Preprocessor):
             for road_segment in road_segments:
                 data_test_segments.append(road_segment)
 
+        #Segment Valid
+        car_valid_segments = self.segment_data(data_valid, mode='labels',
+                                              label_column='coarse_label',
+                                              args=selected_coarse_labels)
+        data_valid_segments = []
+        for car_segment in car_valid_segments:
+            road_segments = self.segment_data(car_segment, mode='labels',
+                                              label_column='road_label',
+                                              args=selected_road_labels
+                                              )
+            for road_segment in road_segments:
+                data_valid_segments.append(road_segment)
+
         print('Resample')
+        #Train
         for ind in range(len(data_train_segments)):
             data_train_segments[ind] = data_train_segments[ind].set_index('time')
             data_train_segments[ind] = self.resample_quantitative_data(data_train_segments[ind],
                                                                          freq=freq)  # 8000 1.25 Hz
 
+        #Test
         for ind in range(len(data_test_segments)):
             data_test_segments[ind] = data_test_segments[ind].set_index('time')
             data_test_segments[ind] = self.resample_quantitative_data(data_test_segments[ind],
                                                                          freq=freq)
 
+        #Valid
+        for ind in range(len(data_valid_segments)):
+            data_valid_segments[ind] = data_valid_segments[ind].set_index('time')
+            data_valid_segments[ind] = self.resample_quantitative_data(data_valid_segments[ind],
+                                                                      freq=freq)
+
         print('Dimensionality reduction')
+        #Train
         for ind in range(len(data_train_segments)):
             data_train_segments[ind] = self.reduce_quantitativ_data_dimensionality(
                 data=data_train_segments[ind],
@@ -606,6 +630,7 @@ class SussexHuaweiPreprocessor(Preprocessor):
                 reduced_column_name='acceleration_abs'
             )
 
+        #Test
         for ind in range(len(data_test_segments)):
             data_test_segments[ind] = self.reduce_quantitativ_data_dimensionality(
                 data=data_test_segments[ind],
@@ -614,8 +639,17 @@ class SussexHuaweiPreprocessor(Preprocessor):
                 reduced_column_name='acceleration_abs'
             )
 
-        print(data_train_segments)
+        #Valid
+        for ind in range(len(data_test_segments)):
+            data_valid_segments[ind] = self.reduce_quantitativ_data_dimensionality(
+                data=data_valid_segments[ind],
+                mode='euclidean',  # works better than euclidean for motif
+                columns=acelerometer_columns,
+                reduced_column_name='acceleration_abs'
+            )
+
         print('Normalizing, outlier removal')
+        #Train
         selected_columns = ['acceleration_abs',
                             'road_label', 'id']  # 'acceleration_abs'
         data_train = self.de_segment_data(data_train_segments, selected_columns)
@@ -628,6 +662,7 @@ class SussexHuaweiPreprocessor(Preprocessor):
             quantile=0.99  # current run @0.95 for classical approach via TS Fresh
         )[:-1]
 
+        #Test
         data_test = self.de_segment_data(data_train_segments, selected_columns)
         data_test, mean_test, std_test = self.znormalize_quantitative_data(data_test,
                                                                           selected_columns[:-1],
@@ -640,5 +675,18 @@ class SussexHuaweiPreprocessor(Preprocessor):
             quantile=0.99  # current run @0.95 for classical approach via TS Fresh
         )[:-1]
 
+        #Valid
+        data_valid = self.de_segment_data(data_valid_segments, selected_columns)
+        data_valid, mean_valid, std_valid = self.znormalize_quantitative_data(data_valid,
+                                                                           selected_columns[:-1],
+                                                                           mean_train, std_train)
+
+        data_valid = self.remove_outliers_from_quantitative_data(
+            data_valid,
+            replacement_mode='quantile',
+            columns=selected_columns[:-1],
+            quantile=0.99  # current run @0.95 for classical approach via TS Fresh
+        )[:-1]
+
         #print(data_train)
-        return data_train, mean_train, std_train, data_test
+        return data_train, mean_train, std_train, data_test, data_valid
