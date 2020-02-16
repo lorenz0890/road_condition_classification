@@ -53,6 +53,7 @@ class ConcretePipelineFacade(PipelineFacade):
         # 4. Feature extraction
         print('--------------------FEATURE EXTRACTION------------------')
         X_train = None
+        X_test = None
         if config['feature_eng_extractor_type'] == "motif":
             X_train = extractor.extract_select_training_features(
                 data_train,
