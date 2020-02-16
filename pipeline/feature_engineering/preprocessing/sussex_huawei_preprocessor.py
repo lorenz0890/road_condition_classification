@@ -484,17 +484,17 @@ class SussexHuaweiPreprocessor(Preprocessor):
             os._exit(2)
 
     @overrides
-    def inference_split_process(self, data, params):
+    def inference_split_process(self, data, config, meta_data):
         """
         :param data: pandas.DataFrame
         :param params: List
         :return: pandas.DataFrame, pandas.DataFrame, pandas.DataFrame
         """
         print('Fetch params')
-        acelerometer_columns = [params[0], params[1], params[2]]
-        freq = params[3]  # '1000ms'
-        mean_train = params[4]
-        std_train = params[5]
+        acelerometer_columns = [config['data_set_column_names'][1:][0], config['data_set_column_names'][1:][1], config['data_set_column_names'][1:][2]]
+        freq = config['pre_proc_resample_freq']  # '1000ms'
+        mean_train = meta_data['mean_train']
+        std_train = meta_data['std_train']
 
 
         print('Convert time unit, remove nans')
@@ -509,7 +509,7 @@ class SussexHuaweiPreprocessor(Preprocessor):
         print('Dimensionality reduction')
         data = self.reduce_quantitativ_data_dimensionality(
             data=data,
-            mode='euclidean',  # works better than euclidean for motif
+            mode=config['feature_eng_dim_reduction_type'],  # works better than euclidean for motif
             columns=acelerometer_columns,
             reduced_column_name='acceleration_abs'
         )
@@ -620,13 +620,12 @@ class SussexHuaweiPreprocessor(Preprocessor):
             data_valid_segments[ind] = self.resample_quantitative_data(data_valid_segments[ind],
                                                                       freq=freq)
 
-        print(data_train.head(10))
         print('Dimensionality reduction')
         #Train
         for ind in range(len(data_train_segments)):
             data_train_segments[ind] = self.reduce_quantitativ_data_dimensionality(
                 data=data_train_segments[ind],
-                mode='euclidean',  # works better than euclidean for motif
+                mode=config['feature_eng_dim_reduction_type'],  # works better than euclidean for motif
                 columns=acelerometer_columns,
                 reduced_column_name='acceleration_abs'
             )
@@ -635,7 +634,7 @@ class SussexHuaweiPreprocessor(Preprocessor):
         for ind in range(len(data_test_segments)):
             data_test_segments[ind] = self.reduce_quantitativ_data_dimensionality(
                 data=data_test_segments[ind],
-                mode='euclidean',  # works better than euclidean for motif
+                mode=config['feature_eng_dim_reduction_type'],  # works better than euclidean for motif
                 columns=acelerometer_columns,
                 reduced_column_name='acceleration_abs'
             )
@@ -644,7 +643,7 @@ class SussexHuaweiPreprocessor(Preprocessor):
         for ind in range(len(data_test_segments)):
             data_valid_segments[ind] = self.reduce_quantitativ_data_dimensionality(
                 data=data_valid_segments[ind],
-                mode='euclidean',  # works better than euclidean for motif
+                mode=config['feature_eng_dim_reduction_type'],  # works better than euclidean for motif
                 columns=acelerometer_columns,
                 reduced_column_name='acceleration_abs'
             )
@@ -662,8 +661,6 @@ class SussexHuaweiPreprocessor(Preprocessor):
             columns=selected_columns[:-2],
             quantile=0.99  # current run @0.95 for classical approach via TS Fresh
         )[:-2]
-
-        print(data_train.head(10))
 
         #Test
         data_test = self.de_segment_data(data_train_segments, selected_columns)
@@ -692,4 +689,7 @@ class SussexHuaweiPreprocessor(Preprocessor):
         )[:-2]
 
         #print(data_train)
+        data_train = data_train.loc[:, ~data_train.columns.duplicated()]
+        data_test = data_test.loc[:, ~data_test.columns.duplicated()]
+        data_valid = data_valid.loc[:, ~data_valid.columns.duplicated()]
         return data_train, mean_train, std_train, data_test, data_valid

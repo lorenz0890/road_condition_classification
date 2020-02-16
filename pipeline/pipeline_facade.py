@@ -144,7 +144,8 @@ class ConcretePipelineFacade(PipelineFacade):
 
         data_inference= preprocessor.inference_split_process(
             data=data_valid,
-            params=params
+            config=config,
+            meta_data={'mean_train': mean_train, 'std_train': std_train}
         )
         if config['feature_eng_extractor_type'] == "motif":
             X_valid, y_valid = extractor.extract_select_inference_features(

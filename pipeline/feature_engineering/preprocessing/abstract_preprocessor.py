@@ -180,7 +180,7 @@ class Preprocessor(ABC, RCTCComponent):
         pass
 
     @abstractmethod
-    def inference_split_process(self, data, config):
+    def inference_split_process(self, data, config, meta_data):
         """
         TODO: Required for real data
         :param data: pandas.DataFrame
