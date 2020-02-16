@@ -654,40 +654,42 @@ class SussexHuaweiPreprocessor(Preprocessor):
         selected_columns = ['acceleration_abs',
                             'road_label', 'id']  # 'acceleration_abs'
         data_train = self.de_segment_data(data_train_segments, selected_columns)
-        data_train, mean_train, std_train = self.znormalize_quantitative_data(data_train, selected_columns[:-1])
+        data_train, mean_train, std_train = self.znormalize_quantitative_data(data_train, selected_columns[:-2])
 
         data_train = self.remove_outliers_from_quantitative_data(
             data_train,
             replacement_mode='quantile',
-            columns=selected_columns[:-1],
+            columns=selected_columns[:-2],
             quantile=0.99  # current run @0.95 for classical approach via TS Fresh
-        )[:-1]
+        )[:-2]
+
+        print(data_train.head(10))
 
         #Test
         data_test = self.de_segment_data(data_train_segments, selected_columns)
         data_test, mean_test, std_test = self.znormalize_quantitative_data(data_test,
-                                                                          selected_columns[:-1],
+                                                                          selected_columns[:-2],
                                                                           mean_train, std_train)
 
         data_test = self.remove_outliers_from_quantitative_data(
             data_test,
             replacement_mode='quantile',
-            columns=selected_columns[:-1],
+            columns=selected_columns[:-2],
             quantile=0.99  # current run @0.95 for classical approach via TS Fresh
-        )[:-1]
+        )[:-2]
 
         #Valid
         data_valid = self.de_segment_data(data_valid_segments, selected_columns)
         data_valid, mean_valid, std_valid = self.znormalize_quantitative_data(data_valid,
-                                                                           selected_columns[:-1],
+                                                                           selected_columns[:-2],
                                                                            mean_train, std_train)
 
         data_valid = self.remove_outliers_from_quantitative_data(
             data_valid,
             replacement_mode='quantile',
-            columns=selected_columns[:-1],
+            columns=selected_columns[:-2],
             quantile=0.99  # current run @0.95 for classical approach via TS Fresh
-        )[:-1]
+        )[:-2]
 
         #print(data_train)
         return data_train, mean_train, std_train, data_test, data_valid
