@@ -33,7 +33,7 @@
   "pre_proc_validation_sz": 0.25,
   "pre_proc_test_sz": 0.25,
   "pre_proc_training_sz": 0.5,
-  "pre_proc_resample_freq": "1000ms",
+  "pre_proc_resample_freq": "10000ms",
   "pre_proc_movement_type_label": [
     5
   ],
@@ -43,17 +43,15 @@
   ],
   "feature_eng_extractor_type": "motif",
   "feature_eng_mp_extractor_radii": [
+    5,
     10,
-    100,
-    200,
-    400,
-    600
+    100
+
   ],
   "feature_eng_mp_extractor_lengths": [
-    150,
-    300,
-    600,
-    800
+    10,
+    50,
+    150
   ],
   "feature_eng_baseline_extractor_features": [
     "TODO ADD FEATURES THAT TSFRESH SHOULD EXTRACT"
