@@ -146,6 +146,7 @@ class ConcretePipelineFacade(PipelineFacade):
                 data_valid, [motif_radius, motif_len, config['hw_num_processors']], True
             )
 
+        model_factory.pre_clustering(X_valid, y_valid, None)
         print(X_valid.head(10))
         print(y_valid.head(10))
 

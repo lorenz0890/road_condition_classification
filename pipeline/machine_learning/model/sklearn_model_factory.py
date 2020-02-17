@@ -115,7 +115,7 @@ class SklearnModelFactory(ModelFactory):
                 with open(r"{}".format(search_params[5]), "wb") as output_file:
                     pickle.dump(clf, output_file)
 
-            return {'clf' : clf, 'X_test' : X_test, 'y_test' : y_test} #TODO returning X_test not necessary anymore
+            return {'clf' : clf, 'X_test' : X_test, 'y_test' : y_test} #TODO returning X_test not necessary anymore, refacor
 
         except (TypeError, ValueError):
             self.logger.error(traceback.format_exc())
@@ -176,7 +176,7 @@ class SklearnModelFactory(ModelFactory):
             # Test different classifiers on the detected features
             if (('sklearn_svc' in config['classifier_optimal_search_space'] or 'all' in config['classifier_optimal_search_space']) and
                 X_train.shape[0] >= config['classifier_hypermaram_space_sklearn_svc']['cross_validation_k'] and
-                X_test.shape[0] >= 2
+                X_test.shape[0] >= config['classifier_hypermaram_space_sklearn_rf']['cross_validation_k']
             ):
 
                 print('------------------Sklearn-----------------')
@@ -228,7 +228,7 @@ class SklearnModelFactory(ModelFactory):
 
             if (('sklearn_cart' in config['classifier_optimal_search_space'] or 'all' in config['classifier_optimal_search_space']) and
                     X_train.shape[0] >= config['classifier_hypermaram_space_sklearn_cart']['cross_validation_k'] and
-                    X_test.shape[0] >= 2
+                    X_test.shape[0] >= config['classifier_hypermaram_space_sklearn_rf']['cross_validation_k']
             ):
 
                 model = self.create_model(
@@ -276,7 +276,7 @@ class SklearnModelFactory(ModelFactory):
 
             if (('sklearn_rf' in config['classifier_optimal_search_space'] or 'all' in config['classifier_optimal_search_space']) and
                     X_train.shape[0] >= config['classifier_hypermaram_space_sklearn_rf']['cross_validation_k'] and
-                    X_test.shape[0] >= 2
+                    X_test.shape[0] >= config['classifier_hypermaram_space_sklearn_rf']['cross_validation_k']
             ):
                 model = self.create_model(
                     model_type='random_forrest',
@@ -323,7 +323,7 @@ class SklearnModelFactory(ModelFactory):
 
             if (('sklearn_mlp' in config['classifier_optimal_search_space'] or 'all' in config['classifier_optimal_search_space']) and
                     X_train.shape[0] >= config['classifier_hypermaram_space_sklearn_mlp']['cross_validation_k'] and
-                    X_test.shape[0] >= 2
+                    X_test.shape[0] >= config['classifier_hypermaram_space_sklearn_rf']['cross_validation_k']
             ):
                 architectures = []
                 for architecture in config['classifier_hypermaram_space_sklearn_mlp']['architectures']:
