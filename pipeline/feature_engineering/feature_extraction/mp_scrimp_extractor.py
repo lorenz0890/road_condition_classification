@@ -40,10 +40,10 @@ class MPScrimpExtractor(Extractor):
     @overrides
     def select_features(self, data, args=None):
         """
-        Select features by first finding motifs in time series and tagging them
-        an then using PAA as approximation for whole motifs.
+        Select features by first finding motifs in time series and tagging them.
         Since scrimp returns motif sorted by distances, the top motifs should
         receive the same tags in training and inference sets if they are from the same source.
+        Finally PAA is used for whole motifs found in data via std, mean, min and max.
         :param data: pandas.DataFrame
         :param args:
         :return: pandas.DataFrame
