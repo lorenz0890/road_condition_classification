@@ -113,10 +113,9 @@ class SussexHuaweiDAO(DAO):
                 #print(all_data_labels)
                 all_data, all_labels = zip(*all_data_labels)
 
-                print(all_labels)
-                train = all_labels[0:int(0.5*len(all_labels))]
-                test = pandas.concat(all_labels[int(0.5 * len(all_labels)):int(0.75 * len(all_labels))])
-                valid = pandas.concat(all_labels[int(7.5 * len(all_labels)):])
+                train = pandas.DataFrame(all_labels[0:int(0.5*len(all_labels))])
+                test = pandas.DataFrame(all_labels[int(0.5 * len(all_labels)):int(0.75 * len(all_labels))])
+                valid = pandas.DataFrame(all_labels[int(7.5 * len(all_labels)):])
 
                 train = train.loc[train['coarse_label'] == 5] #Car
                 train = train.loc[train['road_label' == 1], train['road_label' == 3]] #City, Countr<
