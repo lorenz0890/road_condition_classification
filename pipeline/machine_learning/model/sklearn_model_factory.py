@@ -38,8 +38,8 @@ class SklearnModelFactory(ModelFactory):
                                        n_estimators=750
                                        ).fit_predict(X)
 
-        X_combined = X.loc[pandas.DataFrame(y_clustering)[0] == 1]
-        y_combined = y.loc[pandas.DataFrame(y_clustering)[0] == 1]
+        X_combined = X.loc[pandas.DataFrame(y_clustering)[0] == -1]
+        y_combined = y.loc[pandas.DataFrame(y_clustering)[0] == -1]
 
         X_combined = X_combined.reset_index(drop=True)
         y_combined = y_combined.reset_index(drop=True)
@@ -149,7 +149,7 @@ class SklearnModelFactory(ModelFactory):
 
             print("------------------Iteration: {}-----------------".format(i))
 
-            # Preclistering using iso forrests
+            # Preclustering using iso forrests
             X_test, y_test = self.pre_clustering(X_test, y_test, None)
             X_train, y_train = self.pre_clustering(X_train, y_train, None)
 

@@ -74,7 +74,7 @@ class ConcretePipelineFacade(PipelineFacade):
                                                                   encoding_function=lambda x: (x > 2.0).astype(int)
                                                                   )  # 0 City, 1 Countryside
             y_train = data[['road_label', 'id']].reset_index(drop=True)
-            data_train = data[['acceleration_abs', 'id']].reset_index(drop=True)
+            X_train = data[['acceleration_abs', 'id']].reset_index(drop=True)
             #data['id'] = range(1, len(data) + 1) #what happens if i just set this to 1
             #y_train['id'] = data['id']
             #y_train['road_label'].index = list(y_train['id'])
@@ -111,7 +111,7 @@ class ConcretePipelineFacade(PipelineFacade):
             X_train = ['placeholder',
                        [X_train, y_train, 'N/A', 'N/A', 'N/A']]  # required for further processing. TODO: Unifiy naming!
 
-            pass
+
         if X_train is None or X_test is None:
             pass  # TODO Raise Error
 
