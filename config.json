@@ -66,7 +66,8 @@
   "classifier_model_factory_type": "sklearn",
   "classifier_optimal_search_space": [
     "sklearn_cart",
-    "sklearn_rf"
+    "sklearn_rf",
+    "sklearn_svc"
   ],
   "classifier_rep_class_distribution": [
     0.25,
@@ -92,12 +93,12 @@
       "alpha_exponent": 10,
       "architectures": [
         [
-          32,
-          32
+          10,
+          10
         ],
         [
-          16,
-          16
+          5,
+          5
         ]
       ],
       "activation_function": [

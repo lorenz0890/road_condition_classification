@@ -166,6 +166,8 @@ class ConcretePipelineFacade(PipelineFacade):
         # 7. Run Validation
         print('--------------------VALIDATION---------------------------')
         print(X_valid.shape)
+        print("Validation y label 1: {}".format(list(y_valid[0]).count(1.0) / len(y_valid)))  # TODO: make configureable
+        print("Validation y label 3: {}".format(list(y_valid[0]).count(3.0) / len(y_valid)))
         score = clf.score(X_valid, y_valid)
         print(score)
         y_pred = clf.predict(X_valid)
