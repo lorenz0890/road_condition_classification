@@ -30,9 +30,9 @@
     "fine_label",
     "road_label"
   ],
-  "pre_proc_validation_sz": 0.2,
-  "pre_proc_test_sz": 0.2,
-  "pre_proc_training_sz": 0.6,
+  "pre_proc_validation_sz": 0.25,
+  "pre_proc_test_sz": 0.25,
+  "pre_proc_training_sz": 0.5,
   "pre_proc_resample_freq": "1000ms",
   "pre_proc_movement_type_label": [
     5
@@ -53,8 +53,7 @@
     150,
     300,
     600,
-    800,
-    1200
+    800
   ],
   "feature_eng_baseline_extractor_features": [
     "TODO ADD FEATURES THAT TSFRESH SHOULD EXTRACT"
