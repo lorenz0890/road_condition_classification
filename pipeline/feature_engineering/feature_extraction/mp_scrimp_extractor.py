@@ -64,9 +64,15 @@ class MPScrimpExtractor(Extractor):
                         if args[1] >= 3:
                             attr_vec[count + pos][2] = elem.std() #Add std of found motif
                         if args[1] >= 4:
-                            attr_vec[count + pos][2] = numpy.amin(elem) #Add min of found motif
+                            attr_vec[count + pos][3] = numpy.amin(elem) #Add min of found motif
                         if args[1] >= 5:
-                            attr_vec[count + pos][2] = numpy.amax(elem) #Add max of found motif
+                            attr_vec[count + pos][4] = numpy.amax(elem) #Add max of found motif
+                        if args[1] >= 6:
+                            attr_vec[count + pos][5] = numpy.percentile(elem, 25) #Add max of found motif
+                        if args[1] >= 7:
+                            attr_vec[count + pos][6] = numpy.percentile(elem, 50) #Add max of found motif
+                        if args[1] >= 8:
+                            attr_vec[count + pos][7] = numpy.percentile(elem, 75) #Add max of found motif
 
                     count += args[0]
                 tag += 1.0
@@ -78,6 +84,7 @@ class MPScrimpExtractor(Extractor):
             if args[1] >= 2: #If args[1] = 2 then we are selecting relevant features
                 X = X.groupby(X.index // args[0]).mean()
 
+            X = X.dropna()
             return X#, y
 
         except Exception:
@@ -144,7 +151,7 @@ class MPScrimpExtractor(Extractor):
             X_indices = self.extract_features(data=data,
                                               args=[combis[i][1], 16, combis[i][0], 'acceleration_abs'])
             X = self.select_features(data=data,
-                                     args=[combis[i][1], 5, X_indices, 'acceleration_abs'])
+                                     args=[combis[i][1], 8, X_indices, 'acceleration_abs'])
             y = self.select_features(data=data,
                                      args=[combis[i][1], 1, X_indices, 'road_label'])
 
@@ -181,7 +188,7 @@ class MPScrimpExtractor(Extractor):
             #X_valid = self.select_features(data=data,
             #                         args=[length, 1, motifs, 'acceleration_abs'])
             X_valid = self.select_features(data=data,
-                                                   args=[length, 5, X_indices, 'acceleration_abs'])
+                                                   args=[length, 8, X_indices, 'acceleration_abs'])
 
 
             if debug:
