@@ -54,6 +54,7 @@ class ConcretePipelineFacade(PipelineFacade):
         X_test = None
         print(data_train.shape)
         print(data_test.shape)
+        print(data_train.head(100))
         if config['feature_eng_extractor_type'] == "motif":
             X_train = extractor.extract_select_training_features(
                 data_train,
