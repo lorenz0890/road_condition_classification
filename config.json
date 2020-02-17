@@ -56,7 +56,7 @@
   "feature_eng_baseline_extractor_features": [
     "TODO ADD FEATURES THAT TSFRESH SHOULD EXTRACT"
   ],
-  "feature_eng_dim_reduction_type": "euclidean",
+  "feature_eng_dim_reduction_type": "pca",
   "feature_eng_dim_reduction_target_col_name": "acceleration_abs",
   "feature_eng_label_target_col_name": "road_label",
   "feature_end_segment_length" : 30,
