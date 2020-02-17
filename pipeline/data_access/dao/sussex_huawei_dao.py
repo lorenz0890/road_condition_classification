@@ -113,11 +113,11 @@ class SussexHuaweiDAO(DAO):
                 #print(all_data_labels)
                 all_data, all_labels = zip(*all_data_labels)
 
-                train = all_labels[0:int(0.5*len(all_labels))].to_numpy()
+                train = all_labels[0:int(0.5*len(all_labels))]
                 test =  all_labels[int(0.5 * len(all_labels)):int(0.75 * len(all_labels))]
                 valid = all_labels[int(7.5 * len(all_labels)):]
 
-                print(train[numpy.where(train[:,0] == 5),:])
+                print(type(train))
                 sampling_ok = True
 
 
