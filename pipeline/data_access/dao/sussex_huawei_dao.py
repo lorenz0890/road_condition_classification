@@ -109,13 +109,12 @@ class SussexHuaweiDAO(DAO):
             #or max number of trys.
             #TODO make configureable, use values from config and migrate to method
             distribution_ok = False
-            trys_left = 1000
+            trys_left = 2000
             print('Attempting to shuffle trips according to desired distribution')
             while not distribution_ok and trys_left > 0:
-                if trys_left%10 == 0:
-                    #all_data, all_labels = all_data[:-1], all_labels[:-1]
+                if trys_left%50 == 0:
                     print('Attempts left', trys_left)
-                    #print('Reducing Dataset', trys_left)
+
                 train_ok, test_ok, valid_ok = False, False, False
                 all_data_labels = list(zip(all_data, all_labels))
                 random.shuffle(all_data_labels)
