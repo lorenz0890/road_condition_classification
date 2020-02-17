@@ -54,7 +54,7 @@ class MPScrimpExtractor(Extractor):
             attr_vec = numpy.ndarray(shape=(sz, args[1]), dtype=float) #3
             # print(mtfs)
             count = 0
-            i = 1.0
+            tag = 1.0
             #print(mtfs[0][:100])
             #print(sz)
             for motif in mtfs:
@@ -63,16 +63,16 @@ class MPScrimpExtractor(Extractor):
                     for pos, x in enumerate(elem):
                         attr_vec[count + pos][0] = x
                         if args[1] == 2:
-                            attr_vec[count + pos][1] = i
+                            attr_vec[count + pos][1] = tag
 
                     count += args[0]
-                i += 1.0
+                tag += 1.0
 
             X = attr_vec#.transpose()
             X = pandas.DataFrame(X)
             print(X.shape)
             if args[1] == 1:
-                X = X.groupby(X.index // 60).mean().astype(int)
+                X = X.groupby(X.index // 60).first()
             if args[1] == 2:
                 X = X.groupby(X.index // 60).mean()
             print(X.shape)
