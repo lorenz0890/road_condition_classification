@@ -53,7 +53,7 @@ class MPScrimpExtractor(Extractor):
             # print(mtfs)
             count = 0
             i = 1.0
-            #print(len(mtfs))
+            print(mtfs[0][:100])
             #print(sz)
             for motif in mtfs:
                 for index in motif:  # ['acceleration_abs', 'road_label']
@@ -68,7 +68,7 @@ class MPScrimpExtractor(Extractor):
 
             X = attr_vec#.transpose()
             X = pandas.DataFrame(X)
-            X.groupby(X.index // 30).mean()
+            X.groupby(X.index // 60).mean()
             #print("asd")
             #print(X.head(10))
 
