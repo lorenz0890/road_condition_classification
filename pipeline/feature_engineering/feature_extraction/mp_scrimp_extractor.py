@@ -52,33 +52,31 @@ class MPScrimpExtractor(Extractor):
             mtfs = args[2]
             sz = len([item for sublist in mtfs for item in sublist]) * args[0]
             attr_vec = numpy.ndarray(shape=(sz, args[1]), dtype=float) #3
-            # print(mtfs)
             count = 0
             tag = 1.0
-            #print(mtfs[0][:100])
-            #print(sz)
             for motif in mtfs:
                 for index in motif:  # ['acceleration_abs', 'road_label']
                     elem = numpy.array(data[args[3]].values[index:index + args[0]])
                     for pos, x in enumerate(elem):
                         attr_vec[count + pos][0] = x
                         if args[1] >= 2:
-                            attr_vec[count + pos][1] = tag
+                            attr_vec[count + pos][1] = tag #Add tag of found motif
                         if args[1] >= 3:
-                            #print(len(motif))
-                            attr_vec[count + pos][2] = elem.std()
+                            attr_vec[count + pos][2] = elem.std() #Add std of found motif
+                        if args[1] >= 4:
+                            attr_vec[count + pos][2] = numpy.amin(elem) #Add min of found motif
+                        if args[1] >= 5:
+                            attr_vec[count + pos][2] = numpy.amax(elem) #Add max of found motif
 
                     count += args[0]
                 tag += 1.0
 
             X = attr_vec#.transpose()
             X = pandas.DataFrame(X)
-            #print(X.shape)
-            if args[1] == 1:
+            if args[1] == 1: #If args[1] = 1 then we are selecting relevant labels
                 X = X.groupby(X.index // args[0]).first()
-            if args[1] >= 2:
+            if args[1] >= 2: #If args[1] = 2 then we are selecting relevant features
                 X = X.groupby(X.index // args[0]).mean()
-            #print(X.shape)
 
             return X#, y
 
@@ -146,7 +144,7 @@ class MPScrimpExtractor(Extractor):
             X_indices = self.extract_features(data=data,
                                               args=[combis[i][1], 16, combis[i][0], 'acceleration_abs'])
             X = self.select_features(data=data,
-                                     args=[combis[i][1], 3, X_indices, 'acceleration_abs'])
+                                     args=[combis[i][1], 5, X_indices, 'acceleration_abs'])
             y = self.select_features(data=data,
                                      args=[combis[i][1], 1, X_indices, 'road_label'])
 
@@ -183,7 +181,7 @@ class MPScrimpExtractor(Extractor):
             #X_valid = self.select_features(data=data,
             #                         args=[length, 1, motifs, 'acceleration_abs'])
             X_valid = self.select_features(data=data,
-                                                   args=[length, 3, X_indices, 'acceleration_abs'])
+                                                   args=[length, 5, X_indices, 'acceleration_abs'])
 
 
             if debug:

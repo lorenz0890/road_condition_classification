@@ -5,6 +5,7 @@ from os import path
 import traceback
 import pandas
 import numpy
+import random
 
 
 class SussexHuaweiDAO(DAO):
@@ -81,6 +82,7 @@ class SussexHuaweiDAO(DAO):
             all_labels = []
             all_data = []
             id = 0
+            random.shuffle(identifiers)
             for identifier in identifiers:
                 data_string = file_path[0].format(identifier)
                 label_string = file_path[1].format(identifier)
