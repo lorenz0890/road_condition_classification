@@ -105,7 +105,7 @@ class SussexHuaweiDAO(DAO):
 
                 id+=1
 
-            #2. modify distributions of data until target is reached
+            #2. shuffle trips of data until target label distribution is reached
             sampling_ok = False
             while not sampling_ok:
                 all_data_labels = list(zip(all_data, all_labels))
@@ -113,13 +113,11 @@ class SussexHuaweiDAO(DAO):
                 #print(all_data_labels)
                 all_data, all_labels = zip(*all_data_labels)
 
-                train = pandas.DataFrame(all_labels[0:int(0.5*len(all_labels))])
-                test = pandas.DataFrame(all_labels[int(0.5 * len(all_labels)):int(0.75 * len(all_labels))])
-                valid = pandas.DataFrame(all_labels[int(7.5 * len(all_labels)):])
+                train = all_labels[0:int(0.5*len(all_labels))]
+                test =  all_labels[int(0.5 * len(all_labels)):int(0.75 * len(all_labels))]
+                valid = all_labels[int(7.5 * len(all_labels)):]
 
-                train = train.loc[train['coarse_label'] == 5] #Car
-                train = train.loc[train['road_label' == 1], train['road_label' == 3]] #City, Countr<
-                print(train['road_label'].value_counts())
+                print(train)
                 sampling_ok = True
 
 
