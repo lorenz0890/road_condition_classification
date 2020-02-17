@@ -2,6 +2,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.neural_network import MLPClassifier
+from sklearn.ensemble import IsolationForest
 from sklearn.model_selection import RandomizedSearchCV
 import pickle
 import pandas
@@ -18,6 +19,22 @@ class SklearnModelFactory(ModelFactory):
     def __init__(self):
         super().__init__()
 
+
+    def preclustering(self, X, y, args):
+        y_clustering = IsolationForest(behaviour='new',
+                                       max_samples=5,
+                                       n_jobs=-1,
+                                       contamination=0.25,
+                                       max_features=1.0,
+                                       n_estimators=750
+                                       ).fit_predict(X)
+
+        X_combined = X.loc[pandas.DataFrame(y_clustering)[0] == 1]
+        y_combined = y.loc[pandas.DataFrame(y_clustering)[0] == 1]
+
+        X_combined = X_combined.reset_index(drop=True)
+        y_combined = y_combined.reset_index(drop=True)
+        return X_combined, y_combined
 
     @overrides
     def create_model(self, model_type, X_train, y_train, X_test, y_test, model_params, search_params):
@@ -150,6 +167,8 @@ class SklearnModelFactory(ModelFactory):
                 print('Class distribution not representative in test set')
                 continue
 
+            X_test, y_test = self.preclustering(X_test, y_test, None)
+            X_train, y_train = self.preclustering(X_train, y_train, None)
 
             # Test SVC on motif discovery
             if 'sklearn_svc' in config['classifier_optimal_search_space'] or 'all' in config['classifier_optimal_search_space']:

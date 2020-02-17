@@ -127,6 +127,7 @@ class ConcretePipelineFacade(PipelineFacade):
         print(X_test[1][0].head(10))
         print(X_test[1][1].head(10))
 
+
         # 5. Find optimal classifier for given training set
         print('--------------------TRAINING PHASE----------------------')
         clf, score, conf, X_train, motif_len, motif_radius, motif_count = model_factory.find_optimal_model(
