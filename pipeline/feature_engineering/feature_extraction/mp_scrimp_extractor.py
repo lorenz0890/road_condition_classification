@@ -107,14 +107,19 @@ class MPScrimpExtractor(Extractor):
 
             radii = args[0] #[8, 12, 16, 20, 24, 32]  # 6 TODO: if args is None use these values
             lengths = args[1] #[6, 12, 18, 24, 32]  # 5
-            num_tasks = len(radii)*len(lengths)
+            combis = []
+            for radius in radii:
+                for length in lengths:
+                    combi = [radius, length]
+                    combis.append(combi)
+            num_tasks = len(combis)
             task_id = 0
             num_processors = 32# args[2]
             while task_id < num_tasks:
                 processes = []
                 for i in range(num_processors):
                     if num_processors >= 0 and i < num_tasks:#TODO: Consider removal of first condition
-                        p = mp.Process(target=self.__extract_select_training_worker, args=(task_id, data, output, radii, lengths))
+                        p = mp.Process(target=self.__extract_select_training_worker, args=(task_id, data, output, combis))
                         processes.append(p)
                     task_id+=1
 
@@ -136,17 +141,13 @@ class MPScrimpExtractor(Extractor):
             self.logger.error(traceback.format_exc())
             os._exit(2)
 
-    def __extract_select_training_worker(self, i, data, output, radii, lengths):
+    def __extract_select_training_worker(self, i, data, output, combis):
 
         try:
-            combis = []
-            for radius in radii:
-                for length in lengths:
-                    combi = [radius, length]
-                    combis.append(combi)
+
             print("Motif extraction worker no: {0} length: {1}, radius: {2}".format(i, combis[i][1], combis[i][0]))
             X_indices, X_distances = self.extract_features(data=data,
-                                              args=[combis[i][1], 16, combis[i][0], 'acceleration_abs'])
+                                              args=[combis[i][1], 2, combis[i][0], 'acceleration_abs'])
             X = self.select_features(data=data,
                                      args=[combis[i][1], 6, X_indices, 'acceleration_abs', X_distances])
             y = self.select_features(data=data,

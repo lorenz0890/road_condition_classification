@@ -115,7 +115,7 @@ class SussexHuaweiDAO(DAO):
                 if trys_left%10 == 0:
                     #all_data, all_labels = all_data[:-1], all_labels[:-1]
                     print('Attempts left', trys_left)
-                    print('Reducing Dataset', trys_left)
+                    #print('Reducing Dataset', trys_left)
                 train_ok, test_ok, valid_ok = False, False, False
                 all_data_labels = list(zip(all_data, all_labels))
                 random.shuffle(all_data_labels)
