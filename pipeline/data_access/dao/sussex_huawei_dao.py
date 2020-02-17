@@ -106,6 +106,7 @@ class SussexHuaweiDAO(DAO):
                 id+=1
 
             #2. shuffle trips of data until target label distribution is reached
+            #or max number of trys
             sampling_ok = False
             while not sampling_ok:
                 all_data_labels = list(zip(all_data, all_labels))
