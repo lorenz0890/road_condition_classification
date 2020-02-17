@@ -20,7 +20,8 @@ class SklearnModelFactory(ModelFactory):
         super().__init__()
 
 
-    def preclustering(self, X, y, args):
+    @overrides
+    def pre_clustering(self, X, y, args):
         y_clustering = IsolationForest(behaviour='new',
                                        max_samples=5,
                                        n_jobs=-1,

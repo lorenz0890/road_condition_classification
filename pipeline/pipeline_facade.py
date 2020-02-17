@@ -40,19 +40,14 @@ class ConcretePipelineFacade(PipelineFacade):
 
         # 3. Preprocessing
         print('--------------------PRE PROCESSING--------------------')
-        #params = [labels, config['pre_proc_test_sz'], config['pre_proc_training_sz'], config['pre_proc_validation_sz']]
-        #params += config['data_set_column_names'][1:] + [config['pre_proc_movement_type_label']]
-        #params += [config['pre_proc_road_type_label']]
-        #params.append(config['pre_proc_resample_freq'])
-
-        print(data.head(10))
+        #print(data.head(10))
         data_train, mean_train, std_train, data_test, data_valid = preprocessor.training_split_process(
             data=data,
             config=config,
             labels=labels
         )
 
-        print(data_train.head(10))
+        #print(data_train.head(10))
         # 4. Feature extraction
         print('--------------------FEATURE EXTRACTION------------------')
         X_train = None
@@ -60,9 +55,6 @@ class ConcretePipelineFacade(PipelineFacade):
         print(data_train.shape)
         print(data_test.shape)
         if config['feature_eng_extractor_type'] == "motif":
-            #data_train.drop(['id'], axis=1, inplace=True)
-            #data_test.drop(['id'], axis=1, inplace=True)
-            #data_valid.drop(['id'], axis=1, inplace=True)
             X_train = extractor.extract_select_training_features(
                 data_train,
                 [config['feature_eng_mp_extractor_radii'], config['feature_eng_mp_extractor_lengths']]
@@ -71,6 +63,7 @@ class ConcretePipelineFacade(PipelineFacade):
                 data_test,
                 [config['feature_eng_mp_extractor_radii'], config['feature_eng_mp_extractor_lengths']]
             )
+
         if config['feature_eng_extractor_type'] == "tsfresh":
             """
             # TODO migrate the preperation for extraction to extract_select_training_features, make label column name configureable
@@ -141,21 +134,11 @@ class ConcretePipelineFacade(PipelineFacade):
 
         # 6. Prepare Validation
         print('--------------------PREPARE VALIDATION-------------------')
-        #TODO: Adapat for TS Fresh
+        #TODO: Adapt for TS Fresh
         print(data_valid.shape)
         print(data_valid.head(10))
         X_valid, y_valid = None, None
-        #params = []
-        #params += config['data_set_column_names'][1:]
-        #params.append(config['pre_proc_resample_freq'])
-        #params.append(mean_train)
-        #params.append(std_train)
 
-        #data_inference= preprocessor.inference_split_process(
-        #    data=data_valid,
-        #    config=config,
-        #    meta_data={'mean_train': mean_train, 'std_train': std_train}
-        #)
         if config['feature_eng_extractor_type'] == "motif":
             X_valid, y_valid = extractor.extract_select_inference_features(
                 data_valid, [motif_radius, motif_len, config['hw_num_processors']], True

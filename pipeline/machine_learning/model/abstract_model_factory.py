@@ -21,4 +21,13 @@ class ModelFactory(ABC, RCTCComponent):
         :return:
         """
 
+    def pre_clustering(self, X, y, args):
+        """
+        Description
+        :param X:
+        :param y:
+        :param args:
+        :return:
+        """
+
 
