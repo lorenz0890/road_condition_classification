@@ -110,7 +110,7 @@ class SussexHuaweiDAO(DAO):
             while not sampling_ok:
                 all_data_labels = list(zip(all_data, all_labels))
                 random.shuffle(all_data_labels)
-                print(all_data_labels)
+                #print(all_data_labels)
                 all_data, all_labels = zip(*all_data_labels)
 
                 print(all_labels)
