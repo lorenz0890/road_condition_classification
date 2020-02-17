@@ -113,17 +113,17 @@ class SussexHuaweiDAO(DAO):
             print('Attempting to shuffle trips according to desired distribution')
             while not distribution_ok and trys_left > 0:
                 if trys_left%10 == 0:
-                    all_data, all_labels = all_data[:-1], all_labels[:-1]
+                    #all_data, all_labels = all_data[:-1], all_labels[:-1]
                     print('Attempts left', trys_left)
                     print('Reducing Dataset', trys_left)
                 train_ok, test_ok, valid_ok = False, False, False
                 all_data_labels = list(zip(all_data, all_labels))
                 random.shuffle(all_data_labels)
-                all_data, all_labels = zip(*all_data_labels)
+                all_data_shuffled, all_labels_shuffled = zip(*all_data_labels)
 
-                train = all_labels[0:int(0.5*len(all_labels))]
-                test =  all_labels[int(0.5 * len(all_labels)):int(0.75 * len(all_labels))]
-                valid = all_labels[int(0.75 * len(all_labels)):]
+                train = all_labels_shuffled[0:int(0.5*len(all_labels_shuffled))]
+                test =  all_labels_shuffled[int(0.5 * len(all_labels_shuffled)):int(0.75 * len(all_labels_shuffled))]
+                valid = all_labels_shuffled[int(0.75 * len(all_labels_shuffled)):]
 
                 train = train[0].loc[train[0]['road_label'].isin([1,3])]
                 train = train.loc[train['coarse_label'].isin([5])]
