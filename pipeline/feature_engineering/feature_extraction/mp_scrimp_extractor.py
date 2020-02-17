@@ -72,9 +72,9 @@ class MPScrimpExtractor(Extractor):
             X = pandas.DataFrame(X)
             print(X.shape)
             if args[1] == 1:
-                X = X.groupby(X.index // 60).first()
+                X = X.groupby(X.index // int(args[0]/10)).first()
             if args[1] == 2:
-                X = X.groupby(X.index // 60).mean()
+                X = X.groupby(X.index // int(args[0]/10)).mean()
             print(X.shape)
 
             return X#, y
