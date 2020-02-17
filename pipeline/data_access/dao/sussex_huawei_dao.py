@@ -115,9 +115,9 @@ class SussexHuaweiDAO(DAO):
 
                 train = all_labels[0:int(0.5*len(all_labels))]
                 test =  all_labels[int(0.5 * len(all_labels)):int(0.75 * len(all_labels))]
-                valid = all_labels[int(7.5 * len(all_labels)):]
+                valid = all_labels[int(0.75 * len(all_labels)):]
 
-                print(numpy.array(list(train)))
+                print(numpy.array(train[0]))
                 sampling_ok = True
 
 
