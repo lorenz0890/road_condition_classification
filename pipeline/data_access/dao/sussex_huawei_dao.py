@@ -105,6 +105,22 @@ class SussexHuaweiDAO(DAO):
 
                 id+=1
 
+            sampling_ok = False
+            while not sampling_ok:
+                all_data_labels = list(zip(all_data, all_labels))
+                random.shuffle(all_data_labels)
+                all_data, all_labels = zip(*all_data_labels)
+
+                train = pandas.concat(all_labels[0:int(0.5*len(all_labels))])
+                test = pandas.concat(all_labels[int(0.5 * len(all_labels)):int(0.75 * len(all_labels))])
+                valid = pandas.concat(all_labels[int(7.5 * len(all_labels)):])
+
+                train = train.loc[train['coarse_label'] == 5]
+                train = train.loc[train['road_label' == 1], train['road_label' == 3]]
+                print(train['road_label'].value_counts())
+                sampling_ok == True
+
+
             if len(all_labels) > 1 or len(all_data) > 1:
                 #TODO: raise error if len not equal
                 labels = pandas.concat(all_labels, axis=0)
