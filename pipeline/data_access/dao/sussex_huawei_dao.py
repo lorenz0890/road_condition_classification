@@ -118,10 +118,10 @@ class SussexHuaweiDAO(DAO):
                 valid = all_labels[int(0.75 * len(all_labels)):]
 
                 print(numpy.array(train[0])[
-                          numpy.where([train[0][:,0]==5]) &
+                          numpy.where(train[0][:,0] == 5) &
                           (
-                              numpy.where(train[0][:,2]==1) |
-                              numpy.where(train[0][:, 2]==3)
+                              numpy.where(train[0][:, 2] == 1) |
+                              numpy.where(train[0][:, 2] == 3)
                           )
 
                       ])
