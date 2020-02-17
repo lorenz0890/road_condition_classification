@@ -109,7 +109,7 @@ class SussexHuaweiDAO(DAO):
             #or max number of trys.
             #TODO make configureable, use values from config
             distribution_ok = False
-            trys_left = 100
+            trys_left = 500
             while not distribution_ok and trys_left > 0:
                 print('Attempting to shuffle trips according to desired distribution')
                 print('Attempts left', trys_left)
