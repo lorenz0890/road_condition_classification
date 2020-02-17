@@ -128,7 +128,7 @@ class SussexHuaweiDAO(DAO):
                                   (train[:, 2] == 3))
                       ]
                 print(train)
-                print(list(train).count)
+                print(list(train).count(1))
                 sampling_ok = True
 
 
