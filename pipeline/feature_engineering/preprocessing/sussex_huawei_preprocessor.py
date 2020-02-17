@@ -696,8 +696,8 @@ class SussexHuaweiPreprocessor(Preprocessor):
         data_train['acceleration_abs'] = data_train['acceleration_abs'].rolling(2).mean()
         data_test['acceleration_abs'] = data_test['acceleration_abs'].rolling(2).mean()
         data_valid['acceleration_abs'] = data_valid['acceleration_abs'].rolling(2).mean()
-        data_train['acceleration_abs'].dropna(inplace=True)
-        data_test['acceleration_abs'].dropna(inplace=True)
-        data_valid['acceleration_abs'].dropna(inplace=True)
+        data_train['acceleration_abs'].dropna(axis = 0, how = 'any', inplace=True)
+        data_test['acceleration_abs'].dropna(axis = 0, how = 'any', inplace=True)
+        data_valid['acceleration_abs'].dropna(axis = 0, how = 'any', inplace=True)
         print(data_train.head(100))
         return data_train, mean_train, std_train, data_test, data_valid
