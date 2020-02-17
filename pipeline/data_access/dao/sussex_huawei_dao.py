@@ -111,24 +111,22 @@ class SussexHuaweiDAO(DAO):
             while not sampling_ok:
                 all_data_labels = list(zip(all_data, all_labels))
                 random.shuffle(all_data_labels)
-                #print(all_data_labels)
+
                 all_data, all_labels = zip(*all_data_labels)
 
                 train = all_labels[0:int(0.5*len(all_labels))]
                 test =  all_labels[int(0.5 * len(all_labels)):int(0.75 * len(all_labels))]
                 valid = all_labels[int(0.75 * len(all_labels)):]
 
-                print(train)
                 train = numpy.array(train[0])
-                train = train[numpy.where(train[: ,1] == 5)]
+                train = train[numpy.where(train[:][:,1] == 5)]
+                #train = train[
+                #              numpy.where(
+                #                  (train[:, 2] == 1) |
+                #                  (train[:, 2] == 3))
+                #      ]
                 print(train)
-                train = train[
-                              numpy.where(
-                                  (train[:, 2] == 1) |
-                                  (train[:, 2] == 3))
-                      ]
-                print(train)
-                print(list(train).count(1))
+                #if list(train[2]).count(1)/len(list(train[2]) < 0.6
                 sampling_ok = True
 
 
