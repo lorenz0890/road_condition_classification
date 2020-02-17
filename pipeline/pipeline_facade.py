@@ -166,7 +166,7 @@ class ConcretePipelineFacade(PipelineFacade):
         # 7. Run Validation
         print('--------------------VALIDATION---------------------------')
         print(X_valid.shape)
-        score = clf.score(X_test, y_valid)
+        score = clf.score(X_valid, y_valid)
         print(score)
         y_pred = clf.predict(X_valid)
         conf = confusion_matrix(y_valid, y_pred, labels=None, sample_weight=None)
