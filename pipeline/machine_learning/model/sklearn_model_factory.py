@@ -148,6 +148,11 @@ class SklearnModelFactory(ModelFactory):
                     y_test = X_test_list[j][1]
 
             print("------------------Iteration: {}-----------------".format(i))
+
+            # Preclistering using iso forrests
+            X_test, y_test = self.pre_clustering(X_test, y_test, None)
+            X_train, y_train = self.pre_clustering(X_train, y_train, None)
+
             print('------------------Motifs-----------------')
             print("Motif radius: {}".format(X_train_list[i][2]))
             print("Motif length: {}".format(X_train_list[i][3]))
@@ -169,9 +174,12 @@ class SklearnModelFactory(ModelFactory):
                 continue
 
 
-            #Preclistering using iso forrests
-            X_test, y_test = self.pre_clustering(X_test, y_test, None)
-            X_train, y_train = self.pre_clustering(X_train, y_train, None)
+            if not (config['classifier_rep_class_distribution'][0] <
+                    list(y_test[0]).count(1.0) / len(y_test) <
+                    config['classifier_rep_class_distribution'][1]):
+                print('Class distribution not representative in test set')
+                continue
+
 
             # Test different classifiers on the detected features
             if (('sklearn_svc' in config['classifier_optimal_search_space'] or 'all' in config['classifier_optimal_search_space']) and
