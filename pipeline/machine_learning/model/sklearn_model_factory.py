@@ -168,6 +168,10 @@ class SklearnModelFactory(ModelFactory):
                 print('Class distribution not representative in test set')
                 continue
 
+            if not X_train.shape[0]>= 5:
+                print('Test set sample size too small')
+                continue
+
             #Preclistering using iso forrests
             #X_test, y_test = self.pre_clustering(X_test, y_test, None)
             #X_train, y_train = self.pre_clustering(X_train, y_train, None)
