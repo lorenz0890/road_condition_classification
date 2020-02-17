@@ -51,7 +51,7 @@ class MPScrimpExtractor(Extractor):
         try:
             mtfs = args[2]
             sz = len([item for sublist in mtfs for item in sublist]) * args[0]
-            attr_vec = numpy.ndarray(shape=(sz, args[1]), dtype=float) #3
+            attr_vec = numpy.ndarray(shape=(sz, args[1]+1), dtype=float) #3
             # print(mtfs)
             count = 0
             tag = 1.0
@@ -64,6 +64,7 @@ class MPScrimpExtractor(Extractor):
                         attr_vec[count + pos][0] = x
                         if args[1] == 2:
                             attr_vec[count + pos][1] = tag
+                            attr_vec[count + pos][2] = len(motif)
 
                     count += args[0]
                 tag += 1.0
