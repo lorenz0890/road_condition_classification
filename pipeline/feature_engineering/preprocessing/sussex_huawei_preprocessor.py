@@ -693,8 +693,11 @@ class SussexHuaweiPreprocessor(Preprocessor):
         data_valid = data_valid.loc[:, ~data_valid.columns.duplicated()]
 
         print('Rolling mean smoothing')
-        data_train['acceleration_abs'] = data_train['acceleration_abs'].rolling(2).mean().dropna()
-        data_test['acceleration_abs'] = data_test['acceleration_abs'].rolling(2).mean().dropna()
-        data_valid['acceleration_abs'] = data_valid['acceleration_abs'].rolling(2).mean().dropna()
+        data_train['acceleration_abs'] = data_train['acceleration_abs'].rolling(2).mean()
+        data_test['acceleration_abs'] = data_test['acceleration_abs'].rolling(2).mean()
+        data_valid['acceleration_abs'] = data_valid['acceleration_abs'].rolling(2).mean()
+        data_train['acceleration_abs'].dropna(inplace=True)
+        data_test['acceleration_abs'].dropna(inplace=True)
+        data_valid['acceleration_abs'].dropna(inplace=True)
         print(data_train.head(100))
         return data_train, mean_train, std_train, data_test, data_valid
