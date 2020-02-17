@@ -79,8 +79,8 @@
     {
       "test_set_sz": 0.2,
       "verbose": 0,
-      "cross_validation_k": 10,
-      "iterations": 20,
+      "cross_validation_k": 5,
+      "iterations": 2,
       "save_classifier": true,
       "save_classifier_file_name": "mlp_rs.pickle",
       "solver": [
@@ -134,8 +134,8 @@
   "classifier_hypermaram_space_sklearn_svc": {
     "test_set_sz": 0.2,
     "verbose": 0,
-    "cross_validation_k": 10,
-    "iterations": 20,
+    "cross_validation_k": 5,
+    "iterations": 2,
     "save_classifier": true,
     "save_classifier_file_name": "svc_rs.pickle",
     "kernel": [
@@ -171,8 +171,8 @@
   "classifier_hypermaram_space_sklearn_rf": {
     "test_set_sz": 0.2,
     "verbose": 0,
-    "cross_validation_k": 10,
-    "iterations": 2,
+    "cross_validation_k": 5,
+    "iterations": 3,
     "save_classifier": true,
     "save_classifier_file_name": "rf_rs.pickle",
     "n_estimators": [
@@ -203,8 +203,8 @@
   "classifier_hypermaram_space_sklearn_cart": {
     "test_set_sz": 0.2,
     "verbose": 0,
-    "cross_validation_k": 10,
-    "iterations": 2,
+    "cross_validation_k": 5,
+    "iterations": 3,
     "save_classifier": true,
     "save_classifier_file_name": "dt_rs.pickle",
     "max_depth": [
