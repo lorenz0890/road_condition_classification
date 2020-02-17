@@ -187,7 +187,7 @@ class SklearnModelFactory(ModelFactory):
                     X_test=X_test,
                     y_test=y_test,
                     model_params={
-                        'kernel': ['rbf', 'linear', 'poly'],
+                        'kernel': ['rbf', 'linear', 'poly'], #TODO use value from config
                         'degree': sp_randint(config['classifier_hypermaram_space_sklearn_svc']['degree'][0],
                                              config['classifier_hypermaram_space_sklearn_svc']['degree'][1]),
                         'gamma': numpy.concatenate((10.0 ** -numpy.arange(0, config['classifier_hypermaram_space_sklearn_svc']['gamma_exponent']),
@@ -362,6 +362,7 @@ class SklearnModelFactory(ModelFactory):
                                    config['classifier_hypermaram_space_sklearn_mlp']['save_classifier_file_name'],
                                    config['classifier_hypermaram_space_sklearn_mlp']['test_set_sz']]
                 )
+                print('------------------MLP----------------')
                 print(model['clf'].best_params_)
                 score = model['clf'].score(X_test, y_test)
                 y_pred = model['clf'].predict(X_test)
@@ -377,6 +378,8 @@ class SklearnModelFactory(ModelFactory):
                 print(score)
                 print(conf)
                 print("\n\n")
+
+
 
         print("best len", best_motif_len, "best radius", best_motif_radius)
         return best_clf, best_score, best_conf, best_X_train, best_motif_len, best_motif_radius, best_motif_count

@@ -19,7 +19,7 @@ class MPScrimpExtractor(Extractor):
     @overrides
     def extract_features(self, data, args = None):
         """
-        Extract features
+        Extract features using SCRIMP++
         Source:
         https://github.com/target/matrixprofile-ts/blob/master/docs/examples/Motif%20Discovery.ipynb
         :param data: pandas.DataFrame
@@ -43,6 +43,7 @@ class MPScrimpExtractor(Extractor):
         Select features by first finding motifs in time series and tagging them.
         Since scrimp returns motif sorted by distances, the top motifs should
         receive the same tags in training and inference sets if they are from the same source.
+        As potentially discriminative feature, the motif distance is also added.
         Finally PAA is used for whole motifs found in data via std, mean, min and max.
         :param data: pandas.DataFrame
         :param args:
@@ -105,8 +106,8 @@ class MPScrimpExtractor(Extractor):
             manager = mp.Manager()
             output = manager.dict()
 
-            radii = args[0] #[8, 12, 16, 20, 24, 32]  # 6 TODO: if args is None use these values
-            lengths = args[1] #[6, 12, 18, 24, 32]  # 5
+            radii = args[0]
+            lengths = args[1]
             combis = []
             for radius in radii:
                 for length in lengths:
@@ -114,7 +115,7 @@ class MPScrimpExtractor(Extractor):
                     combis.append(combi)
             num_tasks = len(combis)
             task_id = 0
-            num_processors = 32# args[2]
+            num_processors = 32
             while task_id < num_tasks:
                 processes = []
                 for i in range(num_processors):
@@ -144,10 +145,9 @@ class MPScrimpExtractor(Extractor):
     def __extract_select_training_worker(self, i, data, output, combis):
 
         try:
-
             print("Motif extraction worker no: {0} length: {1}, radius: {2}".format(i, combis[i][1], combis[i][0]))
             X_indices, X_distances = self.extract_features(data=data,
-                                              args=[combis[i][1], 32, combis[i][0], 'acceleration_abs'])
+                                              args=[combis[i][1], 4, combis[i][0], 'acceleration_abs'])
             X = self.select_features(data=data,
                                      args=[combis[i][1], 6, X_indices, 'acceleration_abs', X_distances])
             y = self.select_features(data=data,
@@ -178,17 +178,13 @@ class MPScrimpExtractor(Extractor):
         """
 
         try:
-            X_train = args[2]
-            length = args[0]
-            radius=args[1]
+            length = args[1]
+            radius=args[0]
 
-            X_indices, X_distances = self.extract_features(data=data, args=[length, 32, radius, 'acceleration_abs'])
-            #X_valid = self.select_features(data=data,
-            #                         args=[length, 1, motifs, 'acceleration_abs'])
+            X_indices, X_distances = self.extract_features(data=data, args=[length, 4, radius, 'acceleration_abs'])
+
             X_valid = self.select_features(data=data,
                                                    args=[length, 6, X_indices, 'acceleration_abs', X_distances])
-
-
             if debug:
                 y_valid = self.select_features(data=data,
                                                        args=[length, 1, X_indices, 'road_label', X_distances])
