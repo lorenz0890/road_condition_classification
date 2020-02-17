@@ -109,6 +109,8 @@ class SussexHuaweiDAO(DAO):
             #or max number of trys
             sampling_ok = False
             while not sampling_ok:
+                train_ok, test_ok, valid_ok = False, False, False
+
                 all_data_labels = list(zip(all_data, all_labels))
                 random.shuffle(all_data_labels)
 
@@ -122,10 +124,22 @@ class SussexHuaweiDAO(DAO):
                 train = train.loc[train['coarse_label'].isin([5])]
                 if 3 in train['road_label'].value_counts().index:
                     if 0.4 < train['road_label'].value_counts()[3]/train.shape[0] < 0.6:
-                        sampling_ok = True
-                print(train['road_label'].value_counts())
+                        train_ok = True
 
+                test = test[0].loc[test[0]['road_label'].isin([1, 3])]
+                test = test.loc[test['coarse_label'].isin([5])]
+                if 3 in test['road_label'].value_counts().index:
+                    if 0.4 < test['road_label'].value_counts()[3] / test.shape[0] < 0.6:
+                        test_ok = True
 
+                valid = valid[0].loc[valid[0]['road_label'].isin([1, 3])]
+                valid = valid.loc[valid['coarse_label'].isin([5])]
+                if 3 in valid['road_label'].value_counts().index:
+                    if 0.4 < valid['road_label'].value_counts()[3] / valid.shape[0] < 0.6:
+                        valid_ok = True
+
+                if train_ok and test_ok and valid_ok:
+                    sampling_ok = True
 
             if len(all_labels) > 1 or len(all_data) > 1:
                 #TODO: raise error if len not equal
