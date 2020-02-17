@@ -68,7 +68,8 @@
   "feature_end_segment_length" : 30,
   "classifier_model_factory_type": "sklearn",
   "classifier_optimal_search_space": [
-    "sklearn_cart"
+    "sklearn_cart",
+    "sklearn_rf"
   ],
   "classifier_rep_class_distribution": [
     0.4,
@@ -171,7 +172,7 @@
     "test_set_sz": 0.2,
     "verbose": 0,
     "cross_validation_k": 10,
-    "iterations": 20,
+    "iterations": 2,
     "save_classifier": true,
     "save_classifier_file_name": "rf_rs.pickle",
     "n_estimators": [
