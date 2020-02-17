@@ -9,7 +9,6 @@ import os
 import traceback
 from pipeline.machine_learning.model.abstract_model_factory import ModelFactory
 from overrides import overrides
-from sklearn.model_selection import train_test_split
 from scipy.stats import randint as sp_randint
 from sklearn.metrics import confusion_matrix
 import numpy

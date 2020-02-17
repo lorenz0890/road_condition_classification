@@ -64,8 +64,8 @@ class MPScrimpExtractor(Extractor):
                         attr_vec[count + pos][0] = x
                         if args[1] >= 2:
                             attr_vec[count + pos][1] = tag
-                            if args[1] >= 3:
-                                attr_vec[count + pos][2] = len(motif)/len(data[args[3]].values)
+                        if args[1] >= 3:
+                            attr_vec[count + pos][2] = len(motif)/len(data[args[3]].values)
 
                     count += args[0]
                 tag += 1.0
