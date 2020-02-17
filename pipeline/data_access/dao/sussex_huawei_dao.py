@@ -126,7 +126,7 @@ class SussexHuaweiDAO(DAO):
                         train_new.append(row)
 
                 print(train_new)
-                print(train_new[2].count(1)/len(train_new[2]))
+                print(train_new.count(1)/len(train_new))
 
 
             if len(all_labels) > 1 or len(all_data) > 1:
