@@ -150,8 +150,8 @@ class SklearnModelFactory(ModelFactory):
             print("------------------Iteration: {}-----------------".format(i))
 
             # Preclustering using iso forrests
-            X_test, y_test = self.pre_clustering(X_test, y_test, None)
-            X_train, y_train = self.pre_clustering(X_train, y_train, None)
+            #X_test, y_test = self.pre_clustering(X_test, y_test, None)
+            #X_train, y_train = self.pre_clustering(X_train, y_train, None)
 
             print('------------------Motifs-----------------')
             print("Motif radius: {}".format(X_train_list[i][2]))
