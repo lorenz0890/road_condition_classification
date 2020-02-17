@@ -137,7 +137,7 @@ class SklearnModelFactory(ModelFactory):
             print("Motif count: {}".format(X_train_list[i][4]))
             print("X shape: {}".format(X_train.shape))
             print("Training y label 1: {}".format(list(y_train[0]).count(1.0) / len(y_train))) #TODO: make configureable
-            print("Training y label 3: {}\n\n".format(list(y_train[0]).count(3.0) / len(y_train)))
+            print("Training y label 3: {}".format(list(y_train[0]).count(3.0) / len(y_train)))
             print("Test y label 1: {}".format(list(y_test[0]).count(1.0) / len(y_test)))  # TODO: make configureable
             print("Test y label 3: {}\n\n".format(list(y_test[0]).count(3.0) / len(y_test)))
             if not (config['classifier_rep_class_distribution'][0] <
@@ -150,7 +150,7 @@ class SklearnModelFactory(ModelFactory):
                     config['classifier_rep_class_distribution'][1]):
                 print('Class distribution not representative in test set')
                 continue
-                
+
             # Test SVC on motif discovery
             if 'sklearn_svc' in config['classifier_optimal_search_space'] or 'all' in config['classifier_optimal_search_space']:
                 print('------------------Sklearn-----------------')
