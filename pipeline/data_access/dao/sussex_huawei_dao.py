@@ -82,7 +82,7 @@ class SussexHuaweiDAO(DAO):
             all_labels = []
             all_data = []
             id = 0
-            random.shuffle(identifiers)
+
             for identifier in identifiers:
                 data_string = file_path[0].format(identifier)
                 label_string = file_path[1].format(identifier)
@@ -105,7 +105,6 @@ class SussexHuaweiDAO(DAO):
 
                 id+=1
 
-            print(all_labels[0])
             if len(all_labels) > 1 or len(all_data) > 1:
                 #TODO: raise error if len not equal
                 labels = pandas.concat(all_labels, axis=0)
