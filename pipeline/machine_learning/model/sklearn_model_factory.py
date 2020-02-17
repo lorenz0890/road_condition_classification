@@ -2,6 +2,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.neural_network import MLPClassifier
+from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import RandomizedSearchCV
 import pickle
 import pandas
@@ -151,6 +152,11 @@ class SklearnModelFactory(ModelFactory):
                 print('Class distribution not representative in test set')
                 continue
 
+
+            #Test of KNN
+            clf = KNeighborsClassifier(n_neighbours=3)
+            clf.fit(X_train, y_train)
+            print(clf.score(X_test, y_test))
             # Test SVC on motif discovery
             if 'sklearn_svc' in config['classifier_optimal_search_space'] or 'all' in config['classifier_optimal_search_space']:
                 print('------------------Sklearn-----------------')
