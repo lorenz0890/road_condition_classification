@@ -31,9 +31,9 @@ class SklearnModelFactory(ModelFactory):
         :return:
         """
         y_clustering = IsolationForest(behaviour='new',
-                                       max_samples=5,
+                                       max_samples='auto',
                                        n_jobs=-1,
-                                       contamination=0.1,
+                                       contamination='auto',
                                        max_features=1.0,
                                        n_estimators=750
                                        ).fit_predict(X)
