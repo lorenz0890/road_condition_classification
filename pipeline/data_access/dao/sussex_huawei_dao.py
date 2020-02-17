@@ -121,10 +121,11 @@ class SussexHuaweiDAO(DAO):
                 train = numpy.array(train[0])
                 train_new = []
                 for row in train:
+                    print(row)
                     if row[1] == 5:
                         train_new.append(row)
 
-                print(train)
+                print(train_new)
                 print(train_new[2].count(1)/len(train_new[2]))
 
 
