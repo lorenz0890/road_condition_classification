@@ -118,15 +118,10 @@ class SussexHuaweiDAO(DAO):
                 test =  all_labels[int(0.5 * len(all_labels)):int(0.75 * len(all_labels))]
                 valid = all_labels[int(0.75 * len(all_labels)):]
 
-                train = numpy.array(train[0])
-                train_new = []
-                for row in train:
-                    print(row)
-                    if row[1] == 5:
-                        train_new.append(row)
+                train = pandas.concat(train[0], axis=0)
 
-                print(train_new)
-                print(train_new.count(1)/len(train_new))
+                #print(train_new)
+                #print(train_new.count(1)/len(train_new))
 
 
             if len(all_labels) > 1 or len(all_data) > 1:
