@@ -126,6 +126,7 @@ class SussexHuaweiDAO(DAO):
                 else:
                     upper, lower = b, a
 
+            print(lower, upper)
             #Shuffle until train, test, valid set match global distribution
             print('Attempting to shuffle trips according to desired distribution')
             while not distribution_ok and trys_left > 0:
