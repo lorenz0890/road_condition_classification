@@ -75,7 +75,7 @@ class MPScrimpExtractor(Extractor):
             #print(X.shape)
             if args[1] == 1:
                 X = X.groupby(X.index // args[0]).first()
-            if args[1] == 2:
+            if args[1] >= 2:
                 X = X.groupby(X.index // args[0]).mean()
             #print(X.shape)
 
