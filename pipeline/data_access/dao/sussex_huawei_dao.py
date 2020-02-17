@@ -120,10 +120,9 @@ class SussexHuaweiDAO(DAO):
 
                 train = train[0].loc[train[0]['road_label'].isin([1,3])]
                 train = train.loc[train['coarse_label'].isin([5])]
-                print(train['road_label'].value_counts().index)
-                print(train['road_label'].value_counts())
-                if 0.4 < train['road_label'].value_counts()['3']/train.shape[0] < 0.6:
-                    sampling_ok = True
+                if 3 in train['road_label'].value_counts().index:
+                    if 0.4 < train['road_label'].value_counts()[3]/train.shape[0] < 0.6:
+                        sampling_ok = True
                 print(train['road_label'].value_counts())
 
 
