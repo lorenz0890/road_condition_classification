@@ -105,6 +105,7 @@ class SussexHuaweiDAO(DAO):
 
                 id+=1
 
+            print(all_labels[0])
             if len(all_labels) > 1 or len(all_data) > 1:
                 #TODO: raise error if len not equal
                 labels = pandas.concat(all_labels, axis=0)

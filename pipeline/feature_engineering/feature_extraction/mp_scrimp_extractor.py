@@ -30,7 +30,7 @@ class MPScrimpExtractor(Extractor):
             mp = matrixProfile.scrimp_plus_plus(data[args[3]].values, args[0]) #6 or 32
             mtfs, motif_d = motifs.motifs(data[args[3]].values, mp, max_motifs=args[1], radius=args[2])  # 2, 23
 
-            return mtfs
+            return mtfs, motif_d
 
         except Exception:
             self.logger.error(traceback.format_exc())
@@ -50,11 +50,12 @@ class MPScrimpExtractor(Extractor):
         """
         try:
             mtfs = args[2]
+            motif_d = args[4]
             sz = len([item for sublist in mtfs for item in sublist]) * args[0]
             attr_vec = numpy.ndarray(shape=(sz, args[1]), dtype=float) #3
             count = 0
             tag = 1.0
-            for motif in mtfs:
+            for i, motif in enumerate(mtfs):
                 for index in motif:  # ['acceleration_abs', 'road_label']
                     elem = numpy.array(data[args[3]].values[index:index + args[0]])
                     for pos, x in enumerate(elem):
@@ -68,11 +69,7 @@ class MPScrimpExtractor(Extractor):
                         if args[1] >= 5:
                             attr_vec[count + pos][4] = numpy.amax(elem) #Add max of found motif
                         if args[1] >= 6:
-                            attr_vec[count + pos][5] = numpy.percentile(elem, 25) #Add 0.25 percentile
-                        if args[1] >= 7:
-                            attr_vec[count + pos][6] = numpy.percentile(elem, 50) #Add 0.5 percentile
-                        if args[1] >= 8:
-                            attr_vec[count + pos][7] = numpy.percentile(elem, 75) #Add 0.75 percentile
+                            attr_vec[count + pos][5] = motif_d[i] #Add 0.25 percentile
 
                     count += args[0]
                 tag += 1.0
@@ -148,12 +145,12 @@ class MPScrimpExtractor(Extractor):
                     combi = [radius, length]
                     combis.append(combi)
             print("Motif extraction worker no: {0} length: {1}, radius: {2}".format(i, combis[i][1], combis[i][0]))
-            X_indices = self.extract_features(data=data,
+            X_indices, X_distances = self.extract_features(data=data,
                                               args=[combis[i][1], 16, combis[i][0], 'acceleration_abs'])
             X = self.select_features(data=data,
-                                     args=[combis[i][1], 5, X_indices, 'acceleration_abs'])
+                                     args=[combis[i][1], 6, X_indices, 'acceleration_abs', X_distances])
             y = self.select_features(data=data,
-                                     args=[combis[i][1], 1, X_indices, 'road_label'])
+                                     args=[combis[i][1], 1, X_indices, 'road_label', X_distances])
 
             print("Motif extraction worker no: {0} returned".format(i))
             output[i] = {
@@ -184,16 +181,16 @@ class MPScrimpExtractor(Extractor):
             length = args[0]
             radius=args[1]
 
-            X_indices = self.extract_features(data=data, args=[length,16,radius,'acceleration_abs'])
+            X_indices, X_distances = self.extract_features(data=data, args=[length,16,radius,'acceleration_abs'])
             #X_valid = self.select_features(data=data,
             #                         args=[length, 1, motifs, 'acceleration_abs'])
             X_valid = self.select_features(data=data,
-                                                   args=[length, 5, X_indices, 'acceleration_abs'])
+                                                   args=[length, 6, X_indices, 'acceleration_abs', X_distances])
 
 
             if debug:
                 y_valid = self.select_features(data=data,
-                                                       args=[length, 1, X_indices, 'road_label'])
+                                                       args=[length, 1, X_indices, 'road_label', X_distances])
 
                 return X_valid, y_valid
 
