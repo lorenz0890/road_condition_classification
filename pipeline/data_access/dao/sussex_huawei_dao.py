@@ -119,7 +119,8 @@ class SussexHuaweiDAO(DAO):
                 valid = all_labels[int(0.75 * len(all_labels)):]
 
                 train = train[0].loc[train[0]['road_label'].isin([1,3])]
-                print(train)
+                train = train.loc[train['coarse_label'].isin([5])]
+                print(train['road_label'].value_counts())
                 #print(train_new.count(1)/len(train_new))
                 sampling_ok = True
 
