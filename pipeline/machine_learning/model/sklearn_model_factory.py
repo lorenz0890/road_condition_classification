@@ -168,16 +168,15 @@ class SklearnModelFactory(ModelFactory):
                 print('Class distribution not representative in test set')
                 continue
 
-            if not X_train.shape[0]>= 5:
-                print('Test set sample size too small')
-                continue
 
             #Preclistering using iso forrests
-            #X_test, y_test = self.pre_clustering(X_test, y_test, None)
-            #X_train, y_train = self.pre_clustering(X_train, y_train, None)
+            X_test, y_test = self.pre_clustering(X_test, y_test, None)
+            X_train, y_train = self.pre_clustering(X_train, y_train, None)
 
             # Test SVC on motif discovery
-            if 'sklearn_svc' in config['classifier_optimal_search_space'] or 'all' in config['classifier_optimal_search_space']:
+            if ('sklearn_svc' in config['classifier_optimal_search_space'] or 'all' in config['classifier_optimal_search_space'] and
+                X_train.shape[0] >= config['classifier_hypermaram_space_sklearn_svc']['cross_validation_k']):
+
                 print('------------------Sklearn-----------------')
                 model = self.create_model(
                     model_type='svc',
@@ -226,7 +225,9 @@ class SklearnModelFactory(ModelFactory):
                 print(conf)
                 print("\n\n")
 
-            if 'sklearn_cart' in config['classifier_optimal_search_space'] or 'all' in config['classifier_optimal_search_space']:
+            if ('sklearn_cart' in config['classifier_optimal_search_space'] or 'all' in config['classifier_optimal_search_space'] and
+                    X_train.shape[0] >= config['classifier_hypermaram_space_sklearn_cart']['cross_validation_k']):
+
                 model = self.create_model(
                     model_type='cart_tree',
                     X_train=X_train,
@@ -271,7 +272,8 @@ class SklearnModelFactory(ModelFactory):
                 print(conf)
                 print("\n\n")
 
-            if 'sklearn_rf' in config['classifier_optimal_search_space'] or 'all' in config['classifier_optimal_search_space']:
+            if ('sklearn_rf' in config['classifier_optimal_search_space'] or 'all' in config['classifier_optimal_search_space'] and
+                    X_train.shape[0] >= config['classifier_hypermaram_space_sklearn_rf']['cross_validation_k']):
                 model = self.create_model(
                     model_type='random_forrest',
                     X_train=X_train,
@@ -316,7 +318,8 @@ class SklearnModelFactory(ModelFactory):
                 print(conf)
                 print("\n\n")
 
-            if 'sklearn_mlp' in config['classifier_optimal_search_space'] or 'all' in config['classifier_optimal_search_space']:
+            if ('sklearn_mlp' in config['classifier_optimal_search_space'] or 'all' in config['classifier_optimal_search_space'] and
+                    X_train.shape[0] >= config['classifier_hypermaram_space_sklearn_mlp']['cross_validation_k']):
                 architectures = []
                 for architecture in config['classifier_hypermaram_space_sklearn_mlp']['architectures']:
                     architectures.append(tuple(architecture))
