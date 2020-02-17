@@ -154,7 +154,7 @@ class SklearnModelFactory(ModelFactory):
 
 
             #Test of KNN
-            clf = KNeighborsClassifier(n_neighbours=3)
+            clf = KNeighborsClassifier(n_neighbors=3)
             clf.fit(X_train, y_train)
             print(clf.score(X_test, y_test))
             # Test SVC on motif discovery
