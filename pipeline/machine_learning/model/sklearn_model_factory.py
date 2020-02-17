@@ -22,6 +22,14 @@ class SklearnModelFactory(ModelFactory):
 
     @overrides
     def pre_clustering(self, X, y, args):
+        """
+        Preclustering and outlier detection using random forrests
+        TODO: Make configureable
+        :param X:
+        :param y:
+        :param args:
+        :return:
+        """
         y_clustering = IsolationForest(behaviour='new',
                                        max_samples=5,
                                        n_jobs=-1,
@@ -94,12 +102,6 @@ class SklearnModelFactory(ModelFactory):
 
             if model is None:
                 raise ValueError(self.messages.PROVIDED_MODE_DOESNT_EXIST.value)
-
-            #X_train, X_test, y_train, y_test = train_test_split(X,
-            #                                                    y,
-            #                                                    test_size=search_params[6],
-            #                                                    stratify=y
-            #                                                    )
 
             clf = RandomizedSearchCV(model,
                                      model_params,
@@ -174,7 +176,7 @@ class SklearnModelFactory(ModelFactory):
             X_train, y_train = self.pre_clustering(X_train, y_train, None)
 
             # Test SVC on motif discovery
-            if ('sklearn_svc' in config['classifier_optimal_search_space'] or 'all' in config['classifier_optimal_search_space'] and
+            if (('sklearn_svc' in config['classifier_optimal_search_space'] or 'all' in config['classifier_optimal_search_space']) and
                 X_train.shape[0] >= config['classifier_hypermaram_space_sklearn_svc']['cross_validation_k']):
 
                 print('------------------Sklearn-----------------')
@@ -209,7 +211,6 @@ class SklearnModelFactory(ModelFactory):
                 )
                 print('------------------SVC-----------------')
                 print(model['clf'].best_params_)
-                #X_test, y_test = model['X_test'], model['y_test']
                 score = model['clf'].score(X_test, y_test)
                 y_pred = model['clf'].predict(X_test)
                 conf = confusion_matrix(y_test, y_pred, labels=None, sample_weight=None)
@@ -225,7 +226,7 @@ class SklearnModelFactory(ModelFactory):
                 print(conf)
                 print("\n\n")
 
-            if ('sklearn_cart' in config['classifier_optimal_search_space'] or 'all' in config['classifier_optimal_search_space'] and
+            if (('sklearn_cart' in config['classifier_optimal_search_space'] or 'all' in config['classifier_optimal_search_space']) and
                     X_train.shape[0] >= config['classifier_hypermaram_space_sklearn_cart']['cross_validation_k']):
 
                 model = self.create_model(
@@ -256,7 +257,6 @@ class SklearnModelFactory(ModelFactory):
                 )
                 print('------------------CART-Tree-----------------')
                 print(model['clf'].best_params_)
-                #X_test, y_test = model['X_test'], model['y_test']
                 score = model['clf'].score(X_test, y_test)
                 y_pred = model['clf'].predict(X_test)
                 conf = confusion_matrix(y_test, y_pred, labels=None, sample_weight=None)
@@ -272,7 +272,7 @@ class SklearnModelFactory(ModelFactory):
                 print(conf)
                 print("\n\n")
 
-            if ('sklearn_rf' in config['classifier_optimal_search_space'] or 'all' in config['classifier_optimal_search_space'] and
+            if (('sklearn_rf' in config['classifier_optimal_search_space'] or 'all' in config['classifier_optimal_search_space']) and
                     X_train.shape[0] >= config['classifier_hypermaram_space_sklearn_rf']['cross_validation_k']):
                 model = self.create_model(
                     model_type='random_forrest',
@@ -302,7 +302,6 @@ class SklearnModelFactory(ModelFactory):
                 )
                 print('------------------Random Forrest----------------')
                 print(model['clf'].best_params_)
-                #X_test, y_test = model['X_test'], model['y_test']
                 score = model['clf'].score(X_test, y_test)
                 y_pred = model['clf'].predict(X_test)
                 conf = confusion_matrix(y_test, y_pred, labels=None, sample_weight=None)
@@ -318,7 +317,7 @@ class SklearnModelFactory(ModelFactory):
                 print(conf)
                 print("\n\n")
 
-            if ('sklearn_mlp' in config['classifier_optimal_search_space'] or 'all' in config['classifier_optimal_search_space'] and
+            if (('sklearn_mlp' in config['classifier_optimal_search_space'] or 'all' in config['classifier_optimal_search_space']) and
                     X_train.shape[0] >= config['classifier_hypermaram_space_sklearn_mlp']['cross_validation_k']):
                 architectures = []
                 for architecture in config['classifier_hypermaram_space_sklearn_mlp']['architectures']:
@@ -358,7 +357,6 @@ class SklearnModelFactory(ModelFactory):
                                    config['classifier_hypermaram_space_sklearn_mlp']['test_set_sz']]
                 )
                 print(model['clf'].best_params_)
-                #X_test, y_test = model['X_test'], model['y_test']
                 score = model['clf'].score(X_test, y_test)
                 y_pred = model['clf'].predict(X_test)
                 conf = confusion_matrix(y_test, y_pred, labels=None, sample_weight=None)

@@ -118,7 +118,7 @@ class MPScrimpExtractor(Extractor):
             while task_id < num_tasks:
                 processes = []
                 for i in range(num_processors):
-                    if num_processors >= 0 and i < num_tasks:#TODO: Consider removal of first condition
+                    if num_processors >= 0 and i < num_tasks and task_id < num_tasks:#TODO: Consider removal of first condition
                         p = mp.Process(target=self.__extract_select_training_worker, args=(task_id, data, output, combis))
                         processes.append(p)
                     task_id+=1
