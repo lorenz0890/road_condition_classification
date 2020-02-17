@@ -78,8 +78,8 @@
     "sklearn_mlp"
   ],
   "classifier_rep_class_distribution": [
-    0.4,
-    0.6
+    0.3,
+    0.7
   ],
   "classifier_hypermaram_space_sklearn_mlp":
     {

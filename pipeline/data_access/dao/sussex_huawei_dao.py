@@ -113,7 +113,7 @@ class SussexHuaweiDAO(DAO):
 
             #Get gobal distribution
             labels_dist = pandas.concat(all_labels, axis=0)
-            labels_dist = labels_dist.locl[labels_dist['road_label'].isin([1,3])]
+            labels_dist = labels_dist.loc[labels_dist['road_label'].isin([1,3])]
             labels_dist = labels_dist.locl[labels_dist['coarse_label'].isin([5])]
             upper, lower = 1.0, 0.0
             if (3 in labels_dist['road_label'].value_counts().index and
