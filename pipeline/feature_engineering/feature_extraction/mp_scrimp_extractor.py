@@ -78,9 +78,9 @@ class MPScrimpExtractor(Extractor):
             X = attr_vec#.transpose()
             X = pandas.DataFrame(X)
             if args[1] == 1: #If args[1] = 1 then we are selecting relevant labels
-                X = X.groupby(X.index // args[0]/10).first()
+                X = X.groupby(X.index // args[0]).first()
             if args[1] >= 2: #If args[1] = 2 then we are selecting relevant features
-                X = X.groupby(X.index // args[0]/10).mean()
+                X = X.groupby(X.index // args[0]).mean()
 
             X = X.dropna()
             return X#, y
