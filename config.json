@@ -51,6 +51,7 @@
   ],
   "feature_eng_mp_extractor_lengths": [
     10,
+    25,
     50,
     100,
     150
