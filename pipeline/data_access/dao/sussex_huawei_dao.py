@@ -107,8 +107,11 @@ class SussexHuaweiDAO(DAO):
 
             #2. shuffle trips of data until target label distribution is reached
             #or max number of trys
-            sampling_ok = False
-            while not sampling_ok:
+            distribution_ok = False
+            trys_left = 20
+            while not distribution_ok and trys_left > 0:
+                print('Attempting to shuffle trips according to desired distribution')
+                print('Attempts left', trys_left)
                 train_ok, test_ok, valid_ok = False, False, False
 
                 all_data_labels = list(zip(all_data, all_labels))
@@ -139,7 +142,9 @@ class SussexHuaweiDAO(DAO):
                         valid_ok = True
 
                 if train_ok and test_ok and valid_ok:
-                    sampling_ok = True
+                    distribution_ok = True
+
+                trys_left -=1
 
             if len(all_labels) > 1 or len(all_data) > 1:
                 #TODO: raise error if len not equal
