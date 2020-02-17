@@ -110,6 +110,23 @@ class SussexHuaweiDAO(DAO):
             #TODO make configureable, use values from config and migrate to method
             distribution_ok = False
             trys_left = 2000
+
+            #Get gobal distribution
+            labels_dist = pandas.concat(all_labels, axis=0)
+            labels_dist = labels_dist.locl[labels_dist['road_label'].isin([1,3])]
+            labels_dist = labels_dist.locl[labels_dist['coarse_label'].isin([5])]
+            upper, lower = 1.0, 0.0
+            if (3 in labels_dist['road_label'].value_counts().index and
+                1 in labels_dist['road_label'].value_counts().index
+            ):
+                a = labels_dist['road_label'].value_counts()[3] / labels_dist.shape[0]
+                b = labels_dist['road_label'].value_counts()[1] / labels_dist.shape[0]
+                if a > b:
+                    upper, lower = a, b
+                else:
+                    upper, lower = b, a
+
+            #Shuffle until train, test, valid set match global distribution
             print('Attempting to shuffle trips according to desired distribution')
             while not distribution_ok and trys_left > 0:
                 if trys_left%50 == 0:
@@ -127,21 +144,21 @@ class SussexHuaweiDAO(DAO):
                 train = train[0].loc[train[0]['road_label'].isin([1,3])]
                 train = train.loc[train['coarse_label'].isin([5])]
                 if 3 in train['road_label'].value_counts().index:
-                    if 0.4 < train['road_label'].value_counts()[3]/train.shape[0] < 0.6:
+                    if lower < train['road_label'].value_counts()[3]/train.shape[0] < upper:
                         train_ok = True
                     #print(train['road_label'].value_counts()[3]/train.shape[0])
 
                 test = test[0].loc[test[0]['road_label'].isin([1, 3])]
                 test = test.loc[test['coarse_label'].isin([5])]
                 if 3 in test['road_label'].value_counts().index:
-                    if 0.4 < test['road_label'].value_counts()[3] / test.shape[0] < 0.6:
+                    if lower < test['road_label'].value_counts()[3] / test.shape[0] < upper:
                         test_ok = True
                     #print(test['road_label'].value_counts()[3] / test.shape[0])
 
                 valid = valid[0].loc[valid[0]['road_label'].isin([1, 3])]
                 valid = valid.loc[valid['coarse_label'].isin([5])]
                 if 3 in valid['road_label'].value_counts().index:
-                    if 0.4 < valid['road_label'].value_counts()[3] / valid.shape[0] < 0.6:
+                    if lower < valid['road_label'].value_counts()[3] / valid.shape[0] < upper:
                         valid_ok = True
                     #print(valid['road_label'].value_counts()[3] / valid.shape[0])
 
