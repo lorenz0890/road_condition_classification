@@ -30,9 +30,9 @@
     "fine_label",
     "road_label"
   ],
-  "pre_proc_validation_sz": 0.25,
-  "pre_proc_test_sz": 0.25,
-  "pre_proc_training_sz": 0.5,
+  "pre_proc_validation_sz": 0.225,
+  "pre_proc_test_sz": 0.225,
+  "pre_proc_training_sz": 0.55,
   "pre_proc_resample_freq": "1000ms",
   "pre_proc_movement_type_label": [
     5
