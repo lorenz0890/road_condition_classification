@@ -692,12 +692,12 @@ class SussexHuaweiPreprocessor(Preprocessor):
         data_test = data_test.loc[:, ~data_test.columns.duplicated()]
         data_valid = data_valid.loc[:, ~data_valid.columns.duplicated()]
 
-        print('Rolling mean smoothing')
-        data_train['acceleration_abs'] = data_train['acceleration_abs'].rolling(5, min_periods=1, win_type='gaussian').sum(std=3) #TODO make configureable
-        data_test['acceleration_abs'] = data_test['acceleration_abs'].rolling(5, min_periods=1, win_type='gaussian').sum(std=3)
-        data_valid['acceleration_abs'] = data_valid['acceleration_abs'].rolling(5, min_periods=1, win_type='gaussian').sum(std=3)
-        data_train = self.remove_nans(data_train, replacement_mode='del_row')
-        data_test = self.remove_nans(data_test, replacement_mode='del_row')
-        data_valid = self.remove_nans(data_valid, replacement_mode='del_row')
+        #print('Rolling mean smoothing')
+        #data_train['acceleration_abs'] = data_train['acceleration_abs'].rolling(5, min_periods=1, win_type='gaussian').sum(std=3) #TODO make configureable
+        #data_test['acceleration_abs'] = data_test['acceleration_abs'].rolling(5, min_periods=1, win_type='gaussian').sum(std=3)
+        #data_valid['acceleration_abs'] = data_valid['acceleration_abs'].rolling(5, min_periods=1, win_type='gaussian').sum(std=3)
+        #data_train = self.remove_nans(data_train, replacement_mode='del_row')
+        #data_test = self.remove_nans(data_test, replacement_mode='del_row')
+        #data_valid = self.remove_nans(data_valid, replacement_mode='del_row')
         #print(data_train.head(100))
         return data_train, mean_train, std_train, data_test, data_valid
