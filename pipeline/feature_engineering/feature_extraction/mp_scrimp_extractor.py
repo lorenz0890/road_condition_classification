@@ -68,11 +68,11 @@ class MPScrimpExtractor(Extractor):
                         if args[1] >= 5:
                             attr_vec[count + pos][4] = numpy.amax(elem) #Add max of found motif
                         if args[1] >= 6:
-                            attr_vec[count + pos][5] = numpy.percentile(elem, 25) #Add max of found motif
+                            attr_vec[count + pos][5] = numpy.percentile(elem, 25) #Add 0.25 percentile
                         if args[1] >= 7:
-                            attr_vec[count + pos][6] = numpy.percentile(elem, 50) #Add max of found motif
+                            attr_vec[count + pos][6] = numpy.percentile(elem, 50) #Add 0.5 percentile
                         if args[1] >= 8:
-                            attr_vec[count + pos][7] = numpy.percentile(elem, 75) #Add max of found motif
+                            attr_vec[count + pos][7] = numpy.percentile(elem, 75) #Add 0.75 percentile
 
                     count += args[0]
                 tag += 1.0

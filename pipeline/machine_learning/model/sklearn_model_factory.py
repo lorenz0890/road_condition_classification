@@ -168,6 +168,7 @@ class SklearnModelFactory(ModelFactory):
                 print('Class distribution not representative in test set')
                 continue
 
+            #Preclistering using iso forrests
             X_test, y_test = self.pre_clustering(X_test, y_test, None)
             X_train, y_train = self.pre_clustering(X_train, y_train, None)
 
