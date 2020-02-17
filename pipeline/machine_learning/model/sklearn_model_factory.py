@@ -33,7 +33,7 @@ class SklearnModelFactory(ModelFactory):
         y_clustering = IsolationForest(behaviour='new',
                                        max_samples='auto',
                                        n_jobs=-1,
-                                       contamination='auto',
+                                       contamination=0.05,
                                        max_features=1.0,
                                        n_estimators=750
                                        ).fit_predict(X)
