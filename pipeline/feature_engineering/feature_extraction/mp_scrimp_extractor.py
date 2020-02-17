@@ -65,6 +65,7 @@ class MPScrimpExtractor(Extractor):
                         if args[1] >= 2:
                             attr_vec[count + pos][1] = tag
                         if args[1] >= 3:
+                            print(len(motif))
                             attr_vec[count + pos][2] = len(motif)/len(data[args[3]].values)
 
                     count += args[0]
@@ -143,7 +144,7 @@ class MPScrimpExtractor(Extractor):
                     combis.append(combi)
             print("Motif extraction worker no: {0} length: {1}, radius: {2}".format(i, combis[i][1], combis[i][0]))
             X_indices = self.extract_features(data=data,
-                                              args=[combis[i][1], 3, combis[i][0], 'acceleration_abs'])
+                                              args=[combis[i][1], 16, combis[i][0], 'acceleration_abs'])
             X = self.select_features(data=data,
                                      args=[combis[i][1], 3, X_indices, 'acceleration_abs'])
             y = self.select_features(data=data,
@@ -178,7 +179,7 @@ class MPScrimpExtractor(Extractor):
             length = args[0]
             radius=args[1]
 
-            X_indices = self.extract_features(data=data, args=[length,3,radius,'acceleration_abs'])
+            X_indices = self.extract_features(data=data, args=[length,16,radius,'acceleration_abs'])
             #X_valid = self.select_features(data=data,
             #                         args=[length, 1, motifs, 'acceleration_abs'])
             X_valid = self.select_features(data=data,
