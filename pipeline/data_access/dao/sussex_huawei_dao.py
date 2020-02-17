@@ -118,9 +118,10 @@ class SussexHuaweiDAO(DAO):
                 test =  all_labels[int(0.5 * len(all_labels)):int(0.75 * len(all_labels))]
                 valid = all_labels[int(0.75 * len(all_labels)):]
 
-                print(type(train[0]))
-                #print(train_new)
+                train = train.loc[train[0]['road_label'].isin([1,3])]
+                print(train)
                 #print(train_new.count(1)/len(train_new))
+                sampling_ok = True
 
 
             if len(all_labels) > 1 or len(all_data) > 1:
