@@ -139,16 +139,14 @@ class SklearnModelFactory(ModelFactory):
         best_motif_count = -1
 
         for i in range(1, len(X_train_list)):
-            X_train = X_train_list[i][0] # [:3000]
-            y_train = X_train_list[i][1]  # [:3000]
+            X_train = X_train_list[i][0]
+            y_train = X_train_list[i][1]
             X_test, y_test = None, None
             for j in range(1, len(X_test_list)):
                 if X_train_list[i][2] == X_test_list[j][2] and X_train_list[i][3] == X_test_list[j][3]:
                     X_test = X_test_list[j][0]
                     y_test = X_test_list[j][1]
 
-            #print(X_test.head(10))
-            #print(y_test.head(10))
             print("------------------Iteration: {}-----------------".format(i))
             print('------------------Motifs-----------------')
             print("Motif radius: {}".format(X_train_list[i][2]))
@@ -175,7 +173,7 @@ class SklearnModelFactory(ModelFactory):
             X_test, y_test = self.pre_clustering(X_test, y_test, None)
             X_train, y_train = self.pre_clustering(X_train, y_train, None)
 
-            # Test SVC on motif discovery
+            # Test different classifiers on the detected features
             if (('sklearn_svc' in config['classifier_optimal_search_space'] or 'all' in config['classifier_optimal_search_space']) and
                 X_train.shape[0] >= config['classifier_hypermaram_space_sklearn_svc']['cross_validation_k']):
 
@@ -207,7 +205,7 @@ class SklearnModelFactory(ModelFactory):
                                    config['classifier_hypermaram_space_sklearn_svc']['iterations'],
                                    config['classifier_hypermaram_space_sklearn_svc']['save_classifier'],
                                    config['classifier_hypermaram_space_sklearn_svc']['save_classifier_file_name'],
-                                   config['classifier_hypermaram_space_sklearn_svc']['test_set_sz']]
+                                   config['classifier_hypermaram_space_sklearn_svc']['test_set_sz']] #TODO: This is deprecated at the classifier level. Remove from config and here.
                 )
                 print('------------------SVC-----------------')
                 print(model['clf'].best_params_)

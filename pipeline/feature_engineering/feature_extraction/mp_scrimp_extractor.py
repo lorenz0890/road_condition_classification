@@ -182,7 +182,7 @@ class MPScrimpExtractor(Extractor):
             length = args[0]
             radius=args[1]
 
-            X_indices, X_distances = self.extract_features(data=data, args=[length,16,radius,'acceleration_abs'])
+            X_indices, X_distances = self.extract_features(data=data, args=[length,2,radius,'acceleration_abs'])
             #X_valid = self.select_features(data=data,
             #                         args=[length, 1, motifs, 'acceleration_abs'])
             X_valid = self.select_features(data=data,
