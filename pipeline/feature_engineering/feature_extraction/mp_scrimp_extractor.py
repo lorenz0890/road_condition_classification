@@ -65,7 +65,7 @@ class MPScrimpExtractor(Extractor):
                         if args[1] >= 2:
                             attr_vec[count + pos][1] = tag
                         if args[1] >= 3:
-                            print(len(motif))
+                            #print(len(motif))
                             attr_vec[count + pos][2] = elem.std()
 
                     count += args[0]

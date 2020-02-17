@@ -4,9 +4,7 @@
   "data_set_trips": [
     "040517", "040717", "050617", "050717", "060317", "060617",
     "070317", "070617", "080317", "080517", "080617", "090317",
-    "090617", "100317", "100517", "110517", "120517", "120617",
-    "130317", "130617", "140317", "140617", "150517", "150617",
-    "160317", "170317", "170517", "180417", "190417", "190517"
+    "090617", "100317", "100517", "110517", "120517", "120617"
   ],
   "data_set_path": "./data_sets/sussex_huawei/User1/{}/Hips_Motion.txt",
   "data_labels_path": "./data_sets/sussex_huawei/User1/{}/Label.txt",
@@ -35,7 +33,7 @@
   "pre_proc_validation_sz": 0.25,
   "pre_proc_test_sz": 0.25,
   "pre_proc_training_sz": 0.5,
-  "pre_proc_resample_freq": "10000ms",
+  "pre_proc_resample_freq": "5000ms",
   "pre_proc_movement_type_label": [
     5
   ],
