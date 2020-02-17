@@ -67,7 +67,8 @@
   "classifier_optimal_search_space": [
     "sklearn_cart",
     "sklearn_rf",
-    "sklearn_svc"
+    "sklearn_svc",
+    "sklearn_mlp"
   ],
   "classifier_rep_class_distribution": [
     0.25,

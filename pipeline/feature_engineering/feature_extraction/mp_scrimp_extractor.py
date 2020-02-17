@@ -41,7 +41,7 @@ class MPScrimpExtractor(Extractor):
     def select_features(self, data, args=None):
         """
         Select features by first finding motifs in time series and tagging them
-        an then using PAA as approximation for segements of length N.
+        an then using PAA as approximation for whole motifs.
         Since scrimp returns motif sorted by distances, the top motifs should
         receive the same tags in training and inference sets if they are from the same source.
         :param data: pandas.DataFrame
@@ -70,12 +70,12 @@ class MPScrimpExtractor(Extractor):
 
             X = attr_vec#.transpose()
             X = pandas.DataFrame(X)
-            print(X.shape)
+            #print(X.shape)
             if args[1] == 1:
-                X = X.groupby(X.index // int(args[0])).first()
+                X = X.groupby(X.index // args[0]).first()
             if args[1] == 2:
-                X = X.groupby(X.index // int(args[0])).mean()
-            print(X.shape)
+                X = X.groupby(X.index // args[0]).mean()
+            #print(X.shape)
 
             return X#, y
 
