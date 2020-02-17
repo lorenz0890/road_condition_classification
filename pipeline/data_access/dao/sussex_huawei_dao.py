@@ -118,8 +118,7 @@ class SussexHuaweiDAO(DAO):
                 test =  all_labels[int(0.5 * len(all_labels)):int(0.75 * len(all_labels))]
                 valid = all_labels[int(0.75 * len(all_labels)):]
 
-                train = pandas.concat(train[0], axis=0)
-
+                print(type(train[0]))
                 #print(train_new)
                 #print(train_new.count(1)/len(train_new))
 
