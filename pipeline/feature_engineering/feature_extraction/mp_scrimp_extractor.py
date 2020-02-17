@@ -151,7 +151,7 @@ class MPScrimpExtractor(Extractor):
             X_indices = self.extract_features(data=data,
                                               args=[combis[i][1], 16, combis[i][0], 'acceleration_abs'])
             X = self.select_features(data=data,
-                                     args=[combis[i][1], 8, X_indices, 'acceleration_abs'])
+                                     args=[combis[i][1], 5, X_indices, 'acceleration_abs'])
             y = self.select_features(data=data,
                                      args=[combis[i][1], 1, X_indices, 'road_label'])
 
@@ -188,7 +188,7 @@ class MPScrimpExtractor(Extractor):
             #X_valid = self.select_features(data=data,
             #                         args=[length, 1, motifs, 'acceleration_abs'])
             X_valid = self.select_features(data=data,
-                                                   args=[length, 8, X_indices, 'acceleration_abs'])
+                                                   args=[length, 5, X_indices, 'acceleration_abs'])
 
 
             if debug:
