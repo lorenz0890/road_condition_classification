@@ -35,7 +35,7 @@
   "pre_proc_validation_sz": 0.25,
   "pre_proc_test_sz": 0.25,
   "pre_proc_training_sz": 0.5,
-  "pre_proc_resample_freq": "5000ms",
+  "pre_proc_resample_freq": "1000ms",
   "pre_proc_movement_type_label": [
     5
   ],
@@ -49,7 +49,8 @@
     5,
     10,
     100,
-    150
+    150,
+    200
 
   ],
   "feature_eng_mp_extractor_lengths": [
@@ -57,7 +58,10 @@
     25,
     50,
     100,
-    150
+    150,
+    200,
+    400,
+    800
   ],
   "feature_eng_scrimp_extractor_features": 3,
   "feature_eng_baseline_extractor_paa_len" : 30,
@@ -83,7 +87,7 @@
       "test_set_sz": 0.2,
       "verbose": 0,
       "cross_validation_k": 5,
-      "iterations": 2,
+      "iterations": 10,
       "save_classifier": true,
       "save_classifier_file_name": "mlp_rs.pickle",
       "solver": [
@@ -138,7 +142,7 @@
     "test_set_sz": 0.2,
     "verbose": 0,
     "cross_validation_k": 5,
-    "iterations": 2,
+    "iterations": 10,
     "save_classifier": true,
     "save_classifier_file_name": "svc_rs.pickle",
     "kernel": [
@@ -175,7 +179,7 @@
     "test_set_sz": 0.2,
     "verbose": 0,
     "cross_validation_k": 5,
-    "iterations": 3,
+    "iterations": 10,
     "save_classifier": true,
     "save_classifier_file_name": "rf_rs.pickle",
     "n_estimators": [
@@ -207,7 +211,7 @@
     "test_set_sz": 0.2,
     "verbose": 0,
     "cross_validation_k": 5,
-    "iterations": 3,
+    "iterations": 10,
     "save_classifier": true,
     "save_classifier_file_name": "dt_rs.pickle",
     "max_depth": [
