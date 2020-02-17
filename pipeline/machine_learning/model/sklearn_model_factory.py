@@ -169,8 +169,8 @@ class SklearnModelFactory(ModelFactory):
                 continue
 
             #Preclistering using iso forrests
-            X_test, y_test = self.pre_clustering(X_test, y_test, None)
-            X_train, y_train = self.pre_clustering(X_train, y_train, None)
+            #X_test, y_test = self.pre_clustering(X_test, y_test, None)
+            #X_train, y_train = self.pre_clustering(X_train, y_train, None)
 
             # Test SVC on motif discovery
             if 'sklearn_svc' in config['classifier_optimal_search_space'] or 'all' in config['classifier_optimal_search_space']:
