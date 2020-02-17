@@ -699,5 +699,5 @@ class SussexHuaweiPreprocessor(Preprocessor):
         data_train = self.remove_nans(data_train, replacement_mode='del_row')
         data_test = self.remove_nans(data_test, replacement_mode='del_row')
         data_valid = self.remove_nans(data_valid, replacement_mode='del_row')
-        print(data_train.head(100))
+        #print(data_train.head(100))
         return data_train, mean_train, std_train, data_test, data_valid

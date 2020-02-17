@@ -173,17 +173,11 @@ class SklearnModelFactory(ModelFactory):
                 print('Class distribution not representative in test set')
                 continue
 
-
-            if not (config['classifier_rep_class_distribution'][0] <
-                    list(y_test[0]).count(1.0) / len(y_test) <
-                    config['classifier_rep_class_distribution'][1]):
-                print('Class distribution not representative in test set')
-                continue
-
-
             # Test different classifiers on the detected features
             if (('sklearn_svc' in config['classifier_optimal_search_space'] or 'all' in config['classifier_optimal_search_space']) and
-                X_train.shape[0] >= config['classifier_hypermaram_space_sklearn_svc']['cross_validation_k']):
+                X_train.shape[0] >= config['classifier_hypermaram_space_sklearn_svc']['cross_validation_k'] and
+                X_test.shape[0] >= 2
+            ):
 
                 print('------------------Sklearn-----------------')
                 model = self.create_model(
@@ -233,7 +227,9 @@ class SklearnModelFactory(ModelFactory):
                 print("\n\n")
 
             if (('sklearn_cart' in config['classifier_optimal_search_space'] or 'all' in config['classifier_optimal_search_space']) and
-                    X_train.shape[0] >= config['classifier_hypermaram_space_sklearn_cart']['cross_validation_k']):
+                    X_train.shape[0] >= config['classifier_hypermaram_space_sklearn_cart']['cross_validation_k'] and
+                    X_test.shape[0] >= 2
+            ):
 
                 model = self.create_model(
                     model_type='cart_tree',
@@ -279,7 +275,9 @@ class SklearnModelFactory(ModelFactory):
                 print("\n\n")
 
             if (('sklearn_rf' in config['classifier_optimal_search_space'] or 'all' in config['classifier_optimal_search_space']) and
-                    X_train.shape[0] >= config['classifier_hypermaram_space_sklearn_rf']['cross_validation_k']):
+                    X_train.shape[0] >= config['classifier_hypermaram_space_sklearn_rf']['cross_validation_k'] and
+                    X_test.shape[0] >= 2
+            ):
                 model = self.create_model(
                     model_type='random_forrest',
                     X_train=X_train,
@@ -324,7 +322,9 @@ class SklearnModelFactory(ModelFactory):
                 print("\n\n")
 
             if (('sklearn_mlp' in config['classifier_optimal_search_space'] or 'all' in config['classifier_optimal_search_space']) and
-                    X_train.shape[0] >= config['classifier_hypermaram_space_sklearn_mlp']['cross_validation_k']):
+                    X_train.shape[0] >= config['classifier_hypermaram_space_sklearn_mlp']['cross_validation_k'] and
+                    X_test.shape[0] >= 2
+            ):
                 architectures = []
                 for architecture in config['classifier_hypermaram_space_sklearn_mlp']['architectures']:
                     architectures.append(tuple(architecture))
