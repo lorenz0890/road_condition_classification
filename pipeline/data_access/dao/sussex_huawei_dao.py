@@ -119,16 +119,13 @@ class SussexHuaweiDAO(DAO):
                 valid = all_labels[int(0.75 * len(all_labels)):]
 
                 train = numpy.array(train[0])
-                print(train[:][1])
-                train = train[numpy.where(train[:][:,1] == 5)]
-                #train = train[
-                #              numpy.where(
-                #                  (train[:, 2] == 1) |
-                #                  (train[:, 2] == 3))
-                #      ]
+                train_new = []
+                for row in train:
+                    if row[1] == 5:
+                        train_new.append(row)
+
                 print(train)
-                #if list(train[2]).count(1)/len(list(train[2]) < 0.6
-                sampling_ok = True
+                print(train_new[2].count(1)/len(train_new[2]))
 
 
             if len(all_labels) > 1 or len(all_data) > 1:
