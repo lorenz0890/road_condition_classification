@@ -106,7 +106,8 @@ class SussexHuaweiDAO(DAO):
                 id+=1
 
             #2. shuffle trips of data until target label distribution is reached
-            #or max number of trys
+            #or max number of trys.
+            #TODO make configureable, use values from config
             distribution_ok = False
             trys_left = 100
             while not distribution_ok and trys_left > 0:
@@ -126,21 +127,21 @@ class SussexHuaweiDAO(DAO):
                 train = train[0].loc[train[0]['road_label'].isin([1,3])]
                 train = train.loc[train['coarse_label'].isin([5])]
                 if 3 in train['road_label'].value_counts().index:
-                    if 0.45 < train['road_label'].value_counts()[3]/train.shape[0] < 0.55:
+                    if 0.4 < train['road_label'].value_counts()[3]/train.shape[0] < 0.6:
                         train_ok = True
                     print(train['road_label'].value_counts()[3]/train.shape[0])
 
                 test = test[0].loc[test[0]['road_label'].isin([1, 3])]
                 test = test.loc[test['coarse_label'].isin([5])]
                 if 3 in test['road_label'].value_counts().index:
-                    if 0.45 < test['road_label'].value_counts()[3] / test.shape[0] < 0.55:
+                    if 0.4 < test['road_label'].value_counts()[3] / test.shape[0] < 0.6:
                         test_ok = True
                     print(test['road_label'].value_counts()[3] / test.shape[0])
 
                 valid = valid[0].loc[valid[0]['road_label'].isin([1, 3])]
                 valid = valid.loc[valid['coarse_label'].isin([5])]
                 if 3 in valid['road_label'].value_counts().index:
-                    if 0.45 < valid['road_label'].value_counts()[3] / valid.shape[0] < 0.55:
+                    if 0.4 < valid['road_label'].value_counts()[3] / valid.shape[0] < 0.6:
                         valid_ok = True
                     print(valid['road_label'].value_counts()[3] / valid.shape[0])
 
