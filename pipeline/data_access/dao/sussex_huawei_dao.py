@@ -126,23 +126,23 @@ class SussexHuaweiDAO(DAO):
                 train = train[0].loc[train[0]['road_label'].isin([1,3])]
                 train = train.loc[train['coarse_label'].isin([5])]
                 if 3 in train['road_label'].value_counts().index:
-                    if 0.4 < train['road_label'].value_counts()[3]/train.shape[0] < 0.6:
+                    if 0.45 < train['road_label'].value_counts()[3]/train.shape[0] < 0.55:
                         train_ok = True
                     print(train['road_label'].value_counts()[3]/train.shape[0])
 
                 test = test[0].loc[test[0]['road_label'].isin([1, 3])]
                 test = test.loc[test['coarse_label'].isin([5])]
                 if 3 in test['road_label'].value_counts().index:
-                    if 0.4 < test['road_label'].value_counts()[3] / test.shape[0] < 0.6:
+                    if 0.45 < test['road_label'].value_counts()[3] / test.shape[0] < 0.55:
                         test_ok = True
-                    print(test['road_label'].value_counts()[3] / train.shape[0])
+                    print(test['road_label'].value_counts()[3] / test.shape[0])
 
                 valid = valid[0].loc[valid[0]['road_label'].isin([1, 3])]
                 valid = valid.loc[valid['coarse_label'].isin([5])]
                 if 3 in valid['road_label'].value_counts().index:
-                    if 0.4 < valid['road_label'].value_counts()[3] / valid.shape[0] < 0.6:
+                    if 0.45 < valid['road_label'].value_counts()[3] / valid.shape[0] < 0.55:
                         valid_ok = True
-                    print(valid['road_label'].value_counts()[3] / train.shape[0])
+                    print(valid['road_label'].value_counts()[3] / valid.shape[0])
 
                 if train_ok and test_ok and valid_ok:
                     distribution_ok = True
