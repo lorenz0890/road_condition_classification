@@ -121,6 +121,7 @@ class SussexHuaweiDAO(DAO):
                 print(train)
                 train = numpy.array(train[0])
                 train = train[numpy.where(train[: ,1] == 5)]
+                print(train)
                 train = train[
                               numpy.where(
                                   (train[:, 2] == 1) |
