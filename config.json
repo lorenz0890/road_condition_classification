@@ -57,9 +57,7 @@
     50,
     100,
     150,
-    200,
-    400,
-    800
+    200
   ],
   "feature_eng_scrimp_extractor_features": 3,
   "feature_eng_baseline_extractor_paa_len" : 30,

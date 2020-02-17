@@ -38,8 +38,8 @@ class SklearnModelFactory(ModelFactory):
                                        n_estimators=750
                                        ).fit_predict(X)
 
-        X_combined = X.loc[pandas.DataFrame(y_clustering)[0] == -1]
-        y_combined = y.loc[pandas.DataFrame(y_clustering)[0] == -1]
+        X_combined = X.loc[pandas.DataFrame(y_clustering)[0] == 1]
+        y_combined = y.loc[pandas.DataFrame(y_clustering)[0] == 1]
 
         X_combined = X_combined.reset_index(drop=True)
         y_combined = y_combined.reset_index(drop=True)
