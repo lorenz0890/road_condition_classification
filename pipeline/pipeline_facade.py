@@ -65,17 +65,18 @@ class ConcretePipelineFacade(PipelineFacade):
             )
 
         if config['feature_eng_extractor_type'] == "tsfresh":
-            """
+
             # TODO migrate the preperation for extraction to extract_select_training_features, make label column name configureable
             data_train = preprocessor.encode_categorical_features(data=data_train,
                                                                   mode='custom_function',
                                                                   columns=['road_label'],
                                                                   encoding_function=lambda x: (x > 2.0).astype(int)
                                                                   )  # 0 City, 1 Countryside
-            y_train = data[['road_label']].reset_index(drop=True)
-            data['id'] = range(1, len(data) + 1) #what happens if i just set this to 1
-            y_train['id'] = data['id']
-            y_train['road_label'].index = list(y_train['id'])
+            y_train = data[['road_label', 'id']].reset_index(drop=True)
+            data_train = data[['acceleration_abs', 'id']].reset_index(drop=True)
+            #data['id'] = range(1, len(data) + 1) #what happens if i just set this to 1
+            #y_train['id'] = data['id']
+            #y_train['road_label'].index = list(y_train['id'])
 
             X_train = extractor.extract_select_training_features(
                 data_train,
@@ -108,7 +109,7 @@ class ConcretePipelineFacade(PipelineFacade):
             X_train, y_train = X_combined[keys[:-1]], X_combined[keys[-1]]
             X_train = ['placeholder',
                        [X_train, y_train, 'N/A', 'N/A', 'N/A']]  # required for further processing. TODO: Unifiy naming!
-            """
+
             pass
         if X_train is None or X_test is None:
             pass  # TODO Raise Error
