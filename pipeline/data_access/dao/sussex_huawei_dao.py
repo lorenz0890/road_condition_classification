@@ -118,6 +118,7 @@ class SussexHuaweiDAO(DAO):
                 test =  all_labels[int(0.5 * len(all_labels)):int(0.75 * len(all_labels))]
                 valid = all_labels[int(0.75 * len(all_labels)):]
 
+                print(train)
                 train = numpy.array(train[0])
                 train = train[numpy.where(train[: ,1] == 5)]
                 train = train[
