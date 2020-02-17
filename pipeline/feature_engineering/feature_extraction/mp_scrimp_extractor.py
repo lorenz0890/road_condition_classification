@@ -51,7 +51,7 @@ class MPScrimpExtractor(Extractor):
         try:
             mtfs = args[2]
             sz = len([item for sublist in mtfs for item in sublist]) * args[0]
-            attr_vec = numpy.ndarray(shape=(sz, args[1]+1), dtype=float) #3
+            attr_vec = numpy.ndarray(shape=(sz, args[1]), dtype=float) #3
             # print(mtfs)
             count = 0
             tag = 1.0
@@ -142,9 +142,9 @@ class MPScrimpExtractor(Extractor):
                     combis.append(combi)
             print("Motif extraction worker no: {0} length: {1}, radius: {2}".format(i, combis[i][1], combis[i][0]))
             X_indices = self.extract_features(data=data,
-                                              args=[combis[i][1], 2, combis[i][0], 'acceleration_abs'])
+                                              args=[combis[i][1], 3, combis[i][0], 'acceleration_abs'])
             X = self.select_features(data=data,
-                                     args=[combis[i][1], 2, X_indices, 'acceleration_abs'])
+                                     args=[combis[i][1], 3, X_indices, 'acceleration_abs'])
             y = self.select_features(data=data,
                                      args=[combis[i][1], 1, X_indices, 'road_label'])
 
@@ -177,11 +177,11 @@ class MPScrimpExtractor(Extractor):
             length = args[0]
             radius=args[1]
 
-            X_indices = self.extract_features(data=data, args=[length,2,radius,'acceleration_abs'])
+            X_indices = self.extract_features(data=data, args=[length,3,radius,'acceleration_abs'])
             #X_valid = self.select_features(data=data,
             #                         args=[length, 1, motifs, 'acceleration_abs'])
             X_valid = self.select_features(data=data,
-                                                   args=[length, 2, X_indices, 'acceleration_abs'])
+                                                   args=[length, 3, X_indices, 'acceleration_abs'])
 
 
             if debug:
