@@ -118,7 +118,7 @@ class SussexHuaweiDAO(DAO):
                 train = train.loc[train['coarse_label'] == 5]
                 train = train.loc[train['road_label' == 1], train['road_label' == 3]]
                 print(train['road_label'].value_counts())
-                sampling_ok == True
+                sampling_ok = True
 
 
             if len(all_labels) > 1 or len(all_data) > 1:
