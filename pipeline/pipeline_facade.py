@@ -120,34 +120,12 @@ class ConcretePipelineFacade(PipelineFacade):
                 X_test,
                 args=['id', config['hw_num_processors'], None, kind_to_fc_parameters]
             )
-            '''
-            keys = X_train.keys()
-            keys = list(filter(lambda x: "acceleration_abs" in x, keys))
 
-            X_join = pandas.concat([X_train, y_train], axis=1)
-            X_join = preprocessor.remove_nans(X_join, replacement_mode='del_row')
-            X_join[['road_label']] = X_join[['road_label']].astype('int')
-            X_segments = preprocessor.segment_data(X_join, mode='labels',
-                                                   label_column='road_label',
-                                                   args=[0, 1])
-
-            segment_length = 30  # 60s best in paper, 90 best in my evaluation, tested 30, 60, 90, 120
-            X_segments_new = []
-            for ind in range(0, len(X_segments)):
-                X_segments_new = X_segments_new + preprocessor.segment_data(
-                    X_segments[ind],
-                    mode='fixed_interval',
-                    args=[segment_length, True, True]
-                )
-
-            print(len(X_segments_new))
-            keys.append('road_label')
-            X_combined = preprocessor.de_segment_data(X_segments_new, keys)
-            X_train, y_train = X_combined[keys[:-1]], X_combined[keys[-1]]
-            '''
             X_train = ['placeholder',
                        [X_train, y_train, 'N/A', 'N/A', 'N/A']]  # required for further processing. TODO: Unifiy naming!
 
+            X_test = ['placeholder',
+                       [X_test, y_test, 'N/A', 'N/A', 'N/A']]
 
         if X_train is None or X_test is None:
             pass  # TODO Raise Error
