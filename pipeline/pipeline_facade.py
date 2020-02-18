@@ -299,7 +299,7 @@ class ConcretePipelineFacade(PipelineFacade):
             preprocessor = SussexHuaweiPreprocessor()
         if config['feature_eng_extractor_type'] == "motif":
             extractor = MPScrimpExtractor()
-        if config['feature_eng_extractor_type'] == "tsfresh":
+        if config['feature_eng_extractor_type'] == "ts-fresh":
             extractor = BaselineExtractor()
         if config['classifier_model_factory_type'] == "sklearn":
             model_factory = SklearnModelFactory()
