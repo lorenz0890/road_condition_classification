@@ -104,8 +104,10 @@ class ConcretePipelineFacade(PipelineFacade):
 
             y_train = data_train[['road_label', 'id']].reset_index(drop=True)
             print(y_train.head(100))
+            print(y_train.tail(100))
             y_train = y_train.groupby(y_train.index // 30).first()
             print(y_train.head(100))
+            print(y_train.tail(100))
             X_train = data_train[['acceleration_abs', 'id']].reset_index(drop=True)
             y_test = data_test[['road_label', 'id']].reset_index(drop=True)
             y_test = y_test.groupby(y_test.index // 30).first()
