@@ -3,9 +3,9 @@
 import sys
 import warnings
 import os
-if not sys.warnoptions:
-    warnings.simplefilter("ignore")
-    os.environ["PYTHONWARNINGS"] = "ignore" # Also affect subprocesses
+#if not sys.warnoptions:
+#    warnings.simplefilter("ignore")
+#    os.environ["PYTHONWARNINGS"] = "ignore" # Also affect subprocesses
 
 import click
 import json

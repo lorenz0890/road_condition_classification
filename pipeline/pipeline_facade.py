@@ -97,7 +97,7 @@ class ConcretePipelineFacade(PipelineFacade):
                 args=['id', config['hw_num_processors'], None, y_train['road_label'], 0.1]
 
             )
-            
+
             X_test = extractor.extract_select_inference_features(
 
             )
