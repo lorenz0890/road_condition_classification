@@ -80,9 +80,9 @@ class ConcretePipelineFacade(PipelineFacade):
                                                                   encoding_function=lambda x: (x > 2.0).astype(int)
                                                                   )  # 0 City, 1 Countryside
 
-            for i in range(0, data_train.shape[0], 30):
+            for i in range(0, data_train.shape[0], 1):
                 data_train['id'] = i%30
-            for i in range(0, data_test.shape[0], 30):
+            for i in range(0, data_test.shape[0], 1):
                 data_test['id'] = i%30
             y_train = data_train[['road_label', 'id']].reset_index(drop=True)
             X_train = data_train[['acceleration_abs', 'id']].reset_index(drop=True)
@@ -99,6 +99,7 @@ class ConcretePipelineFacade(PipelineFacade):
 
             )
 
+            #Get feature map for validation and training set
             kind_to_fc_parameters = {}
             acceleration_abs = {}
             for col in X_train.columns:
@@ -106,7 +107,8 @@ class ConcretePipelineFacade(PipelineFacade):
             kind_to_fc_parameters['acceleration_abs'] = acceleration_abs
 
             X_test = extractor.extract_select_inference_features(
-
+                X_train,
+                args=['id', config['hw_num_processors'], None, kind_to_fc_parameters]
             )
             '''
             keys = X_train.keys()

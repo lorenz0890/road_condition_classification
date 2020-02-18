@@ -72,4 +72,6 @@ class BaselineExtractor(Extractor):
         :param args:
         :return: list
         """
-        raise NotImplementedError(self.messages.NOT_IMPLEMENTED.value)
+        X = extract_features(data, column_id=args[0], n_jobs=args[1], chunksize=args[2], kind_to_fc_parameters=args[2])
+        X = impute(X)
+        return X
