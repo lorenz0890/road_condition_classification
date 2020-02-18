@@ -116,8 +116,8 @@ class SussexHuaweiDAO(DAO):
             labels_dist = labels_dist.loc[labels_dist['road_label'].isin([1,3])]
             labels_dist = labels_dist.loc[labels_dist['coarse_label'].isin([5])]
             upper, lower = 1.0, 0.0
-            epsilon = 0.01
-            delta=0.001
+            epsilon = 1.0/float(20000)
+            delta = 1.0/float(20000)
             country, city = 0.0, 0.0
             if (3 in labels_dist['road_label'].value_counts().index and
                 1 in labels_dist['road_label'].value_counts().index

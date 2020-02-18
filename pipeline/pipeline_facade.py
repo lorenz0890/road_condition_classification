@@ -73,10 +73,21 @@ class ConcretePipelineFacade(PipelineFacade):
                                                                   columns=['road_label'],
                                                                   encoding_function=lambda x: (x > 2.0).astype(int)
                                                                   )  # 0 City, 1 Countryside
-            for i in range(0, data.shape[0], 30):
-                data['id'] = i%30
+
+            data_test = preprocessor.encode_categorical_features(data=data_train,
+                                                                  mode='custom_function',
+                                                                  columns=['road_label'],
+                                                                  encoding_function=lambda x: (x > 2.0).astype(int)
+                                                                  )  # 0 City, 1 Countryside
+
+            for i in range(0, data_train.shape[0], 30):
+                data_train['id'] = i%30
+            for i in range(0, data_test.shape[0], 30):
+                data_test['id'] = i%30
             y_train = data_train[['road_label', 'id']].reset_index(drop=True)
             X_train = data_train[['acceleration_abs', 'id']].reset_index(drop=True)
+            y_test = data_test[['road_label', 'id']].reset_index(drop=True)
+            X_test = data_test[['acceleration_abs', 'id']].reset_index(drop=True)
             #data['id'] = range(1, len(data) + 1) #what happens if i just set this to 1
             #y_train['id'] = data['id']
             #y_train['road_label'].index = list(y_train['id'])
@@ -86,6 +97,7 @@ class ConcretePipelineFacade(PipelineFacade):
                 args=['id', config['hw_num_processors'], None, y_train['road_label'], 0.1]
 
             )
+            
             X_test = extractor.extract_select_inference_features(
 
             )
