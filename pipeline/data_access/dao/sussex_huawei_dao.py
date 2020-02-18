@@ -137,7 +137,7 @@ class SussexHuaweiDAO(DAO):
             while not distribution_ok and trys_left > 0:
                 if trys_left%50 == 0:
                     print('Attempts left', trys_left)
-                    print('Delta', epsilon)
+                    print('Espilon', epsilon)
 
                 train_ok, test_ok, valid_ok = False, False, False
                 all_data_labels = list(zip(all_data, all_labels))
@@ -168,6 +168,10 @@ class SussexHuaweiDAO(DAO):
 
                 if train_ok and test_ok and valid_ok:
                     distribution_ok = True
+                    print('Country trips distributions in shuffled set with epsilon', epsilon)
+                    print(train['road_label'].value_counts()[3] / train.shape[0])
+                    print(test['road_label'].value_counts()[3] / test.shape[0])
+                    print(valid['road_label'].value_counts()[3] / valid.shape[0])
 
                 trys_left -=1
                 epsilon += delta
