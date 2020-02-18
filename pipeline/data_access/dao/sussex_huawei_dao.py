@@ -116,7 +116,8 @@ class SussexHuaweiDAO(DAO):
             labels_dist = labels_dist.loc[labels_dist['road_label'].isin([1,3])]
             labels_dist = labels_dist.loc[labels_dist['coarse_label'].isin([5])]
             upper, lower = 1.0, 0.0
-            delta = 0.05
+            epsilon = 0.01
+            delta=0.001
             country, city = 0.0, 0.0
             if (3 in labels_dist['road_label'].value_counts().index and
                 1 in labels_dist['road_label'].value_counts().index
@@ -132,18 +133,11 @@ class SussexHuaweiDAO(DAO):
                 pass
 
             print('True class distribution in all car trips, city:', city, 'country', country)
-            print('Attempting to shuffle trips according to desired distribution with delta', delta)
-            train, test, valid = None, None, None
+            print('Attempting to shuffle trips according to desired distribution with delta', epsilon)
             while not distribution_ok and trys_left > 0:
                 if trys_left%50 == 0:
                     print('Attempts left', trys_left)
-                    if train is not None and test is not None and valid is not None:
-                        try:
-                            print(train['road_label'].value_counts()[3] / train.shape[0])
-                            print(test['road_label'].value_counts()[3] / test.shape[0])
-                            print(valid['road_label'].value_counts()[3] / valid.shape[0])
-                            print('Country trips distributions in shuffled set')
-                        except: pass
+                    print('Delta', epsilon)
 
                 train_ok, test_ok, valid_ok = False, False, False
                 all_data_labels = list(zip(all_data, all_labels))
@@ -157,25 +151,26 @@ class SussexHuaweiDAO(DAO):
                 train = train[0].loc[train[0]['road_label'].isin([1,3])]
                 train = train.loc[train['coarse_label'].isin([5])]
                 if 3 in train['road_label'].value_counts().index:
-                    if lower-delta < train['road_label'].value_counts()[3]/train.shape[0] < upper+delta:
+                    if lower-epsilon < train['road_label'].value_counts()[3]/train.shape[0] < upper+epsilon:
                         train_ok = True
 
                 test = test[0].loc[test[0]['road_label'].isin([1, 3])]
                 test = test.loc[test['coarse_label'].isin([5])]
                 if 3 in test['road_label'].value_counts().index:
-                    if lower-delta < test['road_label'].value_counts()[3] / test.shape[0] < upper+delta:
+                    if lower-epsilon < test['road_label'].value_counts()[3] / test.shape[0] < upper+epsilon:
                         test_ok = True
 
                 valid = valid[0].loc[valid[0]['road_label'].isin([1, 3])]
                 valid = valid.loc[valid['coarse_label'].isin([5])]
                 if 3 in valid['road_label'].value_counts().index:
-                    if lower-delta < valid['road_label'].value_counts()[3] / valid.shape[0] < upper+delta:
+                    if lower-epsilon < valid['road_label'].value_counts()[3] / valid.shape[0] < upper+epsilon:
                         valid_ok = True
 
                 if train_ok and test_ok and valid_ok:
                     distribution_ok = True
 
                 trys_left -=1
+                epsilon += delta
 
             if len(all_labels) > 1 or len(all_data) > 1:
                 #TODO: raise error if len not equal
