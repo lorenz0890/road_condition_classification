@@ -143,7 +143,7 @@ class ConcretePipelineFacade(PipelineFacade):
         # 5. Find optimal classifier for given training set
         print('--------------------TRAINING PHASE----------------------')
         clf, score, conf, X_train, motif_len, motif_radius, motif_count = model_factory.find_optimal_model(
-            config['feature_eng_extractor_type'],  # TODO remove bc deprecated. X_train now decides mode.
+            config['feature_eng_extractor_type'],  # TODO remove bc deprecated. config handed anyways
             config,
             X_train,
             X_test,
