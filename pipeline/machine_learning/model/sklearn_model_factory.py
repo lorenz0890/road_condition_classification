@@ -158,27 +158,30 @@ class SklearnModelFactory(ModelFactory):
             #X_test, y_test = self.pre_clustering(X_test, y_test, None)
             #X_train, y_train = self.pre_clustering(X_train, y_train, None)
 
-            print('------------------Motifs-----------------')
-            print("Motif radius: {}".format(X_train_list[i][2]))
-            print("Motif length: {}".format(X_train_list[i][3]))
-            print("Motif count: {}".format(X_train_list[i][4]))
-            print("X_train shape: {}".format(X_train.shape))
-            print("X_test shape: {}".format(X_test.shape))
-            print(y_train)
-            print("Training y label 1: {}".format(list(y_train[0]).count(1.0) / len(y_train))) #TODO: make configureable
-            print("Training y label 3: {}".format(list(y_train[0]).count(3.0) / len(y_train)))
-            print("Test y label 1: {}".format(list(y_test[0]).count(1.0) / len(y_test)))  # TODO: make configureable
-            print("Test y label 3: {}\n\n".format(list(y_test[0]).count(3.0) / len(y_test)))
-            if not (config['classifier_rep_class_distribution'][0] <
-                    list(y_train[0]).count(1.0) / len(y_train) <
-                    config['classifier_rep_class_distribution'][1]):
-                print('Class distribution not representative in training set')
-                continue
-            if not (config['classifier_rep_class_distribution'][0] <
-                    list(y_test[0]).count(1.0) / len(y_test) <
-                    config['classifier_rep_class_distribution'][1]):
-                print('Class distribution not representative in test set')
-                continue
+            if mode == 'motif':
+                print('------------------Motifs-----------------')
+                print("Motif radius: {}".format(X_train_list[i][2]))
+                print("Motif length: {}".format(X_train_list[i][3]))
+                print("Motif count: {}".format(X_train_list[i][4]))
+                print("X_train shape: {}".format(X_train.shape))
+                print("X_test shape: {}".format(X_test.shape))
+                print(y_train)
+                print("Training y label 1: {}".format(list(y_train[0]).count(1.0) / len(y_train))) #TODO: make configureable
+                print("Training y label 3: {}".format(list(y_train[0]).count(3.0) / len(y_train)))
+                print("Test y label 1: {}".format(list(y_test[0]).count(1.0) / len(y_test)))  # TODO: make configureable
+                print("Test y label 3: {}\n\n".format(list(y_test[0]).count(3.0) / len(y_test)))
+                if not (config['classifier_rep_class_distribution'][0] <
+                        list(y_train[0]).count(1.0) / len(y_train) <
+                        config['classifier_rep_class_distribution'][1]):
+                    print('Class distribution not representative in training set')
+                    continue
+                if not (config['classifier_rep_class_distribution'][0] <
+                        list(y_test[0]).count(1.0) / len(y_test) <
+                        config['classifier_rep_class_distribution'][1]):
+                    print('Class distribution not representative in test set')
+                    continue
+            elif mode == 'ts-fresh':
+                pass
 
             # Test different classifiers on the detected features
             if (('sklearn_svc' in config['classifier_optimal_search_space'] or 'all' in config['classifier_optimal_search_space']) and
