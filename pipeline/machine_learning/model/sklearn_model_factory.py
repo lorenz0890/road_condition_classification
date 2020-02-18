@@ -148,8 +148,8 @@ class SklearnModelFactory(ModelFactory):
                         X_test = X_test_list[j][0]
                         y_test = X_test_list[j][1]
             else:
-                X_test = X_train_list[i][0]
-                y_test = X_train_list[i][1]
+                X_test = X_test_list[i][0]
+                y_test = X_test_list[i][1]
 
 
             print("------------------Iteration: {}-----------------".format(i))
@@ -162,7 +162,9 @@ class SklearnModelFactory(ModelFactory):
             print("Motif radius: {}".format(X_train_list[i][2]))
             print("Motif length: {}".format(X_train_list[i][3]))
             print("Motif count: {}".format(X_train_list[i][4]))
-            print("X shape: {}".format(X_train.shape))
+            print("X_train shape: {}".format(X_train.shape))
+            print("X_test shape: {}".format(X_test.shape))
+            print(y_train)
             print("Training y label 1: {}".format(list(y_train[0]).count(1.0) / len(y_train))) #TODO: make configureable
             print("Training y label 3: {}".format(list(y_train[0]).count(3.0) / len(y_train)))
             print("Test y label 1: {}".format(list(y_test[0]).count(1.0) / len(y_test)))  # TODO: make configureable
