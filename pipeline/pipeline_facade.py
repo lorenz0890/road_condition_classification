@@ -85,7 +85,7 @@ class ConcretePipelineFacade(PipelineFacade):
             for i in range(0, data_train.index.size, 30):
                 train_id[i:i+30] = [id]*30
                 id+=1
-            train_id = train_id[-(len(train_id)-data_train.index.size):]
+            train_id = train_id[:data_train.index.size]
             print(train_id[:60])
             print(train_id[-60:])
             print(len(train_id))
@@ -97,7 +97,7 @@ class ConcretePipelineFacade(PipelineFacade):
             for i in range(0, data_test.index.size, 30):
                 test_id[i:i + 30] = [id]*30
                 id += 1
-            test_id = test_id[-(len(test_id) - data_test.index.size):]
+            test_id = test_id[:data_test.index.size]
             data_test['id'] = test_id
             print(test_id[:60])
             print(test_id[-60:])
