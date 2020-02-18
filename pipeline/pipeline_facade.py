@@ -80,10 +80,21 @@ class ConcretePipelineFacade(PipelineFacade):
                                                                   encoding_function=lambda x: (x > 2.0).astype(int)
                                                                   )  # 0 City, 1 Countryside
 
-            for i in range(0, data_train.shape[0], 1):
-                data_train['id'] = int(i/30)
-            for i in range(0, data_test.shape[0], 1):
-                data_test['id'] = int(i/30)
+            train_id = []
+            id = 0
+            for i in range(0, data_train.shape[0], 30):
+                train_id[i:i+30] = id
+                id+=1
+            data_train['id'] = train_id
+
+            test_id = []
+            id = 0
+            for i in range(0, data_test.shape[0], 30):
+                test_id[i:i + 30] = id
+                id += 1
+            data_test['id'] = test_id
+            print(test_id[0:60])
+
             y_train = data_train[['road_label', 'id']].reset_index(drop=True)
             X_train = data_train[['acceleration_abs', 'id']].reset_index(drop=True)
             y_test = data_test[['road_label', 'id']].reset_index(drop=True)
