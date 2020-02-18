@@ -109,29 +109,40 @@ class SussexHuaweiDAO(DAO):
             #or max number of trys.
             #TODO make configureable, use values from config and migrate to method
             distribution_ok = False
-            trys_left = 2000
+            trys_left = 20000
 
             #Get gobal distribution
             labels_dist = pandas.concat(all_labels, axis=0)
             labels_dist = labels_dist.loc[labels_dist['road_label'].isin([1,3])]
             labels_dist = labels_dist.loc[labels_dist['coarse_label'].isin([5])]
             upper, lower = 1.0, 0.0
+            delta = 0.05
+            country, city = 0.0, 0.0
             if (3 in labels_dist['road_label'].value_counts().index and
                 1 in labels_dist['road_label'].value_counts().index
             ):
-                a = labels_dist['road_label'].value_counts()[3] / labels_dist.shape[0]
-                b = labels_dist['road_label'].value_counts()[1] / labels_dist.shape[0]
-                if a > b:
-                    upper, lower = a, b
-                else:
-                    upper, lower = b, a
+                country = labels_dist['road_label'].value_counts()[3] / labels_dist.shape[0]
+                city = labels_dist['road_label'].value_counts()[1] / labels_dist.shape[0]
+                if city > city:
 
-            print(lower, upper)
-            #Shuffle until train, test, valid set match global distribution
-            print('Attempting to shuffle trips according to desired distribution')
+                    upper, lower = city, country
+                else:
+                    upper, lower = country, city
+            else:
+                #TODO raise error
+                pass
+
+            print('True class distribution in all car trips, city:', city, 'country', country)
+            print('Attempting to shuffle trips according to desired distribution with delta', delta)
+            train, test, valid = None, None, None
             while not distribution_ok and trys_left > 0:
                 if trys_left%50 == 0:
                     print('Attempts left', trys_left)
+                    if train is not None and test is not None and valid is not None:
+                        print('Country trips distribution in shuffled set:')
+                        print(train['road_label'].value_counts()[3] / train.shape[0])
+                        print(test['road_label'].value_counts()[3] / test.shape[0])
+                        print(valid['road_label'].value_counts()[3] / valid.shape[0])
 
                 train_ok, test_ok, valid_ok = False, False, False
                 all_data_labels = list(zip(all_data, all_labels))
@@ -145,23 +156,20 @@ class SussexHuaweiDAO(DAO):
                 train = train[0].loc[train[0]['road_label'].isin([1,3])]
                 train = train.loc[train['coarse_label'].isin([5])]
                 if 3 in train['road_label'].value_counts().index:
-                    if lower < train['road_label'].value_counts()[3]/train.shape[0] < upper:
+                    if lower-delta < train['road_label'].value_counts()[3]/train.shape[0] < upper+delta:
                         train_ok = True
-                    #print(train['road_label'].value_counts()[3]/train.shape[0])
 
                 test = test[0].loc[test[0]['road_label'].isin([1, 3])]
                 test = test.loc[test['coarse_label'].isin([5])]
                 if 3 in test['road_label'].value_counts().index:
-                    if lower < test['road_label'].value_counts()[3] / test.shape[0] < upper:
+                    if lower-delta < test['road_label'].value_counts()[3] / test.shape[0] < upper+delta:
                         test_ok = True
-                    #print(test['road_label'].value_counts()[3] / test.shape[0])
 
                 valid = valid[0].loc[valid[0]['road_label'].isin([1, 3])]
                 valid = valid.loc[valid['coarse_label'].isin([5])]
                 if 3 in valid['road_label'].value_counts().index:
-                    if lower < valid['road_label'].value_counts()[3] / valid.shape[0] < upper:
+                    if lower-delta < valid['road_label'].value_counts()[3] / valid.shape[0] < upper+delta:
                         valid_ok = True
-                    #print(valid['road_label'].value_counts()[3] / valid.shape[0])
 
                 if train_ok and test_ok and valid_ok:
                     distribution_ok = True
