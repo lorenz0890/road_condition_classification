@@ -152,12 +152,12 @@ class ConcretePipelineFacade(PipelineFacade):
         if X_train is None or X_test is None:
             pass  # TODO Raise Error
 
-        print(X_train[1][0].shape)
-        print(X_train[1][1].shape)
-        print(X_train[1][0].head(10))
-        print(X_train[1][1].head(10))
-        print(X_test[1][0].head(10))
-        print(X_test[1][1].head(10))
+        #print(X_train[1][0].shape)
+        #print(X_train[1][1].shape)
+        #print(X_train[1][0].head(10))
+        #print(X_train[1][1].head(10))
+        #print(X_test[1][0].head(10))
+        #print(X_test[1][1].head(10))
 
 
         # 5. Find optimal classifier for given training set
