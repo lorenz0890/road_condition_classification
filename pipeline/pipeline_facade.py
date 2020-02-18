@@ -83,17 +83,18 @@ class ConcretePipelineFacade(PipelineFacade):
             train_id = [None]*data_train.shape[0]
             id = 0
             for i in range(0, data_train.shape[0], 30):
-                train_id[i:i+30] = id
+                train_id[i:i+30] = [id]*30
                 id+=1
             data_train['id'] = train_id
 
-            test_id = []*[None]*data_test.shape[0]
+            test_id = [None]*data_test.shape[0]
             id = 0
             for i in range(0, data_test.shape[0], 30):
-                test_id[i:i + 30] = id
+                test_id[i:i + 30] = [id]*30
                 id += 1
             data_test['id'] = test_id
-            print(test_id[0:60])
+            print(test_id[:60])
+            print(test_id[-60:])
 
             y_train = data_train[['road_label', 'id']].reset_index(drop=True)
             X_train = data_train[['acceleration_abs', 'id']].reset_index(drop=True)
