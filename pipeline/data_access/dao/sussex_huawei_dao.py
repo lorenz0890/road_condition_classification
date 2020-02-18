@@ -139,10 +139,10 @@ class SussexHuaweiDAO(DAO):
                     print('Attempts left', trys_left)
                     if train is not None and test is not None and valid is not None:
                         try:
-                            print('Country trips distribution in shuffled set:')
                             print(train['road_label'].value_counts()[3] / train.shape[0])
                             print(test['road_label'].value_counts()[3] / test.shape[0])
                             print(valid['road_label'].value_counts()[3] / valid.shape[0])
+                            print('Country trips distributions in shuffled set')
                         except: pass
 
                 train_ok, test_ok, valid_ok = False, False, False
