@@ -134,10 +134,11 @@ class SussexHuaweiDAO(DAO):
                 pass
 
             print('True class distribution in all car trips, city:', city, 'country', country)
-            print('Attempting to shuffle trips according to desired distribution with delta', epsilon)
+            print('Attempting to shuffle trips for representative train, '
+                  'test, validation distribution with delta', epsilon)
             while not distribution_ok and trys_left > 0:
                 if trys_left%200 == 0:
-                    print('Completion', int((1.0-trys_left/max_trys))*100, '%')
+                    print('Completion', round((1.0-trys_left/max_trys)*100,2), '%')
 
                 train_ok, test_ok, valid_ok = False, False, False
                 all_data_labels = list(zip(all_data, all_labels))
