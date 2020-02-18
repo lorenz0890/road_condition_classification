@@ -10,6 +10,7 @@ from sklearn.metrics import confusion_matrix
 from sklearn.metrics import classification_report
 import pickle
 import pandas
+from tsfresh.utilities import string_manipulation
 
 
 class ConcretePipelineFacade(PipelineFacade):
@@ -86,10 +87,6 @@ class ConcretePipelineFacade(PipelineFacade):
                 train_id[i:i+30] = [id]*30
                 id+=1
             train_id = train_id[:data_train.index.size]
-            print(train_id[:60])
-            print(train_id[-60:])
-            print(len(train_id))
-            print(data_train.index.size)
             data_train['id'] = train_id
 
             test_id = [None]*data_test.index.size
@@ -99,15 +96,9 @@ class ConcretePipelineFacade(PipelineFacade):
                 id += 1
             test_id = test_id[:data_test.index.size]
             data_test['id'] = test_id
-            print(test_id[:60])
-            print(test_id[-60:])
 
             y_train = data_train[['road_label', 'id']].reset_index(drop=True)
-            print(y_train.head(100))
-            print(y_train.tail(100))
-            y_train = y_train.groupby(y_train.index // 30).agg(lambda x: x.value_counts().index[0])
-            print(y_train.head(100))
-            print(y_train.tail(100))
+            y_train = y_train.groupby(y_train.index // 30).agg(lambda x: x.value_counts().index[0]) #majority label in segment
             X_train = data_train[['acceleration_abs', 'id']].reset_index(drop=True)
             y_test = data_test[['road_label', 'id']].reset_index(drop=True)
             y_test = y_test.groupby(y_test.index // 30).agg(lambda x: x.value_counts().index[0])
@@ -127,6 +118,7 @@ class ConcretePipelineFacade(PipelineFacade):
             kind_to_fc_parameters = {}
             acceleration_abs = {}
             for col in X_train.columns:
+                print(string_manipulation.get_config_from_string(col))
                 acceleration_abs[col.replace('acceleration_abs__', '')] = None
             kind_to_fc_parameters['acceleration_abs'] = acceleration_abs
 
