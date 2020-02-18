@@ -74,7 +74,7 @@ class ConcretePipelineFacade(PipelineFacade):
                                                                   encoding_function=lambda x: (x > 2.0).astype(int)
                                                                   )  # 0 City, 1 Countryside
 
-            data_test = preprocessor.encode_categorical_features(data=data_train,
+            data_test = preprocessor.encode_categorical_features(data=data_test,
                                                                   mode='custom_function',
                                                                   columns=['road_label'],
                                                                   encoding_function=lambda x: (x > 2.0).astype(int)
@@ -105,12 +105,12 @@ class ConcretePipelineFacade(PipelineFacade):
             y_train = data_train[['road_label', 'id']].reset_index(drop=True)
             print(y_train.head(100))
             print(y_train.tail(100))
-            y_train = y_train.groupby(y_train.index // 30).first()
+            y_train = y_train.groupby(y_train.index // 30).agg(lambda x: x.value_counts().index[0])
             print(y_train.head(100))
             print(y_train.tail(100))
             X_train = data_train[['acceleration_abs', 'id']].reset_index(drop=True)
             y_test = data_test[['road_label', 'id']].reset_index(drop=True)
-            y_test = y_test.groupby(y_test.index // 30).first()
+            y_test = y_test.groupby(y_test.index // 30).agg(lambda x: x.value_counts().index[0])
             X_test = data_test[['acceleration_abs', 'id']].reset_index(drop=True)
             #data['id'] = range(1, len(data) + 1) #what happens if i just set this to 1
             #y_train['id'] = data['id']
