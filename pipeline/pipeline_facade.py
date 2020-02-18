@@ -122,10 +122,12 @@ class ConcretePipelineFacade(PipelineFacade):
             )
 
             X_train = ['placeholder',
-                       [X_train, y_train['road_label'], 'N/A', 'N/A', 'N/A']]  # required for further processing. TODO: Unifiy naming!
+                       [X_train, y_train['road_label'].rename(columns={'road_label': 0}, inplace=True),
+                       'N/A', 'N/A', 'N/A']]  # required for further processing. TODO: Unifiy naming!
 
             X_test = ['placeholder',
-                       [X_test, y_test['road_label'], 'N/A', 'N/A', 'N/A']]
+                       [X_test, y_test['road_label'].rename(columns={'road_label': 0}, inplace=True),
+                       'N/A', 'N/A', 'N/A']]
 
         if X_train is None or X_test is None:
             pass  # TODO Raise Error
