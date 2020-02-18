@@ -127,7 +127,7 @@ class ConcretePipelineFacade(PipelineFacade):
             kind_to_fc_parameters = {}
             acceleration_abs = {}
             for col in X_train.columns:
-                acceleration_abs[col] = None
+                acceleration_abs[col.replace('acceleration_abs', '')] = None
             kind_to_fc_parameters['acceleration_abs'] = acceleration_abs
 
             X_test = extractor.extract_select_inference_features(
