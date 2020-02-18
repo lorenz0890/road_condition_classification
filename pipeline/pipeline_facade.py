@@ -81,9 +81,9 @@ class ConcretePipelineFacade(PipelineFacade):
                                                                   )  # 0 City, 1 Countryside
 
             for i in range(0, data_train.shape[0], 1):
-                data_train['id'] = i%30
+                data_train['id'] = int(i/30)
             for i in range(0, data_test.shape[0], 1):
-                data_test['id'] = i%30
+                data_test['id'] = int(i/30)
             y_train = data_train[['road_label', 'id']].reset_index(drop=True)
             X_train = data_train[['acceleration_abs', 'id']].reset_index(drop=True)
             y_test = data_test[['road_label', 'id']].reset_index(drop=True)
