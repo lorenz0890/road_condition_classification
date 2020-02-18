@@ -123,8 +123,7 @@ class SussexHuaweiDAO(DAO):
             ):
                 country = labels_dist['road_label'].value_counts()[3] / labels_dist.shape[0]
                 city = labels_dist['road_label'].value_counts()[1] / labels_dist.shape[0]
-                if city > city:
-
+                if city > country:
                     upper, lower = city, country
                 else:
                     upper, lower = country, city
