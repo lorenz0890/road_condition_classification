@@ -80,16 +80,16 @@ class ConcretePipelineFacade(PipelineFacade):
                                                                   encoding_function=lambda x: (x > 2.0).astype(int)
                                                                   )  # 0 City, 1 Countryside
 
-            train_id = [None]*len(data_train)
+            train_id = [None]*data_train.index.size
             id = 0
-            for i in range(0, len(data_train), 30):
+            for i in range(0, data_train.index.size, 30):
                 train_id[i:i+30] = [id]*30
                 id+=1
             data_train['id'] = train_id
 
-            test_id = [None]*len(data_test)
+            test_id = [None]*data_test.index.size
             id = 0
-            for i in range(0, len(data_test), 30):
+            for i in range(0, data_test.index.size, 30):
                 test_id[i:i + 30] = [id]*30
                 id += 1
             data_test['id'] = test_id
@@ -107,7 +107,7 @@ class ConcretePipelineFacade(PipelineFacade):
             #Extract Training features
             X_train = extractor.extract_select_training_features(
                 X_train,
-                args=['id', config['hw_num_processors'], None, y_train['road_label'], 0.1]
+                args=['id', config['hw_num_processors'], None, y_train['road_label'], 0.1] #TODO use fdr dfrom cfg
 
             )
 
