@@ -10,7 +10,7 @@ from sklearn.metrics import confusion_matrix
 from sklearn.metrics import classification_report
 import pickle
 import pandas
-from tsfresh.utilities import string_manipulation
+from tsfresh.feature_extraction.settings import from_columns
 
 
 class ConcretePipelineFacade(PipelineFacade):
@@ -115,12 +115,7 @@ class ConcretePipelineFacade(PipelineFacade):
             )
 
             #Get feature map for validation and training set
-            kind_to_fc_parameters = {}
-            acceleration_abs = {}
-            for col in X_train.columns:
-                acceleration_abs[col.replace('acceleration_abs__', '')] = string_manipulation.get_config_from_string(col.split('__'))
-            kind_to_fc_parameters['acceleration_abs'] = acceleration_abs
-
+            kind_to_fc_parameters = from_columns(X_train)
             X_test = extractor.extract_select_inference_features(
                 X_test,
                 args=['id', config['hw_num_processors'], None, kind_to_fc_parameters]
