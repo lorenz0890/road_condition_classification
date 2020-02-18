@@ -118,7 +118,7 @@ class ConcretePipelineFacade(PipelineFacade):
             kind_to_fc_parameters = {}
             acceleration_abs = {}
             for col in X_train.columns:
-                print(string_manipulation.get_config_from_string(col))
+                print(string_manipulation.get_config_from_string(col.split('__')))
                 acceleration_abs[col.replace('acceleration_abs__', '')] = None
             kind_to_fc_parameters['acceleration_abs'] = acceleration_abs
 
