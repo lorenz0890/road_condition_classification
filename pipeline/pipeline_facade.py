@@ -103,7 +103,9 @@ class ConcretePipelineFacade(PipelineFacade):
             print(test_id[-60:])
 
             y_train = data_train[['road_label', 'id']].reset_index(drop=True)
+            print(y_train.head(100))
             y_train = y_train.groupby(y_train.index // 30).first()
+            print(y_train.head(100))
             X_train = data_train[['acceleration_abs', 'id']].reset_index(drop=True)
             y_test = data_test[['road_label', 'id']].reset_index(drop=True)
             y_test = y_test.groupby(y_test.index // 30).first()
@@ -127,7 +129,7 @@ class ConcretePipelineFacade(PipelineFacade):
             kind_to_fc_parameters['acceleration_abs'] = acceleration_abs
 
             X_test = extractor.extract_select_inference_features(
-                X_train,
+                X_test,
                 args=['id', config['hw_num_processors'], None, kind_to_fc_parameters]
             )
             '''
