@@ -137,8 +137,7 @@ class SussexHuaweiDAO(DAO):
             print('Attempting to shuffle trips according to desired distribution with delta', epsilon)
             while not distribution_ok and trys_left > 0:
                 if trys_left%200 == 0:
-                    print('Completion', (1.0-trys_left/max_trys)*100, '%')
-                    print('Espilon', epsilon)
+                    print('Completion', int((1.0-trys_left/max_trys))*100, '%')
 
                 train_ok, test_ok, valid_ok = False, False, False
                 all_data_labels = list(zip(all_data, all_labels))
