@@ -109,6 +109,7 @@ class SussexHuaweiDAO(DAO):
             #or max number of trys.
             #TODO make configureable, use values from config and migrate to method
             distribution_ok = False
+            max_trys = 20000
             trys_left = 20000
 
             #Get gobal distribution
@@ -135,8 +136,8 @@ class SussexHuaweiDAO(DAO):
             print('True class distribution in all car trips, city:', city, 'country', country)
             print('Attempting to shuffle trips according to desired distribution with delta', epsilon)
             while not distribution_ok and trys_left > 0:
-                if trys_left%50 == 0:
-                    print('Attempts left', trys_left)
+                if trys_left%100 == 0:
+                    print('Completion', (trys_left/max_trys)*100, '%')
                     print('Espilon', epsilon)
 
                 train_ok, test_ok, valid_ok = False, False, False

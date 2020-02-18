@@ -92,11 +92,18 @@ class ConcretePipelineFacade(PipelineFacade):
             #y_train['id'] = data['id']
             #y_train['road_label'].index = list(y_train['id'])
 
+            #Extract Training features
             X_train = extractor.extract_select_training_features(
                 X_train,
                 args=['id', config['hw_num_processors'], None, y_train['road_label'], 0.1]
 
             )
+
+            kind_to_fc_parameters = {}
+            acceleration_abs = {}
+            for col in X_train.columns:
+                acceleration_abs[col] = None
+            kind_to_fc_parameters['acceleration_abs'] = acceleration_abs
 
             X_test = extractor.extract_select_inference_features(
 
@@ -261,7 +268,7 @@ class ConcretePipelineFacade(PipelineFacade):
                                                                           config['hw_num_processors']
                                                                       ], False
                                                                       )
-        if config['feature_eng_extractor_type'] == "tsfresh":
+        if config['feature_eng_extractor_type'] == "ts-fresh":
             pass  # TODO
         if X_inference is None:
             pass  # TODO Raise Error
