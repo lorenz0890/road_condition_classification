@@ -65,7 +65,7 @@ class ConcretePipelineFacade(PipelineFacade):
                 [config['feature_eng_mp_extractor_radii'], config['feature_eng_mp_extractor_lengths']]
             )
 
-        if config['feature_eng_extractor_type'] == "tsfresh":
+        if config['feature_eng_extractor_type'] == "ts-fresh":
 
             # TODO migrate the preperation for extraction to extract_select_training_features, make label column name configureable
             data_train = preprocessor.encode_categorical_features(data=data_train,
@@ -73,18 +73,20 @@ class ConcretePipelineFacade(PipelineFacade):
                                                                   columns=['road_label'],
                                                                   encoding_function=lambda x: (x > 2.0).astype(int)
                                                                   )  # 0 City, 1 Countryside
-            y_train = data[['road_label', 'id']].reset_index(drop=True)
-            X_train = data[['acceleration_abs', 'id']].reset_index(drop=True)
+            for i in range(0, data.shape[0], 30):
+                data['id'] = i%30
+            y_train = data_train[['road_label', 'id']].reset_index(drop=True)
+            X_train = data_train[['acceleration_abs', 'id']].reset_index(drop=True)
             #data['id'] = range(1, len(data) + 1) #what happens if i just set this to 1
             #y_train['id'] = data['id']
             #y_train['road_label'].index = list(y_train['id'])
 
             X_train = extractor.extract_select_training_features(
-                data_train,
+                X_train,
                 args=['id', config['hw_num_processors'], None, y_train['road_label'], 0.1]
 
             )
-
+            '''
             keys = X_train.keys()
             keys = list(filter(lambda x: "acceleration_abs" in x, keys))
 
@@ -108,6 +110,7 @@ class ConcretePipelineFacade(PipelineFacade):
             keys.append('road_label')
             X_combined = preprocessor.de_segment_data(X_segments_new, keys)
             X_train, y_train = X_combined[keys[:-1]], X_combined[keys[-1]]
+            '''
             X_train = ['placeholder',
                        [X_train, y_train, 'N/A', 'N/A', 'N/A']]  # required for further processing. TODO: Unifiy naming!
 
