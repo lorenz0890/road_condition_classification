@@ -85,6 +85,10 @@ class ConcretePipelineFacade(PipelineFacade):
             for i in range(0, data_train.index.size, 30):
                 train_id[i:i+30] = [id]*30
                 id+=1
+            print(train_id[:60])
+            print(train_id[-60:])
+            print(len(train_id))
+            print(data_train.index.size)
             data_train['id'] = train_id
 
             test_id = [None]*data_test.index.size
