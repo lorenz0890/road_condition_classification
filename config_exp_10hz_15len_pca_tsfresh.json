@@ -59,8 +59,8 @@
     150,
     200
   ],
-  "feature_eng_scrimp_extractor_features": 3,
-  "feature_eng_baseline_extractor_segement_len" : 900,
+  "feature_eng_scrimp_extractor_features": 2,
+  "feature_eng_baseline_extractor_segement_len" : 15,
   "feature_eng_baseline_extractor_fdr" : 0.05,
   "feature_eng_dim_reduction_type": "pca",
   "feature_eng_dim_reduction_target_col_name": "acceleration_abs",
