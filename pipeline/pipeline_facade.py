@@ -274,6 +274,7 @@ class ConcretePipelineFacade(PipelineFacade):
             }
 
         run_summary['global_best_meta_data'] = meta_data
+        run_summary['config'] = config
 
         with open('./meta_data', 'wb') as meta_file:
             pickle.dump(meta_data, meta_file)
