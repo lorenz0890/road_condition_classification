@@ -51,6 +51,8 @@ class ConcretePipelineFacade(PipelineFacade):
         print('--------------------FEATURE EXTRACTION------------------')
         X_train = None
         X_test = None
+        y_train = None
+        y_test = None
 
         if config['feature_eng_extractor_type'] == "motif":
             X_train = extractor.extract_select_training_features(
@@ -239,11 +241,20 @@ class ConcretePipelineFacade(PipelineFacade):
         print('--------------------STORE RESULTS------------------------')
         # TODO: delegate to DAO, make storing configureable
 
-        pandas.DataFrame(X_train).to_pickle('X_train.pkl')
-        pandas.DataFrame(X_test).to_pickle('X_train.pkl')
-        pandas.DataFrame(X_valid).to_pickle('X_valid.pkl')
+        results_tag = "{0}_{1}_{2}_{3}".format(
+            config['feature_eng_extractor_type'],
+            config['pre_proc_resample_freq'],
+            config['feature_eng_dim_reduction_type'],
+            config['feature_eng_baseline_extractor_segement_len']
+        )
+        pandas.DataFrame(X_train).to_pickle("X_train_{}.pkl".format(results_tag))
+        pandas.DataFrame(X_test).to_pickle("X_test_{}.pkl".format(results_tag))
+        pandas.DataFrame(X_valid).to_pickle("X_valid_{}.pkl".format(results_tag))
+        pandas.DataFrame(y_train).to_pickle("y_train_{}.pkl".format(results_tag))
+        pandas.DataFrame(y_test).to_pickle("y_test_{}.pkl".format(results_tag))
+        pandas.DataFrame(y_valid).to_pickle("y_valid_{}.pkl".format(results_tag))
 
-        with open('./clf.pkl', 'wb') as clf_file:
+        with open("./clf_{}.pkl".format(results_tag), 'wb') as clf_file:
             pickle.dump(clf, clf_file)
 
         meta_data = None
@@ -274,10 +285,10 @@ class ConcretePipelineFacade(PipelineFacade):
         run_summary['global_best_meta_data'] = meta_data
         run_summary['config'] = config
 
-        with open('./meta_data.pkl', 'wb') as meta_file:
+        with open("./meta_data_{}.pkl".format(results_tag), 'wb') as meta_file:
             pickle.dump(meta_data, meta_file)
 
-        with open('./run_summary.pkl', 'wb') as run_summary_file:
+        with open("./run_summary_{}.pkl".format(results_tag), 'wb') as run_summary_file:
             pickle.dump(run_summary, run_summary_file)
 
         print('--------------------PRINT SUMMARY------------------------')
@@ -289,6 +300,7 @@ class ConcretePipelineFacade(PipelineFacade):
     def execute_inference(self, config):
         """
         Run inference based on config
+        TODO update to current framework
         :param config: dict
         """
 
