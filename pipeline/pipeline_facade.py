@@ -204,8 +204,8 @@ class ConcretePipelineFacade(PipelineFacade):
         elif config['feature_eng_extractor_type'] == 'ts-fresh':
             pass #TODO
 
-        print(X_valid)
-        print(y_valid)
+        #print(X_valid)
+        #print(y_valid)
         score = clf.score(X_valid, y_valid['road_label'])
         print(score)
         y_pred = clf.predict(X_valid)
