@@ -78,21 +78,23 @@ class ConcretePipelineFacade(PipelineFacade):
                                                                   )  # 0 City, 1 Countryside
 
 
+            #Find segements with homogeneous labeling
             split = lambda df, chunk_size: numpy.array_split(df, len(df) // chunk_size + 1, axis=0)
             segments_train = split(data_train, segment_length)
-            segments_test= split(data_train, segment_length)
+            segments_test= split(data_test, segment_length)
             segments_train_homogeneous, segments_test_homogeneous = [], []
             for segment in segments_train:
-                if segment['road_label'].counts.nunique() == 1:
+                if segment.count(level='road_label').nunique() == 1:
                     segments_train_homogeneous.append(segment)
             for segment in segments_test:
-                if segment['road_label'].counts.nunique() == 1:
+                if segment.count(level='road_label').nunique() == 1:
                     segments_test_homogeneous.append(segment)
 
             data_train = pandas.concat(segments_train_homogeneous, axis=0)
             data_test = pandas.concat(segments_test_homogeneous, axis=0)
 
 
+            #Generate id column
             train_id = [None]*data_train.index.size
             id = 0
             for i in range(0, data_train.index.size, segment_length):
@@ -108,6 +110,7 @@ class ConcretePipelineFacade(PipelineFacade):
                 id += 1
             test_id = test_id[:data_test.index.size]
             data_test['id'] = test_id
+
 
             y_train = data_train[['road_label', 'id']].reset_index(drop=True)
             y_train = y_train.groupby(y_train.index // segment_length).agg(lambda x: x.value_counts().index[0]) #majority label in segment
