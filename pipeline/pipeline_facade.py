@@ -84,10 +84,10 @@ class ConcretePipelineFacade(PipelineFacade):
             segments_test= split(data_test, segment_length)
             segments_train_homogeneous, segments_test_homogeneous = [], []
             for segment in segments_train:
-                if segment.count(level='road_label').nunique() == 1:
+                if segment.set_index(['road_label']).count(level='road_label').nunique() == 1:
                     segments_train_homogeneous.append(segment)
             for segment in segments_test:
-                if segment.count(level='road_label').nunique() == 1:
+                if segment.set_index(['road_label']).count(level='road_label').nunique() == 1:
                     segments_test_homogeneous.append(segment)
 
             data_train = pandas.concat(segments_train_homogeneous, axis=0)
