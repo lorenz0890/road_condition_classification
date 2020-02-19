@@ -460,6 +460,7 @@ class SklearnModelFactory(ModelFactory):
             run_summary['best']['best_score'] = best_score
             run_summary['best']['best_clf_params'] = best_clf.best_params_
         elif mode == 'ts-fresh':
+            run_summary['best'] = {}
             run_summary['best']['best_conf'] = best_conf
             run_summary['best']['best_score'] = best_score
             run_summary['best']['best_clf_params'] = best_clf.best_params_
