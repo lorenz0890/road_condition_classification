@@ -157,8 +157,7 @@ class SklearnModelFactory(ModelFactory):
                 y_test = X_test_list[i][1]
 
             print("------------------------Iteration: {}-------------------".format(i))
-
-            # Preclustering using iso forrests
+            print('---------------------Pre-Clustering---------------------')
             X_test, y_test = self.pre_clustering(X_test, y_test, None)
             X_train, y_train = self.pre_clustering(X_train, y_train, None)
 

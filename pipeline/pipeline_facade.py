@@ -11,6 +11,7 @@ from sklearn.metrics import classification_report
 import pickle
 import pandas
 import numpy
+import pprint
 from tsfresh.feature_extraction.settings import from_columns
 
 
@@ -157,8 +158,6 @@ class ConcretePipelineFacade(PipelineFacade):
             X_test,
         )
 
-        print('--------------------TRAINING SUMMARY----------------------')
-        print(run_summary)
         if clf is None or score is None or conf is None:
             pass  # TODO Raise Error
 
@@ -215,7 +214,7 @@ class ConcretePipelineFacade(PipelineFacade):
 
         # 7. Run Validation
         print('--------------------VALIDATION---------------------------')
-        X_valid, y_valid = model_factory.pre_clustering(X_valid, y_valid)
+        X_valid, y_valid = model_factory.pre_clustering(X_valid, y_valid, None)
         if config['feature_eng_extractor_type'] == 'motif':
             print("Validation y label 1: {}".format(list(y_valid[0]).count(1.0) / len(y_valid)))  # TODO: make configureable
             print("Validation y label 3: {}".format(list(y_valid[0]).count(3.0) / len(y_valid)))
@@ -227,8 +226,6 @@ class ConcretePipelineFacade(PipelineFacade):
             run_summary['valid_lbl_1'] = list(y_valid).count(0.0) / len(y_valid)
             run_summary['valid_lbl_3'] = list(y_valid).count(1.0) / len(y_valid)
 
-        #print(X_valid)
-        #print(y_valid)
         score = clf.score(X_valid, y_valid)
         print(score)
         y_pred = clf.predict(X_valid)
@@ -284,7 +281,7 @@ class ConcretePipelineFacade(PipelineFacade):
             pickle.dump(run_summary, run_summary_file)
 
         print('--------------------PRINT SUMMARY------------------------')
-        print(run_summary)
+        pprint.pprint(run_summary)
 
 
 
