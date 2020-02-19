@@ -61,7 +61,7 @@ class ConcretePipelineFacade(PipelineFacade):
                 [config['feature_eng_mp_extractor_radii'], config['feature_eng_mp_extractor_lengths']]
             )
 
-        segment_length = 60
+        segment_length = config['feature_eng_baseline_extractor_segement_len']
         if config['feature_eng_extractor_type'] == "ts-fresh":
 
             # TODO migrate the preperation for extraction to extract_select_training_features, make label column name configureable
@@ -189,10 +189,7 @@ class ConcretePipelineFacade(PipelineFacade):
                 args=['id', config['hw_num_processors'], None, kind_to_fc_parameters]
             )
 
-           # X_valid = ['placeholder',
-           #            [X_valid, y_valid['road_label'].rename(columns={'road_label': 0}, inplace=True),
-           #             'N/A', 'N/A', 'N/A']]  # required for further processing. TODO: Unifiy naming!
-
+            y_valid = y_valid['road_label'].rename(columns={'road_label': 0}, inplace=True)
         if config['feature_eng_extractor_type'] == "motif":
             X_valid, y_valid = extractor.extract_select_inference_features(
                 data_valid, [motif_radius, motif_len, config['hw_num_processors']], True
@@ -209,7 +206,7 @@ class ConcretePipelineFacade(PipelineFacade):
 
         print(X_valid)
         print(y_valid)
-        score = clf.score(X_valid, y_valid)
+        score = clf.score(X_valid, y_valid['road_label'])
         print(score)
         y_pred = clf.predict(X_valid)
         conf = confusion_matrix(y_valid, y_pred, labels=None, sample_weight=None)

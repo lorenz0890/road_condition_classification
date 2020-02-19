@@ -60,7 +60,7 @@
     200
   ],
   "feature_eng_scrimp_extractor_features": 3,
-  "feature_eng_baseline_extractor_paa_len" : 30,
+  "feature_eng_baseline_extractor_segement_len" : 30,
   "feature_eng_baseline_extractor_features": [
     "TODO ADD FEATURES THAT TSFRESH SHOULD EXTRACT"
   ],
