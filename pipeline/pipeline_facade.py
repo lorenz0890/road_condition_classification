@@ -103,9 +103,7 @@ class ConcretePipelineFacade(PipelineFacade):
             y_test = data_test[['road_label', 'id']].reset_index(drop=True)
             y_test = y_test.groupby(y_test.index // 30).agg(lambda x: x.value_counts().index[0])
             X_test = data_test[['acceleration_abs', 'id']].reset_index(drop=True)
-            #data['id'] = range(1, len(data) + 1) #what happens if i just set this to 1
-            #y_train['id'] = data['id']
-            #y_train['road_label'].index = list(y_train['id'])
+
 
             #Extract Training features
             X_train = extractor.extract_select_training_features(
@@ -132,13 +130,6 @@ class ConcretePipelineFacade(PipelineFacade):
         if X_train is None or X_test is None:
             pass  # TODO Raise Error
 
-        #print(X_train[1][0].shape)
-        #print(X_train[1][1].shape)
-        #print(X_train[1][0].head(10))
-        #print(X_train[1][1].head(10))
-        #print(X_test[1][0].head(10))
-        #print(X_test[1][1].head(10))
-
 
         # 5. Find optimal classifier for given training set
         print('--------------------TRAINING PHASE----------------------')
@@ -153,10 +144,37 @@ class ConcretePipelineFacade(PipelineFacade):
 
         # 6. Prepare Validation
         print('--------------------PREPARE VALIDATION-------------------')
-        #TODO: Adapt for TS Fresh
-        print(data_valid.shape)
-        print(data_valid.head(10))
+
         X_valid, y_valid = None, None
+        if config['feature_eng_extractor_type'] == "ts-fresh":
+
+            data_valid = preprocessor.encode_categorical_features(data=data_valid,
+                                                                 mode='custom_function',
+                                                                 columns=['road_label'],
+                                                                 encoding_function=lambda x: (x > 2.0).astype(int)
+                                                                 )  # 0 City, 1 Countryside
+            valid_id = [None] * data_valid.index.size
+            id = 0
+            for i in range(0, data_valid.index.size, 30):
+                valid_id[i:i + 30] = [id] * 30
+                id += 1
+            valid_id = valid_id[:data_valid.index.size]
+            data_valid['id'] = valid_id
+
+            y_valid = data_valid[['road_label', 'id']].reset_index(drop=True)
+            y_valid = y_valid.groupby(y_valid.index // 30).agg(lambda x: x.value_counts().index[0])
+            X_valid = data_valid[['acceleration_abs', 'id']].reset_index(drop=True)
+
+            # Get feature map for validation and training set
+            kind_to_fc_parameters = from_columns(X_train)
+            X_valid = extractor.extract_select_inference_features(
+                X_valid,
+                args=['id', config['hw_num_processors'], None, kind_to_fc_parameters]
+            )
+
+            X_valid = ['placeholder',
+                       [X_valid, y_valid['road_label'].rename(columns={'road_label': 0}, inplace=True),
+                        'N/A', 'N/A', 'N/A']]  # required for further processing. TODO: Unifiy naming!
 
         if config['feature_eng_extractor_type'] == "motif":
             X_valid, y_valid = extractor.extract_select_inference_features(
