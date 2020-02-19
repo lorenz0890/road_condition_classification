@@ -77,7 +77,7 @@ class ConcretePipelineFacade(PipelineFacade):
                                                                   encoding_function=lambda x: (x > 2.0).astype(int)
                                                                   )  # 0 City, 1 Countryside
 
-            '''
+
             #Find segements with homogeneous labeling
             split = lambda df, chunk_size: numpy.array_split(df, len(df) // chunk_size + 1, axis=0)
             segments_train = split(data_train, segment_length)
@@ -110,7 +110,7 @@ class ConcretePipelineFacade(PipelineFacade):
                 id += 1
             test_id = test_id[:data_test.index.size]
             data_test['id'] = test_id
-            '''
+            
             y_train = data_train[['road_label', 'id']].reset_index(drop=True)
             y_train = y_train.groupby(y_train.index // segment_length).agg(lambda x: x.value_counts().index[0]) #majority label in segment
             X_train = data_train[['acceleration_abs', 'id']].reset_index(drop=True)
