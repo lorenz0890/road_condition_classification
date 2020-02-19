@@ -124,7 +124,7 @@ class ConcretePipelineFacade(PipelineFacade):
             #Extract Training features
             X_train = extractor.extract_select_training_features(
                 X_train,
-                args=['id', config['hw_num_processors'], None, y_train['road_label'], 0.1] #TODO use fdr dfrom cfg
+                args=['id', config['hw_num_processors'], None, y_train['road_label'], config['feature_eng_baseline_extractor_fdr']] #TODO use fdr dfrom cfg
 
             )
 
