@@ -39,11 +39,15 @@ class SklearnModelFactory(ModelFactory):
                                        ).fit_predict(X)
 
         X_combined = X.loc[pandas.DataFrame(y_clustering)[0] == 1]
-        y_combined = y.loc[pandas.DataFrame(y_clustering)[0] == 1]
-
         X_combined = X_combined.reset_index(drop=True)
-        y_combined = y_combined.reset_index(drop=True)
-        return X_combined, y_combined
+
+        y_combined = None
+        if y is not None:
+            y_combined = y.loc[pandas.DataFrame(y_clustering)[0] == 1]
+            y_combined = y_combined.reset_index(drop=True)
+            return X_combined, y_combined
+
+        return X_combined
 
     @overrides
     def create_model(self, model_type, X_train, y_train, X_test, y_test, model_params, search_params):
@@ -152,8 +156,7 @@ class SklearnModelFactory(ModelFactory):
                 X_test = X_test_list[i][0]
                 y_test = X_test_list[i][1]
 
-
-            print("------------------Iteration: {}-----------------".format(i))
+            print("------------------------Iteration: {}-------------------".format(i))
 
             # Preclustering using iso forrests
             X_test, y_test = self.pre_clustering(X_test, y_test, None)
@@ -173,7 +176,7 @@ class SklearnModelFactory(ModelFactory):
                 run_summary[i]['test_lbl_3'] = list(y_test[0]).count(3.0) / len(y_test)
                 run_summary[i]['distribution_ok'] = True
 
-                print('------------------Motifs-----------------')
+                print('-------------------------Motifs-------------------------')
                 print("Motif radius: {}".format(X_train_list[i][2]))
                 print("Motif length: {}".format(X_train_list[i][3]))
                 print("Motif count: {}".format(X_train_list[i][4]))
@@ -208,7 +211,7 @@ class SklearnModelFactory(ModelFactory):
                 run_summary[i]['test_lbl_3'] = list(y_test).count(1.0) / len(y_test)
                 run_summary[i]['distribution_ok'] = True
 
-                print('------------------Fresh-----------------')
+                print('--------------------------Fresh-------------------------')
                 print("X_train shape: {}".format(X_train.shape))
                 print("X_test shape: {}".format(X_test.shape))
                 print("Training y label 1: {}".format(list(y_train).count(0.0) / len(y_train)))  # TODO: make configureable
@@ -234,7 +237,7 @@ class SklearnModelFactory(ModelFactory):
                 X_test.shape[0] >= config['classifier_hypermaram_space_sklearn_rf']['cross_validation_k']
             ):
 
-                print('------------------Sklearn-----------------')
+                print('-------------------------Sklearn------------------------')
                 model = self.create_model(
                     model_type='svc',
                     X_train=X_train,
@@ -264,7 +267,8 @@ class SklearnModelFactory(ModelFactory):
                                    config['classifier_hypermaram_space_sklearn_svc']['save_classifier_file_name'],
                                    config['classifier_hypermaram_space_sklearn_svc']['test_set_sz']] #TODO: This is deprecated at the classifier level. Remove from config and here.
                 )
-                print('------------------SVC-----------------')
+
+                print('--------------------------SVC---------------------------')
                 print(model['clf'].best_params_)
                 score = model['clf'].score(X_test, y_test)
                 y_pred = model['clf'].predict(X_test)
@@ -315,7 +319,8 @@ class SklearnModelFactory(ModelFactory):
                                    config['classifier_hypermaram_space_sklearn_cart']['save_classifier_file_name'],
                                    config['classifier_hypermaram_space_sklearn_cart']['test_set_sz']]
                 )
-                print('------------------CART-Tree-----------------')
+                print('--------------------FEATURE EXTRACTION------------------')
+                print('------------------------CART-Tree-----------------------')
                 print(model['clf'].best_params_)
                 score = model['clf'].score(X_test, y_test)
                 y_pred = model['clf'].predict(X_test)
@@ -365,7 +370,8 @@ class SklearnModelFactory(ModelFactory):
                                    config['classifier_hypermaram_space_sklearn_rf']['save_classifier_file_name'],
                                    config['classifier_hypermaram_space_sklearn_rf']['test_set_sz']]
                 )
-                print('------------------Random Forrest----------------')
+
+                print('-----------------------Random Forrest-------------------')
                 print(model['clf'].best_params_)
                 score = model['clf'].score(X_test, y_test)
                 y_pred = model['clf'].predict(X_test)
@@ -426,7 +432,7 @@ class SklearnModelFactory(ModelFactory):
                                    config['classifier_hypermaram_space_sklearn_mlp']['save_classifier_file_name'],
                                    config['classifier_hypermaram_space_sklearn_mlp']['test_set_sz']]
                 )
-                print('------------------MLP----------------')
+                print('--------------------------MLP---------------------------')
                 print(model['clf'].best_params_)
                 score = model['clf'].score(X_test, y_test)
                 y_pred = model['clf'].predict(X_test)
