@@ -190,6 +190,7 @@ class ConcretePipelineFacade(PipelineFacade):
             )
 
             y_valid = y_valid['road_label'].rename(columns={'road_label': 0}, inplace=True)
+
         if config['feature_eng_extractor_type'] == "motif":
             X_valid, y_valid = extractor.extract_select_inference_features(
                 data_valid, [motif_radius, motif_len, config['hw_num_processors']], True
@@ -206,7 +207,7 @@ class ConcretePipelineFacade(PipelineFacade):
 
         #print(X_valid)
         #print(y_valid)
-        score = clf.score(X_valid, y_valid['road_label'])
+        score = clf.score(X_valid, y_valid)
         print(score)
         y_pred = clf.predict(X_valid)
         conf = confusion_matrix(y_valid, y_pred, labels=None, sample_weight=None)
