@@ -77,7 +77,7 @@ class ConcretePipelineFacade(PipelineFacade):
                                                                   encoding_function=lambda x: (x > 2.0).astype(int)
                                                                   )  # 0 City, 1 Countryside
 
-
+            '''
             #Find segements with homogeneous labeling
             split = lambda df, chunk_size: numpy.array_split(df, len(df) // chunk_size + 1, axis=0)
             segments_train = split(data_train, segment_length)
@@ -93,7 +93,7 @@ class ConcretePipelineFacade(PipelineFacade):
             data_train = pandas.concat(segments_train_homogeneous, axis=0)
             data_test = pandas.concat(segments_test_homogeneous, axis=0)
 
-            '''
+            
             #Generate id column
             train_id = [None]*data_train.index.size
             id = 0
@@ -118,7 +118,7 @@ class ConcretePipelineFacade(PipelineFacade):
             y_test = y_test.groupby(y_test.index // segment_length).agg(lambda x: x.value_counts().index[0])
             X_test = data_test[['acceleration_abs', 'id']].reset_index(drop=True)
 
-            print(y_train)
+            #print(y_train)
 
             #Extract Training features
             X_train = extractor.extract_select_training_features(
