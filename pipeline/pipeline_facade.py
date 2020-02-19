@@ -168,9 +168,9 @@ class ConcretePipelineFacade(PipelineFacade):
                 args=['id', config['hw_num_processors'], None, kind_to_fc_parameters]
             )
 
-            X_valid = ['placeholder',
-                       [X_valid, y_valid['road_label'].rename(columns={'road_label': 0}, inplace=True),
-                        'N/A', 'N/A', 'N/A']]  # required for further processing. TODO: Unifiy naming!
+           # X_valid = ['placeholder',
+           #            [X_valid, y_valid['road_label'].rename(columns={'road_label': 0}, inplace=True),
+           #             'N/A', 'N/A', 'N/A']]  # required for further processing. TODO: Unifiy naming!
 
         if config['feature_eng_extractor_type'] == "motif":
             X_valid, y_valid = extractor.extract_select_inference_features(
