@@ -60,6 +60,7 @@ class ConcretePipelineFacade(PipelineFacade):
                 [config['feature_eng_mp_extractor_radii'], config['feature_eng_mp_extractor_lengths']]
             )
 
+        segment_length = 60
         if config['feature_eng_extractor_type'] == "ts-fresh":
 
             # TODO migrate the preperation for extraction to extract_select_training_features, make label column name configureable
@@ -75,27 +76,28 @@ class ConcretePipelineFacade(PipelineFacade):
                                                                   encoding_function=lambda x: (x > 2.0).astype(int)
                                                                   )  # 0 City, 1 Countryside
 
+
             train_id = [None]*data_train.index.size
             id = 0
-            for i in range(0, data_train.index.size, 30):
-                train_id[i:i+30] = [id]*30
+            for i in range(0, data_train.index.size, segment_length):
+                train_id[i:i+segment_length] = [id]*segment_length
                 id+=1
             train_id = train_id[:data_train.index.size]
             data_train['id'] = train_id
 
             test_id = [None]*data_test.index.size
             id = 0
-            for i in range(0, data_test.index.size, 30):
-                test_id[i:i + 30] = [id]*30
+            for i in range(0, data_test.index.size, segment_length):
+                test_id[i:i + segment_length] = [id]*segment_length
                 id += 1
             test_id = test_id[:data_test.index.size]
             data_test['id'] = test_id
 
             y_train = data_train[['road_label', 'id']].reset_index(drop=True)
-            y_train = y_train.groupby(y_train.index // 30).agg(lambda x: x.value_counts().index[0]) #majority label in segment
+            y_train = y_train.groupby(y_train.index // segment_length).agg(lambda x: x.value_counts().index[0]) #majority label in segment
             X_train = data_train[['acceleration_abs', 'id']].reset_index(drop=True)
             y_test = data_test[['road_label', 'id']].reset_index(drop=True)
-            y_test = y_test.groupby(y_test.index // 30).agg(lambda x: x.value_counts().index[0])
+            y_test = y_test.groupby(y_test.index // segment_length).agg(lambda x: x.value_counts().index[0])
             X_test = data_test[['acceleration_abs', 'id']].reset_index(drop=True)
 
 
@@ -149,14 +151,14 @@ class ConcretePipelineFacade(PipelineFacade):
                                                                  )  # 0 City, 1 Countryside
             valid_id = [None] * data_valid.index.size
             id = 0
-            for i in range(0, data_valid.index.size, 30):
-                valid_id[i:i + 30] = [id] * 30
+            for i in range(0, data_valid.index.size, segment_length):
+                valid_id[i:i + segment_length] = [id] * segment_length
                 id += 1
             valid_id = valid_id[:data_valid.index.size]
             data_valid['id'] = valid_id
 
             y_valid = data_valid[['road_label', 'id']].reset_index(drop=True)
-            y_valid = y_valid.groupby(y_valid.index // 30).agg(lambda x: x.value_counts().index[0])
+            y_valid = y_valid.groupby(y_valid.index // segment_length).agg(lambda x: x.value_counts().index[0])
             X_valid = data_valid[['acceleration_abs', 'id']].reset_index(drop=True)
 
             # Get feature map for validation and training set
@@ -178,8 +180,11 @@ class ConcretePipelineFacade(PipelineFacade):
 
         # 7. Run Validation
         print('--------------------VALIDATION---------------------------')
-        print("Validation y label 1: {}".format(list(y_valid[0]).count(1.0) / len(y_valid)))  # TODO: make configureable
-        print("Validation y label 3: {}".format(list(y_valid[0]).count(3.0) / len(y_valid)))
+        if config['feature_eng_extractor_type'] == 'motif':
+            print("Validation y label 1: {}".format(list(y_valid[0]).count(1.0) / len(y_valid)))  # TODO: make configureable
+            print("Validation y label 3: {}".format(list(y_valid[0]).count(3.0) / len(y_valid)))
+        elif config['feature_eng_extractor_type'] == 'ts-fresh':
+            pass
         score = clf.score(X_valid, y_valid)
         print(score)
         y_pred = clf.predict(X_valid)
@@ -194,6 +199,7 @@ class ConcretePipelineFacade(PipelineFacade):
         # TODO: delegate to DAO, make storing configureable
 
         X_train.to_pickle('X_train.pkl')
+        X_test.to_pickle('X_train.pkl')
         X_valid.to_pickle('X_valid.pkl')
 
         with open('./clf', 'wb') as clf_file:
@@ -252,9 +258,6 @@ class ConcretePipelineFacade(PipelineFacade):
         with open('./meta_data', 'rb') as meta_file:
             meta_data = pickle.load(meta_file)
 
-        with open('./X_train', 'rb') as X_train_file:
-            X_train = pickle.load(X_train_file)
-
         with open('./clf', 'rb') as clf_file:
             clf = pickle.load(clf_file)
 
@@ -283,7 +286,24 @@ class ConcretePipelineFacade(PipelineFacade):
                                                                       ], False
                                                                       )
         if config['feature_eng_extractor_type'] == "ts-fresh":
-            pass  # TODO
+
+            valid_id = [None] * data_inference.index.size
+            id = 0
+            for i in range(0, data_inference.index.size, 30):
+                valid_id[i:i + 30] = [id] * 30
+                id += 1
+            valid_id = valid_id[:data_inference.index.size]
+            data_inference['id'] = valid_id
+
+            X_valid = data_inference[['acceleration_abs', 'id']].reset_index(drop=True)
+
+            # Get feature map for validation and training set
+            kind_to_fc_parameters = meta_data['feature_mapping']
+            X_valid = extractor.extract_select_inference_features(
+                X_valid,
+                args=['id', config['hw_num_processors'], None, kind_to_fc_parameters]
+            )
+
         if X_inference is None:
             pass  # TODO Raise Error
 
