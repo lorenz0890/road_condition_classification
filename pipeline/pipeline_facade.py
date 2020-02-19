@@ -93,7 +93,6 @@ class ConcretePipelineFacade(PipelineFacade):
             data_train = pandas.concat(segments_train_homogeneous, axis=0)
             data_test = pandas.concat(segments_test_homogeneous, axis=0)
 
-
             #Generate id column
             train_id = [None]*data_train.index.size
             id = 0
@@ -110,7 +109,6 @@ class ConcretePipelineFacade(PipelineFacade):
                 id += 1
             test_id = test_id[:data_test.index.size]
             data_test['id'] = test_id
-
 
             y_train = data_train[['road_label', 'id']].reset_index(drop=True)
             y_train = y_train.groupby(y_train.index // segment_length).agg(lambda x: x.value_counts().index[0]) #majority label in segment
