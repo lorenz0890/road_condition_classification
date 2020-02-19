@@ -10,6 +10,7 @@ from sklearn.metrics import confusion_matrix
 from sklearn.metrics import classification_report
 import pickle
 import pandas
+import numpy
 from tsfresh.feature_extraction.settings import from_columns
 
 
@@ -77,6 +78,21 @@ class ConcretePipelineFacade(PipelineFacade):
                                                                   )  # 0 City, 1 Countryside
 
 
+            split = lambda df, chunk_size: numpy.array_split(df, len(df) // chunk_size + 1, axis=0)
+            segments_train = split(data_train, segment_length)
+            segments_test= split(data_train, segment_length)
+            segments_train_homogeneous, segments_test_homogeneous = [], []
+            for segment in segments_train:
+                if segment['road_label'].counts.nunique() == 1:
+                    segments_train_homogeneous.append(segment)
+            for segment in segments_test:
+                if segment['road_label'].counts.nunique() == 1:
+                    segments_test_homogeneous.append(segment)
+
+            data_train = pandas.concat(segments_train_homogeneous, axis=0)
+            data_test = pandas.concat(segments_test_homogeneous, axis=0)
+
+
             train_id = [None]*data_train.index.size
             id = 0
             for i in range(0, data_train.index.size, segment_length):
@@ -129,6 +145,8 @@ class ConcretePipelineFacade(PipelineFacade):
 
         # 5. Find optimal classifier for given training set
         print('--------------------TRAINING PHASE----------------------')
+        print(X_test[0][0])
+        print(X_test[0][1])
         clf, score, conf, X_train, motif_len, motif_radius, motif_count = model_factory.find_optimal_model(
             config['feature_eng_extractor_type'],  # TODO remove bc deprecated. config handed anyways
             config,
@@ -184,7 +202,10 @@ class ConcretePipelineFacade(PipelineFacade):
             print("Validation y label 1: {}".format(list(y_valid[0]).count(1.0) / len(y_valid)))  # TODO: make configureable
             print("Validation y label 3: {}".format(list(y_valid[0]).count(3.0) / len(y_valid)))
         elif config['feature_eng_extractor_type'] == 'ts-fresh':
-            pass
+            pass #TODO
+
+        print(X_valid)
+        print(y_valid)
         score = clf.score(X_valid, y_valid)
         print(score)
         y_pred = clf.predict(X_valid)
