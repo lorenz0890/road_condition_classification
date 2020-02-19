@@ -150,12 +150,15 @@ class ConcretePipelineFacade(PipelineFacade):
         print('--------------------TRAINING PHASE----------------------')
         print(X_test[0][0])
         print(X_test[0][1])
-        clf, score, conf, X_train, motif_len, motif_radius, motif_count = model_factory.find_optimal_model(
+        clf, score, conf, X_train, motif_len, motif_radius, motif_count, run_summary = model_factory.find_optimal_model(
             config['feature_eng_extractor_type'],  # TODO remove bc deprecated. config handed anyways
             config,
             X_train,
             X_test,
         )
+
+        print('--------------------TRAINING SUMMARY----------------------')
+        print(run_summary)
         if clf is None or score is None or conf is None:
             pass  # TODO Raise Error
 
@@ -196,6 +199,7 @@ class ConcretePipelineFacade(PipelineFacade):
 
             # Get feature map for validation and training set
             kind_to_fc_parameters = from_columns(X_train)
+            run_summary['ts_fresh_relevant_features'] = kind_to_fc_parameters
             X_valid = extractor.extract_select_inference_features(
                 X_valid,
                 args=['id', config['hw_num_processors'], None, kind_to_fc_parameters]
@@ -214,8 +218,13 @@ class ConcretePipelineFacade(PipelineFacade):
         if config['feature_eng_extractor_type'] == 'motif':
             print("Validation y label 1: {}".format(list(y_valid[0]).count(1.0) / len(y_valid)))  # TODO: make configureable
             print("Validation y label 3: {}".format(list(y_valid[0]).count(3.0) / len(y_valid)))
+            run_summary['valid_lbl_1'] = list(y_valid[0]).count(1.0) / len(y_valid)
+            run_summary['valid_lbl_3'] = list(y_valid[0]).count(3.0) / len(y_valid)
         elif config['feature_eng_extractor_type'] == 'ts-fresh':
-            pass #TODO
+            print("Validation y label 1: {}".format(list(y_valid).count(1.0) / len(y_valid)))  # TODO: make configureable
+            print("Validation y label 3: {}".format(list(y_valid).count(0.0) / len(y_valid)))
+            run_summary['valid_lbl_1'] = list(y_valid).count(0.0) / len(y_valid)
+            run_summary['valid_lbl_3'] = list(y_valid).count(1.0) / len(y_valid)
 
         #print(X_valid)
         #print(y_valid)
@@ -264,9 +273,18 @@ class ConcretePipelineFacade(PipelineFacade):
                 'clf_best_params': best_params
             }
 
+        run_summary['global_best_meta_data'] = meta_data
 
         with open('./meta_data', 'wb') as meta_file:
             pickle.dump(meta_data, meta_file)
+
+        with open('./run_summary', 'wb') as run_summary_file:
+            pickle.dump(run_summary, run_summary_file)
+
+        print('--------------------PRINT SUMMARY------------------------')
+        print(run_summary)
+
+
 
     @overrides
     def execute_inference(self, config):

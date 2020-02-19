@@ -160,6 +160,19 @@ class SklearnModelFactory(ModelFactory):
             X_train, y_train = self.pre_clustering(X_train, y_train, None)
 
             if mode == 'motif':
+                #Motif radius, motif len, motif count, Xtrain shape, Xtest shape, Train label 1, train label 2
+                run_summary[i] = {}
+                run_summary[i]['motif_radius'] = X_train_list[i][2]
+                run_summary[i]['motif_length'] = X_train_list[i][3]
+                run_summary[i]['motif_count'] = X_train_list[i][4]
+                run_summary[i]['X_train_shape'] = X_train.shape
+                run_summary[i]['X_test_shape'] = X_test.shape
+                run_summary[i]['train_lbl_1'] = list(y_train[0]).count(1.0) / len(y_train)
+                run_summary[i]['train_lbl_3'] = list(y_train[0]).count(3.0) / len(y_train)
+                run_summary[i]['test_lbl_1'] = list(y_test[0]).count(1.0) / len(y_test)
+                run_summary[i]['test_lbl_3'] = list(y_test[0]).count(3.0) / len(y_test)
+                run_summary[i]['distribution_ok'] = True
+
                 print('------------------Motifs-----------------')
                 print("Motif radius: {}".format(X_train_list[i][2]))
                 print("Motif length: {}".format(X_train_list[i][3]))
@@ -174,29 +187,45 @@ class SklearnModelFactory(ModelFactory):
                         list(y_train[0]).count(1.0) / len(y_train) <
                         config['classifier_rep_class_distribution'][1]):
                     print('Class distribution not representative in training set')
+                    run_summary[i]['distribution_ok'] = False
                     continue
                 if not (config['classifier_rep_class_distribution'][0] <
                         list(y_test[0]).count(1.0) / len(y_test) <
                         config['classifier_rep_class_distribution'][1]):
                     print('Class distribution not representative in test set')
+                    run_summary[i]['distribution_ok'] = False
                     continue
             elif mode == 'ts-fresh':
+                run_summary[i] = {}
+                run_summary[i]['motif_radius'] = X_train_list[i][2]
+                run_summary[i]['motif_length'] = X_train_list[i][3]
+                run_summary[i]['motif_count'] = X_train_list[i][4]
+                run_summary[i]['X_train_shape'] = X_train.shape
+                run_summary[i]['X_test_shape'] = X_test.shape
+                run_summary[i]['train_lbl_1'] = list(y_train).count(0.0) / len(y_train)
+                run_summary[i]['train_lbl_3'] = list(y_train).count(1.0) / len(y_train)
+                run_summary[i]['test_lbl_1'] = list(y_test).count(0.0) / len(y_test)
+                run_summary[i]['test_lbl_3'] = list(y_test).count(1.0) / len(y_test)
+                run_summary[i]['distribution_ok'] = True
+
                 print('------------------Fresh-----------------')
                 print("X_train shape: {}".format(X_train.shape))
                 print("X_test shape: {}".format(X_test.shape))
-                print("Training y label 1: {}".format(list(y_train).count(1.0) / len(y_train)))  # TODO: make configureable
-                print("Training y label 3: {}".format(list(y_train).count(0.0) / len(y_train)))
-                print("Test y label 1: {}".format(list(y_test).count(1.0) / len(y_test)))  # TODO: make configureable
-                print("Test y label 3: {}\n\n".format(list(y_test).count(0.0) / len(y_test)))
+                print("Training y label 1: {}".format(list(y_train).count(0.0) / len(y_train)))  # TODO: make configureable
+                print("Training y label 3: {}".format(list(y_train).count(1.0) / len(y_train)))
+                print("Test y label 1: {}".format(list(y_test).count(0.0) / len(y_test)))  # TODO: make configureable
+                print("Test y label 3: {}\n\n".format(list(y_test).count(1.0) / len(y_test)))
                 if not (config['classifier_rep_class_distribution'][0] <
                         list(y_train).count(1.0) / len(y_train) <
                         config['classifier_rep_class_distribution'][1]):
                     print('Class distribution not representative in training set')
+                    run_summary[i]['distribution_ok'] = False
                     continue
                 if not (config['classifier_rep_class_distribution'][0] <
                         list(y_test).count(1.0) / len(y_test) <
                         config['classifier_rep_class_distribution'][1]):
                     print('Class distribution not representative in test set')
+                    run_summary[i]['distribution_ok'] = False
                     continue
 
             # Test different classifiers on the detected features
@@ -250,6 +279,9 @@ class SklearnModelFactory(ModelFactory):
                     best_motif_count = X_train_list[i][4]
                 print(score)
                 print(conf)
+                run_summary[i]['svc_score'] = score
+                run_summary[i]['svc_conf'] = conf
+                run_summary[i]['svc_best_params'] = model['clf'].best_params_
                 print("\n\n")
 
             if (('sklearn_cart' in config['classifier_optimal_search_space'] or 'all' in config['classifier_optimal_search_space']) and
@@ -298,6 +330,9 @@ class SklearnModelFactory(ModelFactory):
                     best_motif_count = X_train_list[i][4]
                 print(score)
                 print(conf)
+                run_summary[i]['cart_score'] = score
+                run_summary[i]['cart_conf'] = conf
+                run_summary[i]['cart_best_params'] = model['clf'].best_params_
                 print("\n\n")
 
             if (('sklearn_rf' in config['classifier_optimal_search_space'] or 'all' in config['classifier_optimal_search_space']) and
@@ -345,6 +380,9 @@ class SklearnModelFactory(ModelFactory):
                     best_motif_count = X_train_list[i][4]
                 print(score)
                 print(conf)
+                run_summary[i]['rf_score'] = score
+                run_summary[i]['rf_conf'] = conf
+                run_summary[i]['rf_best_params'] = model['clf'].best_params_
                 print("\n\n")
 
             if (('sklearn_mlp' in config['classifier_optimal_search_space'] or 'all' in config['classifier_optimal_search_space']) and
@@ -403,9 +441,23 @@ class SklearnModelFactory(ModelFactory):
                     best_motif_count = X_train_list[i][4]
                 print(score)
                 print(conf)
+                run_summary[i]['mlp_score'] = score
+                run_summary[i]['mlp_conf'] = conf
+                run_summary[i]['mlp_best_params'] = model['clf'].best_params_
                 print("\n\n")
 
-
+        if mode == 'motif':
+            run_summary['best'] = {}
+            run_summary['best']['best_motif_radius'] = best_motif_radius
+            run_summary['best']['best_motif_length'] = best_motif_len
+            run_summary['best']['best_motif_count'] = best_motif_count
+            run_summary['best']['best_conf'] = best_conf
+            run_summary['best']['best_score'] = best_score
+            run_summary['best']['best_clf_params'] = best_clf.best_params_
+        elif mode == 'ts-fresh':
+            run_summary['best']['best_conf'] = best_conf
+            run_summary['best']['best_score'] = best_score
+            run_summary['best']['best_clf_params'] = best_clf.best_params_
 
         print("best len", best_motif_len, "best radius", best_motif_radius)
-        return best_clf, best_score, best_conf, best_X_train, best_motif_len, best_motif_radius, best_motif_count
+        return best_clf, best_score, best_conf, best_X_train, best_motif_len, best_motif_radius, best_motif_count, run_summary
