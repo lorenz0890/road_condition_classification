@@ -81,7 +81,7 @@
       "test_set_sz": 0.2,
       "verbose": 0,
       "cross_validation_k": 5,
-      "iterations": 20,
+      "iterations": 50,
       "save_classifier": true,
       "save_classifier_file_name": "mlp_rs.pickle",
       "solver": [
@@ -136,7 +136,7 @@
     "test_set_sz": 0.2,
     "verbose": 0,
     "cross_validation_k": 5,
-    "iterations": 20,
+    "iterations": 50,
     "save_classifier": true,
     "save_classifier_file_name": "svc_rs.pickle",
     "kernel": [
@@ -173,7 +173,7 @@
     "test_set_sz": 0.2,
     "verbose": 0,
     "cross_validation_k": 5,
-    "iterations": 20,
+    "iterations": 50,
     "save_classifier": true,
     "save_classifier_file_name": "rf_rs.pickle",
     "n_estimators": [
@@ -205,7 +205,7 @@
     "test_set_sz": 0.2,
     "verbose": 0,
     "cross_validation_k": 5,
-    "iterations": 20,
+    "iterations": 50,
     "save_classifier": true,
     "save_classifier_file_name": "dt_rs.pickle",
     "max_depth": [

@@ -137,6 +137,7 @@ class SklearnModelFactory(ModelFactory):
         best_motif_radius = None
         best_motif_len = -1
         best_motif_count = -1
+        run_summary = {} #TODO write a run summary that can be nicley exported
 
         for i in range(1, len(X_train_list)):
             X_train = X_train_list[i][0]
@@ -165,7 +166,6 @@ class SklearnModelFactory(ModelFactory):
                 print("Motif count: {}".format(X_train_list[i][4]))
                 print("X_train shape: {}".format(X_train.shape))
                 print("X_test shape: {}".format(X_test.shape))
-                print(y_train)
                 print("Training y label 1: {}".format(list(y_train[0]).count(1.0) / len(y_train))) #TODO: make configureable
                 print("Training y label 3: {}".format(list(y_train[0]).count(3.0) / len(y_train)))
                 print("Test y label 1: {}".format(list(y_test[0]).count(1.0) / len(y_test)))  # TODO: make configureable
@@ -182,7 +182,22 @@ class SklearnModelFactory(ModelFactory):
                     continue
             elif mode == 'ts-fresh':
                 print('------------------Fresh-----------------')
-                pass
+                print("X_train shape: {}".format(X_train.shape))
+                print("X_test shape: {}".format(X_test.shape))
+                print("Training y label 1: {}".format(list(y_train).count(1.0) / len(y_train)))  # TODO: make configureable
+                print("Training y label 3: {}".format(list(y_train).count(3.0) / len(y_train)))
+                print("Test y label 1: {}".format(list(y_test).count(1.0) / len(y_test)))  # TODO: make configureable
+                print("Test y label 3: {}\n\n".format(list(y_test.count(3.0) / len(y_test))))
+                if not (config['classifier_rep_class_distribution'][0] <
+                        list(y_train).count(1.0) / len(y_train) <
+                        config['classifier_rep_class_distribution'][1]):
+                    print('Class distribution not representative in training set')
+                    continue
+                if not (config['classifier_rep_class_distribution'][0] <
+                        list(y_test).count(1.0) / len(y_test) <
+                        config['classifier_rep_class_distribution'][1]):
+                    print('Class distribution not representative in test set')
+                    continue
 
             # Test different classifiers on the detected features
             if (('sklearn_svc' in config['classifier_optimal_search_space'] or 'all' in config['classifier_optimal_search_space']) and

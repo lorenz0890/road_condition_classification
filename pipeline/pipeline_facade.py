@@ -172,6 +172,7 @@ class ConcretePipelineFacade(PipelineFacade):
                                                                  encoding_function=lambda x: (x > 2.0).astype(int)
                                                                  )  # 0 City, 1 Countryside
 
+            #Segement validation data ins pieces with homogeneous length
             split = lambda df, chunk_size: numpy.array_split(df, len(df) // chunk_size + 1, axis=0)
             segments_valid = split(data_valid, segment_length)
             segments_valid_homogeneous = []
@@ -181,6 +182,7 @@ class ConcretePipelineFacade(PipelineFacade):
 
             data_valid = pandas.concat(segments_valid_homogeneous, axis=0)
 
+            #Generate id column
             valid_id = [None] * data_valid.index.size
             id = 0
             for i in range(0, data_valid.index.size, segment_length):
