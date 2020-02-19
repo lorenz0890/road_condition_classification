@@ -119,6 +119,7 @@ class ConcretePipelineFacade(PipelineFacade):
             y_test = y_test.groupby(y_test.index // segment_length).agg(lambda x: x.value_counts().index[0])
             X_test = data_test[['acceleration_abs', 'id']].reset_index(drop=True)
 
+            print(y_train)
 
             #Extract Training features
             X_train = extractor.extract_select_training_features(
@@ -220,9 +221,9 @@ class ConcretePipelineFacade(PipelineFacade):
         print('--------------------STORE RESULTS------------------------')
         # TODO: delegate to DAO, make storing configureable
 
-        X_train.to_pickle('X_train.pkl')
-        X_test.to_pickle('X_train.pkl')
-        X_valid.to_pickle('X_valid.pkl')
+        pandas.DataFrame(X_train).to_pickle('X_train.pkl')
+        pandas.DataFrame(X_test).to_pickle('X_train.pkl')
+        pandas.DataFrame(X_valid).to_pickle('X_valid.pkl')
 
         with open('./clf', 'wb') as clf_file:
             pickle.dump(clf, clf_file)
