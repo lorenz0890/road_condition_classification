@@ -243,7 +243,7 @@ class ConcretePipelineFacade(PipelineFacade):
         pandas.DataFrame(X_test).to_pickle('X_train.pkl')
         pandas.DataFrame(X_valid).to_pickle('X_valid.pkl')
 
-        with open('./clf', 'wb') as clf_file:
+        with open('./clf.pkl', 'wb') as clf_file:
             pickle.dump(clf, clf_file)
 
         meta_data = None
@@ -274,10 +274,10 @@ class ConcretePipelineFacade(PipelineFacade):
         run_summary['global_best_meta_data'] = meta_data
         run_summary['config'] = config
 
-        with open('./meta_data', 'wb') as meta_file:
+        with open('./meta_data.pkl', 'wb') as meta_file:
             pickle.dump(meta_data, meta_file)
 
-        with open('./run_summary', 'wb') as run_summary_file:
+        with open('./run_summary.pkl', 'wb') as run_summary_file:
             pickle.dump(run_summary, run_summary_file)
 
         print('--------------------PRINT SUMMARY------------------------')
