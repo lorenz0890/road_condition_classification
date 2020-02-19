@@ -30,32 +30,26 @@ class ConcretePipelineFacade(PipelineFacade):
 
         # 2. Load data
         print('--------------------LOAD DATA------------------------')
-        #import random  # for debugging
         labels, data = dao.bulk_read_data(
             file_path=[config['data_set_path'], config['data_labels_path']],
             identifiers=config['data_set_trips'],
-            # identifiers=random.sample(config['data_set_trips'], len(config['data_set_trips'])//4),
             column_names=[config['data_set_column_names'], config['data_label_column_names']],
             use_columns=[config['data_set_columns'], config['data_label_columns']]
         )
 
         # 3. Preprocessing
         print('--------------------PRE PROCESSING--------------------')
-        #print(data.head(10))
         data_train, mean_train, std_train, data_test, data_valid = preprocessor.training_split_process(
             data=data,
             config=config,
             labels=labels
         )
 
-        #print(data_train.head(10))
         # 4. Feature extraction
         print('--------------------FEATURE EXTRACTION------------------')
         X_train = None
         X_test = None
-        #print(data_train.shape)
-        #print(data_test.shape)
-        #print(data_train.head(100))
+
         if config['feature_eng_extractor_type'] == "motif":
             X_train = extractor.extract_select_training_features(
                 data_train,
@@ -145,7 +139,7 @@ class ConcretePipelineFacade(PipelineFacade):
         # 6. Prepare Validation
         print('--------------------PREPARE VALIDATION-------------------')
 
-        X_valid, y_valid = None, None
+        X_valid, y_valid, kind_to_fc_parameters = None, None, None
         if config['feature_eng_extractor_type'] == "ts-fresh":
 
             data_valid = preprocessor.encode_categorical_features(data=data_valid,
@@ -181,14 +175,9 @@ class ConcretePipelineFacade(PipelineFacade):
                 data_valid, [motif_radius, motif_len, config['hw_num_processors']], True
             )
 
-        #X_valid, y_valid = model_factory.pre_clustering(X_valid, y_valid, None)
-        print(X_valid.head(10))
-        print(y_valid.head(10))
-
 
         # 7. Run Validation
         print('--------------------VALIDATION---------------------------')
-        print(X_valid.shape)
         print("Validation y label 1: {}".format(list(y_valid[0]).count(1.0) / len(y_valid)))  # TODO: make configureable
         print("Validation y label 3: {}".format(list(y_valid[0]).count(3.0) / len(y_valid)))
         score = clf.score(X_valid, y_valid)
@@ -210,17 +199,32 @@ class ConcretePipelineFacade(PipelineFacade):
         with open('./clf', 'wb') as clf_file:
             pickle.dump(clf, clf_file)
 
-        meta_data = {
-            'mean_train': mean_train,
-            'std_train': std_train,
-            'motif_len': motif_len,
-            'motif_radius' : motif_radius,
-            'motif_count': motif_count,
-            'clf_score': score,
-            'clf_conf': conf,
-            'clf_report': report,
-            'clf_best_params': best_params
-        }
+        meta_data = None
+        if config['feature_eng_extractor_type'] == "motif":
+            meta_data = {
+                'mean_train': mean_train,
+                'std_train': std_train,
+                'motif_len': motif_len,
+                'motif_radius' : motif_radius,
+                'motif_count': motif_count,
+                'clf_score': score,
+                'clf_conf': conf,
+                'clf_report': report,
+                'clf_best_params': best_params
+            }
+
+        if config['feature_eng_extractor_type'] == "ts-fresh":
+            meta_data = {
+                'mean_train': mean_train,
+                'std_train': std_train,
+                'feature_mapping': kind_to_fc_parameters,
+                'clf_score': score,
+                'clf_conf': conf,
+                'clf_report': report,
+                'clf_best_params': best_params
+            }
+
+
         with open('./meta_data', 'wb') as meta_file:
             pickle.dump(meta_data, meta_file)
 
