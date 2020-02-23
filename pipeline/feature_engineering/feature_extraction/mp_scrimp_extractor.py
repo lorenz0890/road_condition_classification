@@ -23,8 +23,8 @@ class MPScrimpExtractor(Extractor):
         Source:
         https://github.com/target/matrixprofile-ts/blob/master/docs/examples/Motif%20Discovery.ipynb
         :param data: pandas.DataFrame
-        :param args:
-        :return: pandas.DataFrame
+        :param args: list
+        :return: list
         """
         try:
             mp = matrixProfile.scrimp_plus_plus(data[args[3]].values, args[0]) #6 or 32

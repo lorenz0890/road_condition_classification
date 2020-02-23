@@ -17,6 +17,14 @@ class SussexHuaweiPreprocessor(Preprocessor):
 
     @overrides
     def segment_data(self, data, mode, label_column=None, args=None):
+        """
+        Segements a time series based on a label column, semantic segementation of a fixed interval.
+        :param data:
+        :param mode:
+        :param label_column:
+        :param args:
+        :return:
+        """
         try:
             if data is None or mode is None:
                 raise TypeError(self.messages.ILLEGAL_ARGUMENT_NONE_TYPE.value)
@@ -105,6 +113,13 @@ class SussexHuaweiPreprocessor(Preprocessor):
 
     @overrides
     def de_segment_data(self, data_segments, selected_columns=None, axis = 0):
+        """
+        Desegements as time series.
+        :param data_segments:
+        :param selected_columns:
+        :param axis:
+        :return:
+        """
         try:
             data = None
             for ind in range(len(data_segments)):
@@ -161,6 +176,15 @@ class SussexHuaweiPreprocessor(Preprocessor):
 
     @overrides
     def remove_outliers_from_quantitative_data(self, data, replacement_mode, columns, quantile = None, threshold = None):
+        """
+        Removes outlieres either based on quantile or a threshold value.
+        :param data:
+        :param replacement_mode:
+        :param columns:
+        :param quantile:
+        :param threshold:
+        :return:
+        """
         try:
             if data is None or replacement_mode is None or columns is None:
                 raise TypeError(self.messages.ILLEGAL_ARGUMENT_NONE_TYPE.value)
@@ -206,6 +230,13 @@ class SussexHuaweiPreprocessor(Preprocessor):
 
     @overrides
     def resample_quantitative_data(self, data, freq, mode = None):
+        """
+        Resamples quantitative data.
+        :param data:
+        :param freq:
+        :param mode:
+        :return:
+        """
         # Source:
         # https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.resample.html
         # https://jakevdp.github.io/PythonDataScienceHandbook/03.11-working-with-time-series.html
@@ -231,6 +262,13 @@ class SussexHuaweiPreprocessor(Preprocessor):
 
     @overrides
     def convert_unix_to_datetime(self, data, column, unit):
+        """
+        Converts unix time stamps to date time.
+        :param data:
+        :param column:
+        :param unit:
+        :return:
+        """
         # Source:
         # https://stackoverflow.com/questions/19231871/convert-unix-time-to-readable-date-in-pandas-dataframe
         # https://stackoverflow.com/questions/42698421/pandas-to-datetime-from-milliseconds-produces-incorrect-datetime
@@ -253,6 +291,13 @@ class SussexHuaweiPreprocessor(Preprocessor):
 
     @overrides
     def remove_unwanted_labels(self, data, unwanted_labels, replacement_mode):
+        """
+        Remove rows that have an unwanted label.
+        :param data:
+        :param unwanted_labels:
+        :param replacement_mode:
+        :return:
+        """
         try:
             if data is None or replacement_mode is None or unwanted_labels is None:
                 raise TypeError(self.messages.ILLEGAL_ARGUMENT_NONE_TYPE.value)
@@ -274,6 +319,14 @@ class SussexHuaweiPreprocessor(Preprocessor):
 
     @overrides
     def project_accelerometer_to_global_coordinates(self, data, target_columns, mode, args=None):
+        """
+        Project accelerometer data from local vehicle coordinates to a global coordinate system.
+        :param data:
+        :param target_columns:
+        :param mode:
+        :param args:
+        :return:
+        """
         try:
             if data is None or target_columns is None or mode is None:
                 raise TypeError(self.messages.ILLEGAL_ARGUMENT_NONE_TYPE.value)
@@ -320,6 +373,12 @@ class SussexHuaweiPreprocessor(Preprocessor):
 
     @overrides
     def label_data(self, labels, data):
+        """
+        Combines labels vector and data matrix.
+        :param labels:
+        :param data:
+        :return:
+        """
         try:
             if data is None or labels is None:
                 raise TypeError(self.messages.ILLEGAL_ARGUMENT_NONE_TYPE.value)
@@ -340,6 +399,14 @@ class SussexHuaweiPreprocessor(Preprocessor):
 
     @overrides
     def znormalize_quantitative_data(self, data, columns = None, mean = None, std = None):
+        """
+        Apply z-normalization to a data set.
+        :param data:
+        :param columns:
+        :param mean:
+        :param std:
+        :return:
+        """
         try:
             if data is None:
                 raise TypeError(self.messages.ILLEGAL_ARGUMENT_NONE_TYPE.value)
@@ -377,6 +444,12 @@ class SussexHuaweiPreprocessor(Preprocessor):
 
     @overrides
     def min_max_normalize_quantitative_data(self, data, columns=None):
+        """
+        Apply min-max-normalization to a data set.
+        :param data:
+        :param columns:
+        :return:
+        """
         try:
             if data is None:
                 raise TypeError(self.messages.ILLEGAL_ARGUMENT_NONE_TYPE.value)
@@ -401,10 +474,25 @@ class SussexHuaweiPreprocessor(Preprocessor):
 
     @overrides
     def re_represent_data(self, current_representation, target_representation, data):
+        """
+        Change representation of a data set.
+        :param current_representation:
+        :param target_representation:
+        :param data:
+        :return:
+        """
         raise NotImplementedError(self.messages.NOT_IMPLEMENTED.value)
 
     @overrides
     def reduce_quantitativ_data_dimensionality(self, data, mode, reduced_column_name = 'reduced', columns = None):
+        """
+        Apply a dimensionality reduction technique to a data set.
+        :param data:
+        :param mode:
+        :param reduced_column_name:
+        :param columns:
+        :return:
+        """
         try:
             if data is None or mode is None or reduced_column_name is None:
                 raise TypeError(self.messages.ILLEGAL_ARGUMENT_NONE_TYPE.value)
@@ -457,6 +545,14 @@ class SussexHuaweiPreprocessor(Preprocessor):
 
     @overrides
     def encode_categorical_features(self, data, mode, columns, encoding_function):
+        """
+        Encode categorical features using an encoding function.
+        :param data:
+        :param mode:
+        :param columns:
+        :param encoding_function:
+        :return:
+        """
         try:
             if data is None or mode is None or columns is None:
                 raise TypeError(self.messages.ILLEGAL_ARGUMENT_NONE_TYPE.value)
@@ -486,6 +582,7 @@ class SussexHuaweiPreprocessor(Preprocessor):
     @overrides
     def inference_split_process(self, data, config, meta_data):
         """
+        Apply all preprocessing steps necessary for inference.
         :param data: pandas.DataFrame
         :param params: List
         :return: pandas.DataFrame, pandas.DataFrame, pandas.DataFrame
@@ -530,6 +627,7 @@ class SussexHuaweiPreprocessor(Preprocessor):
     @overrides
     def training_split_process(self, data, config, labels):
         """
+        Apply all preprocessing steps necessary for training.
         :param data: pandas.DataFrame
         :param params: List
         :return: pandas.DataFrame, pandas.DataFrame, pandas.DataFrame

@@ -22,7 +22,7 @@ class ConcretePipelineFacade(PipelineFacade):
     @overrides
     def execute_training(self, config):
         """
-        Run training based on config
+        Run training based on config.
         :param config: dict
         """
 

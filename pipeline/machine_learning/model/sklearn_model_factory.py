@@ -25,15 +25,15 @@ class SklearnModelFactory(ModelFactory):
         """
         Preclustering and outlier detection using random forrests
         TODO: Make configureable
-        :param X:
-        :param y:
-        :param args:
-        :return:
+        :param X: pandas.Dataframe
+        :param y: pandas.Dataframe
+        :param args: list
+        :return: TODO
         """
         y_clustering = IsolationForest(behaviour='new',
                                        max_samples=5,
                                        n_jobs=-1,
-                                       contamination=0.1,
+                                       contamination=0.01,
                                        max_features=1.0,
                                        n_estimators=750
                                        ).fit_predict(X)
@@ -59,14 +59,17 @@ class SklearnModelFactory(ModelFactory):
         # https://en.wikipedia.org/wiki/Hyperparameter_optimization#Grid_search
         # https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.RandomizedSearchCV.html
         # alternative to grid search: https://github.com/sahilm89/lhsmdu
-        :param model_type:
-        :param X_train:
-        :param y:
-        :param model_params:
-        :param search_params:
-        :param test_size:
-        :return:
+        :param model_type: str
+        :param X_train: pandas.Dataframe
+        :param y_train: pandas.Dataframe
+        :param X_test: pandas.Dataframe
+        :param y_test: pandas.Dataframe
+        :param model_params: dict
+        :param search_params: list
+        :param test_size: TODO: remove, deprecated
+        :return: TODO
         """
+
         try:
 
             if X_train is None or y_train is None or X_test is None or y_test is None or model_params is None or search_params is None:
@@ -132,7 +135,12 @@ class SklearnModelFactory(ModelFactory):
     @overrides
     def find_optimal_model(self, mode, config, X_train_list=None, X_test_list=None):
         """
-        :return:
+        Finds the best hyper-parameter optimized classifier based on a given config, training and test features.
+        :param mode:
+        :param config: dict
+        :param X_train_list: list(pandas.Dataframe)
+        :param X_test_list: list(pandas.Dataframe)
+        :return: TODO
         """
         best_clf = None
         best_score = 0.0
