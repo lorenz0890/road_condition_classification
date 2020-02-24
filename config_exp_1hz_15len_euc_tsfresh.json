@@ -72,10 +72,6 @@
     "sklearn_svc",
     "sklearn_mlp"
   ],
-  "classifier_rep_class_distribution": [
-    0.25,
-    0.75
-  ],
   "classifier_hypermaram_space_sklearn_mlp":
     {
       "test_set_sz": 0.2,
@@ -96,12 +92,16 @@
       "alpha_exponent": 10,
       "architectures": [
         [
-          10,
-          10
+          32,
+          16
         ],
         [
-          5,
-          5
+          16,
+          8
+        ],
+        [
+          8,
+          4
         ]
       ],
       "activation_function": [
@@ -145,7 +145,7 @@
     ],
     "degree": [
       2,
-      10
+      30
     ],
     "gamma_exponent": 10,
     "C": [
@@ -178,7 +178,7 @@
     "save_classifier_file_name": "rf_rs.pickle",
     "n_estimators": [
       1,
-      100
+      128
     ],
     "max_depth": [
       1,
@@ -186,7 +186,7 @@
     ],
     "min_samples_split": [
       2,
-      10
+      20
     ],
     "bootstrap": [
       true,
@@ -226,7 +226,7 @@
     ],
     "min_samples_split": [
       2,
-      10
+      20
     ]
   },
   "classifier_hypermaram_space_tslearn_knn": {

@@ -121,7 +121,8 @@ class ConcretePipelineFacade(PipelineFacade):
             y_test = y_test.groupby(y_test.index // segment_length).agg(lambda x: x.value_counts().index[0])
             X_test = data_test[['acceleration_abs', 'id']].reset_index(drop=True)
 
-            #print(y_train)
+            print(y_train)
+            print(X_train)
 
             #Extract Training features
             X_train = extractor.extract_select_training_features(
