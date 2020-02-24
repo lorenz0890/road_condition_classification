@@ -164,7 +164,7 @@ class SklearnModelFactory(ModelFactory):
                 X_test = X_test_list[i][0]
                 y_test = X_test_list[i][1]
 
-            print("------------------------Iteration: {}-------------------".format(i))
+            print("----------------------Iteration: {}---------------------".format(i))
             print('---------------------Pre-Clustering---------------------')
             X_test, y_test = self.pre_clustering(X_test, y_test, None)
             X_train, y_train = self.pre_clustering(X_train, y_train, None)
@@ -326,7 +326,6 @@ class SklearnModelFactory(ModelFactory):
                                    config['classifier_hypermaram_space_sklearn_cart']['save_classifier_file_name'],
                                    config['classifier_hypermaram_space_sklearn_cart']['test_set_sz']]
                 )
-                print('--------------------FEATURE EXTRACTION------------------')
                 print('------------------------CART-Tree-----------------------')
                 print(model['clf'].best_params_)
                 score = model['clf'].score(X_test, y_test)
