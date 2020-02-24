@@ -514,7 +514,7 @@ class SussexHuaweiPreprocessor(Preprocessor):
                 return data
 
             if mode == 'manhatten':
-                reduced = data[columns].sum(axis=1)[columns].apply(numpy.abs, axis=1)
+                reduced = data[columns].sum(axis=1).apply(numpy.abs, axis=1)
                 old_index = data.index
                 data = pandas.concat([data, reduced], axis=1)
                 data = data.rename(columns={0: reduced_column_name})
