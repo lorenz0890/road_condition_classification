@@ -61,7 +61,7 @@
   ],
   "feature_eng_scrimp_extractor_features": 2,
   "feature_eng_baseline_extractor_segement_len" : 90,
-  "feature_eng_baseline_extractor_fdr" : 0.1,
+  "feature_eng_baseline_extractor_fdr" : 0.9,
   "feature_eng_dim_reduction_type": "pca",
   "feature_eng_dim_reduction_target_col_name": "acceleration_abs",
   "feature_eng_label_target_col_name": "road_label",
