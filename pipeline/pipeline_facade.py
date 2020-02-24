@@ -127,12 +127,6 @@ class ConcretePipelineFacade(PipelineFacade):
                 X_train,
                 args=['id', config['hw_num_processors'], None, y_train['road_label'], config['feature_eng_baseline_extractor_fdr']]
             )
-            #from tsfresh.feature_extraction import ComprehensiveFCParameters
-            #kind_to_fc_parameters = {'acceleration_abs' : ComprehensiveFCParameters()}#from_columns(X_train)
-            #X_train = extractor.extract_select_inference_features(
-            #    X_train,
-            #    args=['id', config['hw_num_processors'], None, kind_to_fc_parameters]
-            #)
 
             #Get feature map for validation and training set
             kind_to_fc_parameters = from_columns(X_train)
