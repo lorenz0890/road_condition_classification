@@ -505,7 +505,7 @@ class SussexHuaweiPreprocessor(Preprocessor):
                 # https://www.google.com/search?client=ubuntu&channel=fs&q=euclidean+norm&ie=utf-8&oe=utf-8
                 # https://stackoverflow.com/questions/54260920/combine-merge-dataframes-with-different-indexes-and-different-column-names
                 # https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.append.html
-                reduced = data[columns].apply(numpy.square, axis=1)[columns].sum(axis=1)[columns].apply(numpy.square, axis=1)
+                reduced = data[columns].apply(numpy.square, axis=1)[columns].sum(axis=1)[columns].apply(numpy.sqrt, axis=1)
                 old_index = data.index
                 data = pandas.concat([data, reduced], axis=1)
                 data = data.rename(columns={0: reduced_column_name})
@@ -514,8 +514,13 @@ class SussexHuaweiPreprocessor(Preprocessor):
                 return data
 
             if mode == 'manhatten':
-
-                raise NotImplementedError(self.messages.NOT_IMPLEMENTED.value)
+                reduced = data[columns].apply(numpy.square, axis=1)[columns].sum(axis=1)[columns].apply(numpy.square, axis=1)
+                old_index = data.index
+                data = pandas.concat([data, reduced], axis=1)
+                data = data.rename(columns={0: reduced_column_name})
+                data = data.reset_index(drop=True)
+                data = data.set_index(old_index)
+                return data
 
             if mode == 'pca':
                 # Source:
