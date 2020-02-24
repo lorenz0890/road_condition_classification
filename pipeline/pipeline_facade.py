@@ -114,6 +114,13 @@ class ConcretePipelineFacade(PipelineFacade):
             test_id = test_id[:data_test.index.size]
             data_test['id'] = test_id
 
+            with pandas.option_context('display.max_rows', None, 'display.max_columns',
+                                   None):  # more options can be specified also
+                import pdb; pdb.set_trace()
+                print(y_train)
+                print(X_train)
+
+
             y_train = data_train[['road_label', 'id']].reset_index(drop=True)
             y_train = y_train.groupby(y_train.index // segment_length).agg(lambda x: x.value_counts().index[0]) #majority label in segment
             X_train = data_train[['acceleration_abs', 'id']].reset_index(drop=True)
@@ -123,6 +130,7 @@ class ConcretePipelineFacade(PipelineFacade):
 
             with pandas.option_context('display.max_rows', None, 'display.max_columns',
                                    None):  # more options can be specified also
+                import pdb; pdb.set_trace()
                 print(y_train)
                 print(X_train)
 
