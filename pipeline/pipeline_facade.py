@@ -114,12 +114,6 @@ class ConcretePipelineFacade(PipelineFacade):
             test_id = test_id[:data_test.index.size]
             data_test['id'] = test_id
 
-            with pandas.option_context('display.max_rows', None, 'display.max_columns',
-                                   None):  # more options can be specified also
-                import pdb; pdb.set_trace()
-                print(y_train)
-                print(X_train)
-
 
             y_train = data_train[['road_label', 'id']].reset_index(drop=True)
             y_train = y_train.groupby(y_train.index // segment_length).agg(lambda x: x.value_counts().index[0]) #majority label in segment
@@ -128,17 +122,16 @@ class ConcretePipelineFacade(PipelineFacade):
             y_test = y_test.groupby(y_test.index // segment_length).agg(lambda x: x.value_counts().index[0])
             X_test = data_test[['acceleration_abs', 'id']].reset_index(drop=True)
 
-            with pandas.option_context('display.max_rows', None, 'display.max_columns',
-                                   None):  # more options can be specified also
-                import pdb; pdb.set_trace()
-                print(y_train)
-                print(X_train)
-
             #Extract Training features
-            X_train = extractor.extract_select_training_features(
+            #X_train = extractor.extract_select_training_features(
+            #    X_train,
+            #    args=['id', config['hw_num_processors'], None, y_train['road_label'], config['feature_eng_baseline_extractor_fdr']]
+            #)
+            from tsfresh.feature_extraction import ComprehensiveFCParameters
+            kind_to_fc_parameters = {'acceleration_abs' : ComprehensiveFCParameters()}#from_columns(X_train)
+            X_train = extractor.extract_select_inference_features(
                 X_train,
-                args=['id', config['hw_num_processors'], None, y_train['road_label'], config['feature_eng_baseline_extractor_fdr']] #TODO use fdr dfrom cfg
-
+                args=['id', config['hw_num_processors'], None, kind_to_fc_parameters]
             )
 
             #Get feature map for validation and training set
