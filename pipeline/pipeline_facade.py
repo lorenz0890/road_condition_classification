@@ -123,19 +123,19 @@ class ConcretePipelineFacade(PipelineFacade):
             X_test = data_test[['acceleration_abs', 'id']].reset_index(drop=True)
 
             #Extract Training features
-            #X_train = extractor.extract_select_training_features(
-            #    X_train,
-            #    args=['id', config['hw_num_processors'], None, y_train['road_label'], config['feature_eng_baseline_extractor_fdr']]
-            #)
+            X_train = extractor.extract_select_training_features(
+                X_train,
+                args=['id', config['hw_num_processors'], None, y_train['road_label'], config['feature_eng_baseline_extractor_fdr']]
+            )
 
             from tsfresh.feature_extraction import MinimalFCParameters
             from tsfresh.feature_extraction import ComprehensiveFCParameters
-            kind_to_fc_parameters = {'acceleration_abs' : MinimalFCParameters()}
+            #kind_to_fc_parameters = {'acceleration_abs' : MinimalFCParameters()}
             #kind_to_fc_parameters = {'acceleration_abs' : {"mean": None, "standard_deviation": None, "variance": None, "minimum": None, "maximum": None}}
-            X_train = extractor.extract_select_inference_features(
-                X_train,
-                args=['id', config['hw_num_processors'], None, kind_to_fc_parameters]
-            )
+            #X_train = extractor.extract_select_inference_features(
+            #    X_train,
+            #    args=['id', config['hw_num_processors'], None, kind_to_fc_parameters]
+            #)
 
             #Get feature map for validation and training set
             kind_to_fc_parameters = from_columns(X_train)
