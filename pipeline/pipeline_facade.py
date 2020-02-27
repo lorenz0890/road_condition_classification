@@ -128,13 +128,21 @@ class ConcretePipelineFacade(PipelineFacade):
             #    args=['id', config['hw_num_processors'], None, y_train['road_label'], config['feature_eng_baseline_extractor_fdr']]
             #)
 
-            #Get feature map for validation and training set
-            #kind_to_fc_parameters = from_columns(X_train)
-            #X_test = extractor.extract_select_inference_features(
-            #    X_test,
-            #    args=['id', config['hw_num_processors'], None, kind_to_fc_parameters]
-            #)
+            from tsfresh.feature_extraction import MinimalFCParameters
+            kind_to_fc_parameters = {'acceleration_abs' : MinimalFCParameters}
+            X_test = extractor.extract_select_inference_features(
+                X_test,
+                args=['id', config['hw_num_processors'], None, kind_to_fc_parameters]
+            )
 
+            #Get feature map for validation and training set
+            kind_to_fc_parameters = from_columns(X_train)
+            X_test = extractor.extract_select_inference_features(
+                X_test,
+                args=['id', config['hw_num_processors'], None, kind_to_fc_parameters]
+            )
+
+            '''
             #min max var mean sum std aus min feature set von tshfresh
             X_train_new = pandas.DataFrame()
             X_train_new['mean'] = X_train['acceleration_abs'].groupby(X_train.index // segment_length).mean()
@@ -164,7 +172,7 @@ class ConcretePipelineFacade(PipelineFacade):
             y_test = y_test.groupby(y_test.index // segment_length).agg(lambda x: x.value_counts().index[0])
             X_test_new['id'] = y_test['id']
             X_test = X_test_new
-
+            '''
             X_train = ['placeholder',
                        [X_train, y_train['road_label'].rename(columns={'road_label': 0}, inplace=True),
                        'N/A', 'N/A', 'N/A']]  # required for further processing. TODO: Unifiy naming!#
