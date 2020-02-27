@@ -123,21 +123,31 @@ class ConcretePipelineFacade(PipelineFacade):
             X_test = data_test[['acceleration_abs', 'id']].reset_index(drop=True)
 
             #Extract Training features
-            X_train = extractor.extract_select_training_features(
-                X_train,
-                args=['id', config['hw_num_processors'], None, y_train['road_label'], config['feature_eng_baseline_extractor_fdr']]
-            )
+            #X_train = extractor.extract_select_training_features(
+            #    X_train,
+            #    args=['id', config['hw_num_processors'], None, y_train['road_label'], config['feature_eng_baseline_extractor_fdr']]
+            #)
 
             #Get feature map for validation and training set
-            kind_to_fc_parameters = from_columns(X_train)
-            X_test = extractor.extract_select_inference_features(
-                X_test,
-                args=['id', config['hw_num_processors'], None, kind_to_fc_parameters]
-            )
+            #kind_to_fc_parameters = from_columns(X_train)
+            #X_test = extractor.extract_select_inference_features(
+            #    X_test,
+            #    args=['id', config['hw_num_processors'], None, kind_to_fc_parameters]
+            #)
+
+            X_train = X_train.groupby(X_train.index // segment_length).mean()
+            X_train = X_train.groupby(X_train.index // segment_length).std()
+            y_train = data_train[['road_label', 'id']].reset_index(drop=True)
+            y_train = y_train.groupby(y_train.index // segment_length).agg(lambda x: x.value_counts().index[0])
+
+            X_test = X_test.groupby(X_test.index // segment_length).mean()
+            X_test = X_test.groupby(X_test.index // segment_length).std()
+            y_test = data_test[['road_label', 'id']].reset_index(drop=True)
+            y_test = y_test.groupby(y_test.index // segment_length).agg(lambda x: x.value_counts().index[0])
 
             X_train = ['placeholder',
                        [X_train, y_train['road_label'].rename(columns={'road_label': 0}, inplace=True),
-                       'N/A', 'N/A', 'N/A']]  # required for further processing. TODO: Unifiy naming!
+                       'N/A', 'N/A', 'N/A']]  # required for further processing. TODO: Unifiy naming!#
 
             X_test = ['placeholder',
                        [X_test, y_test['road_label'].rename(columns={'road_label': 0}, inplace=True),
