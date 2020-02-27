@@ -135,13 +135,15 @@ class ConcretePipelineFacade(PipelineFacade):
             #    args=['id', config['hw_num_processors'], None, kind_to_fc_parameters]
             #)
 
-            X_train = X_train.groupby(X_train.index // segment_length).mean()
-            X_train = X_train.groupby(X_train.index // segment_length).std()
+            X_train['mean'] = X_train['acceleration_abs'].groupby(X_train.index // segment_length).mean()
+            X_train['std'] = X_train['acceleration_abs'].groupby(X_train.index // segment_length).std()
+            X_train.drop('acceleration_abs', inplace=True)
             y_train = data_train[['road_label', 'id']].reset_index(drop=True)
             y_train = y_train.groupby(y_train.index // segment_length).agg(lambda x: x.value_counts().index[0])
 
-            X_test = X_test.groupby(X_test.index // segment_length).mean()
-            X_test = X_test.groupby(X_test.index // segment_length).std()
+            X_test['mean'] = X_test['acceleration_abs'].groupby(X_test.index // segment_length).mean()
+            X_test['std'] = X_test['acceleration_abs'].groupby(X_test.index // segment_length).std()
+            X_test.drop('acceleration_abs', inplace=True)
             y_test = data_test[['road_label', 'id']].reset_index(drop=True)
             y_test = y_test.groupby(y_test.index // segment_length).agg(lambda x: x.value_counts().index[0])
 
