@@ -87,10 +87,10 @@ class ConcretePipelineFacade(PipelineFacade):
             segments_test= split(data_test, segment_length)
             segments_train_homogeneous, segments_test_homogeneous = [], []
             for segment in segments_train:
-                if segment.road_label.nunique() == 1 and segment.shape[0] == segment_length:
+                if segment.road_label.nunique() == 1: #and segment.shape[0] == segment_length:
                     segments_train_homogeneous.append(segment)
             for segment in segments_test:
-                if segment.road_label.nunique() == 1 and segment.shape[0] == segment_length:
+                if segment.road_label.nunique() == 1: #and segment.shape[0] == segment_length:
                     segments_test_homogeneous.append(segment)
 
             data_train = pandas.concat(segments_train_homogeneous, axis=0)
@@ -133,7 +133,7 @@ class ConcretePipelineFacade(PipelineFacade):
             #kind_to_fc_parameters = {'acceleration_abs' : MinimalFCParameters()}
             kind_to_fc_parameters = {'acceleration_abs' : {"mean": None, "standard_deviation": None,
                                                            "variance": None, "minimum": None,
-                                                           "maximum": None, 'sum_values': None}}
+                                                           "maximum": None}}
             X_train = extractor.extract_select_inference_features(
                 X_train,
                 args=['id', config['hw_num_processors'], None, kind_to_fc_parameters]
