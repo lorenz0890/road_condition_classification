@@ -135,20 +135,26 @@ class ConcretePipelineFacade(PipelineFacade):
             #    args=['id', config['hw_num_processors'], None, kind_to_fc_parameters]
             #)
 
-            X_train['mean'] = X_train['acceleration_abs'].groupby(X_train.index // segment_length).mean()
-            X_train['std'] = X_train['acceleration_abs'].groupby(X_train.index // segment_length).std()
-            X_train.drop('acceleration_abs', inplace=True, axis=1)
+            X_train_new = pandas.DataFrame()
+            X_train_new['mean'] = X_train['acceleration_abs'].groupby(X_train.index // segment_length).mean()
+            X_train_new['std'] = X_train['acceleration_abs'].groupby(X_train.index // segment_length).std()
             y_train = data_train[['road_label', 'id']].reset_index(drop=True)
             y_train = y_train.groupby(y_train.index // segment_length).agg(lambda x: x.value_counts().index[0])
+            X_train_new['id'] = y_train.groupby(y_train.index // segment_length).agg(
+                lambda x: x.value_counts().index[0])
+            X_train = X_train_new
 
             print(X_train)
             print(y_train)
 
-            X_test['mean'] = X_test['acceleration_abs'].groupby(X_test.index // segment_length).mean()
-            X_test['std'] = X_test['acceleration_abs'].groupby(X_test.index // segment_length).std()
-            X_test.drop('acceleration_abs', inplace=True, axis=1)
+            X_test_new = pandas.DataFrame()
+            X_test_new['mean'] = X_test['acceleration_abs'].groupby(X_test.index // segment_length).mean()
+            X_test_new['std'] = X_test['acceleration_abs'].groupby(X_test.index // segment_length).std()
             y_test = data_test[['road_label', 'id']].reset_index(drop=True)
             y_test = y_test.groupby(y_test.index // segment_length).agg(lambda x: x.value_counts().index[0])
+            X_test_new['id'] = y_test.groupby(y_test.index // segment_length).agg(
+                lambda x: x.value_counts().index[0])
+            X_test = X_test_new
 
             X_train = ['placeholder',
                        [X_train, y_train['road_label'].rename(columns={'road_label': 0}, inplace=True),
