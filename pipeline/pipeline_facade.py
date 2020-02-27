@@ -140,8 +140,7 @@ class ConcretePipelineFacade(PipelineFacade):
             X_train_new['std'] = X_train['acceleration_abs'].groupby(X_train.index // segment_length).std()
             y_train = data_train[['road_label', 'id']].reset_index(drop=True)
             y_train = y_train.groupby(y_train.index // segment_length).agg(lambda x: x.value_counts().index[0])
-            X_train_new['id'] = y_train.groupby(y_train.index // segment_length).agg(
-                lambda x: x.value_counts().index[0])['id']
+            X_train_new['id'] = y_train['id']
             X_train = X_train_new
 
             print(X_train)
@@ -152,8 +151,7 @@ class ConcretePipelineFacade(PipelineFacade):
             X_test_new['std'] = X_test['acceleration_abs'].groupby(X_test.index // segment_length).std()
             y_test = data_test[['road_label', 'id']].reset_index(drop=True)
             y_test = y_test.groupby(y_test.index // segment_length).agg(lambda x: x.value_counts().index[0])
-            X_test_new['id'] = y_test.groupby(y_test.index // segment_length).agg(
-                lambda x: x.value_counts().index[0])['id']
+            X_test_new['id'] = y_test['id']
             X_test = X_test_new
 
             X_train = ['placeholder',
