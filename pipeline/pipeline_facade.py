@@ -129,6 +129,7 @@ class ConcretePipelineFacade(PipelineFacade):
             #)
 
             from tsfresh.feature_extraction import MinimalFCParameters
+            from tsfresh.feature_extraction import ComprehensiveFCParameters
             kind_to_fc_parameters = {'acceleration_abs' : MinimalFCParameters}
             X_train = extractor.extract_select_inference_features(
                 X_train,
