@@ -133,8 +133,7 @@ class ConcretePipelineFacade(PipelineFacade):
             #kind_to_fc_parameters = {'acceleration_abs' : MinimalFCParameters()}
             kind_to_fc_parameters = {'acceleration_abs' : {"mean": None, "standard_deviation": None,
                                                            "variance": None, "minimum": None,
-                                                           "maximum": None, "autocorrelation": None,
-                                                           "fft_aggregated" : None}}
+                                                           "maximum": None, 'sum_values': None}}
             X_train = extractor.extract_select_inference_features(
                 X_train,
                 args=['id', config['hw_num_processors'], None, kind_to_fc_parameters]
