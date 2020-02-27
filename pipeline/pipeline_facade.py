@@ -135,9 +135,15 @@ class ConcretePipelineFacade(PipelineFacade):
             #    args=['id', config['hw_num_processors'], None, kind_to_fc_parameters]
             #)
 
+            #min max var mean sum std aus min feature set von tshfresh
             X_train_new = pandas.DataFrame()
             X_train_new['mean'] = X_train['acceleration_abs'].groupby(X_train.index // segment_length).mean()
             X_train_new['std'] = X_train['acceleration_abs'].groupby(X_train.index // segment_length).std()
+            X_train_new['max'] = X_train['acceleration_abs'].groupby(X_train.index // segment_length).std()**(1/2)
+            X_train_new['min'] = X_train['acceleration_abs'].groupby(X_train.index // segment_length).max()
+            X_train_new['var'] = X_train['acceleration_abs'].groupby(X_train.index // segment_length).min()
+            X_train_new['sum'] = X_train['acceleration_abs'].groupby(X_train.index // segment_length).sum()
+
             y_train = data_train[['road_label', 'id']].reset_index(drop=True)
             y_train = y_train.groupby(y_train.index // segment_length).agg(lambda x: x.value_counts().index[0])
             X_train_new['id'] = y_train['id']
@@ -149,6 +155,11 @@ class ConcretePipelineFacade(PipelineFacade):
             X_test_new = pandas.DataFrame()
             X_test_new['mean'] = X_test['acceleration_abs'].groupby(X_test.index // segment_length).mean()
             X_test_new['std'] = X_test['acceleration_abs'].groupby(X_test.index // segment_length).std()
+            X_test_new['max'] = X_test['acceleration_abs'].groupby(X_test.index // segment_length).std() ** (1 / 2)
+            X_test_new['min'] = X_test['acceleration_abs'].groupby(X_test.index // segment_length).max()
+            X_test_new['var'] = X_test['acceleration_abs'].groupby(X_test.index // segment_length).min()
+            X_test_new['sum'] = X_test['acceleration_abs'].groupby(X_test.index // segment_length).sum()
+
             y_test = data_test[['road_label', 'id']].reset_index(drop=True)
             y_test = y_test.groupby(y_test.index // segment_length).agg(lambda x: x.value_counts().index[0])
             X_test_new['id'] = y_test['id']
