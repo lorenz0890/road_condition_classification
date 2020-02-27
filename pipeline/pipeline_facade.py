@@ -87,7 +87,7 @@ class ConcretePipelineFacade(PipelineFacade):
             segments_test= split(data_test, segment_length)
             segments_train_homogeneous, segments_test_homogeneous = [], []
             for segment in segments_train:
-                if segment.road_label.nunique() == 1: #and segment.shape[0] == segment_length:
+                if segment.road_label.nunique() == 1: #and segment.shape[0] == segment_length: TODO Homogeneous length rmoved write that in paper
                     segments_train_homogeneous.append(segment)
             for segment in segments_test:
                 if segment.road_label.nunique() == 1: #and segment.shape[0] == segment_length:
@@ -154,7 +154,7 @@ class ConcretePipelineFacade(PipelineFacade):
             X_train_new['max'] = X_train['acceleration_abs'].groupby(X_train.index // segment_length).std()**(1/2)
             X_train_new['min'] = X_train['acceleration_abs'].groupby(X_train.index // segment_length).max()
             X_train_new['var'] = X_train['acceleration_abs'].groupby(X_train.index // segment_length).min()
-            X_train_new['sum'] = X_train['acceleration_abs'].groupby(X_train.index // segment_length).sum()
+            #X_train_new['sum'] = X_train['acceleration_abs'].groupby(X_train.index // segment_length).sum()
 
             y_train = data_train[['road_label', 'id']].reset_index(drop=True)
             y_train = y_train.groupby(y_train.index // segment_length).agg(lambda x: x.value_counts().index[0])
