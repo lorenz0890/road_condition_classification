@@ -143,7 +143,7 @@ class ConcretePipelineFacade(PipelineFacade):
 
             X_test['mean'] = X_test['acceleration_abs'].groupby(X_test.index // segment_length).mean()
             X_test['std'] = X_test['acceleration_abs'].groupby(X_test.index // segment_length).std()
-            X_test.drop('acceleration_abs', inplace=True)
+            X_test.drop('acceleration_abs', inplace=True, axis=1)
             y_test = data_test[['road_label', 'id']].reset_index(drop=True)
             y_test = y_test.groupby(y_test.index // segment_length).agg(lambda x: x.value_counts().index[0])
 
