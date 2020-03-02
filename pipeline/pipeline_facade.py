@@ -221,7 +221,7 @@ class ConcretePipelineFacade(PipelineFacade):
             #Segement validation data ins pieces with homogeneous length
             # Find segements with homogeneous labeling
             split = lambda df, chunk_size: numpy.array_split(df, len(df) // chunk_size + 1, axis=0)
-            segments_valid = split(data_train, segment_length)
+            segments_valid = split(data_valid, segment_length)
             segments_valid_homogeneous = []
             for segment in segments_valid:
                 if segment.road_label.nunique() == 1:  # and segment.shape[0] == segment_length: TODO Homogeneous length rmoved write that in paper
