@@ -272,6 +272,8 @@ class ConcretePipelineFacade(PipelineFacade):
 
         # 7. Run Validation
         print('--------------------VALIDATION---------------------------')
+        print(X_valid)
+        print(y_valid)
         X_valid, y_valid = model_factory.pre_clustering(X_valid, y_valid, None)
         if config['feature_eng_extractor_type'] == 'motif':
             print("Validation y label 1: {}".format(list(y_valid[0]).count(1.0) / len(y_valid)))  # TODO: make configureable
