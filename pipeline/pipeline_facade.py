@@ -153,9 +153,9 @@ class ConcretePipelineFacade(PipelineFacade):
             X_train_new = pandas.DataFrame()
             X_train_new['mean'] = X_train['acceleration_abs'].groupby(X_train.index // segment_length).mean()
             X_train_new['std'] = X_train['acceleration_abs'].groupby(X_train.index // segment_length).std()
-            X_train_new['max'] = X_train['acceleration_abs'].groupby(X_train.index // segment_length).std()**(1/2)
-            X_train_new['min'] = X_train['acceleration_abs'].groupby(X_train.index // segment_length).max()
-            X_train_new['var'] = X_train['acceleration_abs'].groupby(X_train.index // segment_length).min()
+            X_train_new['var'] = X_train['acceleration_abs'].groupby(X_train.index // segment_length).std()**(1/2)
+            X_train_new['max'] = X_train['acceleration_abs'].groupby(X_train.index // segment_length).max()
+            X_train_new['min'] = X_train['acceleration_abs'].groupby(X_train.index // segment_length).min()
             #X_train_new['sum'] = X_train['acceleration_abs'].groupby(X_train.index // segment_length).sum()
 
             y_train = data_train[['road_label', 'id']].reset_index(drop=True)
@@ -169,9 +169,9 @@ class ConcretePipelineFacade(PipelineFacade):
             X_test_new = pandas.DataFrame()
             X_test_new['mean'] = X_test['acceleration_abs'].groupby(X_test.index // segment_length).mean()
             X_test_new['std'] = X_test['acceleration_abs'].groupby(X_test.index // segment_length).std()
-            X_test_new['max'] = X_test['acceleration_abs'].groupby(X_test.index // segment_length).std() ** (1 / 2)
-            X_test_new['min'] = X_test['acceleration_abs'].groupby(X_test.index // segment_length).max()
-            X_test_new['var'] = X_test['acceleration_abs'].groupby(X_test.index // segment_length).min()
+            X_test_new['var'] = X_test['acceleration_abs'].groupby(X_test.index // segment_length).std() ** (1 / 2)
+            X_test_new['max'] = X_test['acceleration_abs'].groupby(X_test.index // segment_length).max()
+            X_test_new['min'] = X_test['acceleration_abs'].groupby(X_test.index // segment_length).min()
            # X_test_new['sum'] = X_test['acceleration_abs'].groupby(X_test.index // segment_length).sum()
 
             y_test = data_test[['road_label', 'id']].reset_index(drop=True)
@@ -242,14 +242,27 @@ class ConcretePipelineFacade(PipelineFacade):
             X_valid = data_valid[['acceleration_abs', 'id']].reset_index(drop=True)
 
             # Get feature map for validation and training set
-            kind_to_fc_parameters = from_columns(X_train)
-            run_summary['ts_fresh_relevant_features'] = kind_to_fc_parameters
-            X_valid = extractor.extract_select_inference_features(
-                X_valid,
-                args=['id', config['hw_num_processors'], None, kind_to_fc_parameters]
-            )
+            #kind_to_fc_parameters = from_columns(X_train)
+            #run_summary['ts_fresh_relevant_features'] = kind_to_fc_parameters
+            #X_valid = extractor.extract_select_inference_features(
+            #    X_valid,
+            #    args=['id', config['hw_num_processors'], None, kind_to_fc_parameters]
+            #)
 
-            y_valid = y_valid['road_label'].rename(columns={'road_label': 0}, inplace=True)
+            #y_valid = y_valid['road_label'].rename(columns={'road_label': 0}, inplace=True)
+
+            X_valid_new = pandas.DataFrame()
+            X_valid_new['mean'] = X_valid['acceleration_abs'].groupby(X_valid.index // segment_length).mean()
+            X_valid_new['std'] = X_valid['acceleration_abs'].groupby(X_valid.index // segment_length).std()
+            X_valid_new['var'] = X_valid['acceleration_abs'].groupby(X_valid.index // segment_length).std() ** (1 / 2)
+            X_valid_new['max'] = X_valid['acceleration_abs'].groupby(X_valid.index // segment_length).max()
+            X_valid_new['min'] = X_valid['acceleration_abs'].groupby(X_valid.index // segment_length).min()
+            # X_test_new['sum'] = X_test['acceleration_abs'].groupby(X_test.index // segment_length).sum()
+
+            y_valid = data_valid[['road_label', 'id']].reset_index(drop=True)
+            y_valid = y_valid.groupby(y_valid.index // segment_length).agg(lambda x: x.value_counts().index[0])
+            X_valid_new['id'] = y_test['id']
+            X_valid = X_valid_new
 
         if config['feature_eng_extractor_type'] == "motif":
             X_valid, y_valid = extractor.extract_select_inference_features(
