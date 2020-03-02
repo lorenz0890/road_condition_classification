@@ -219,11 +219,12 @@ class ConcretePipelineFacade(PipelineFacade):
                                                                  )  # 0 City, 1 Countryside
 
             #Segement validation data ins pieces with homogeneous length
+            # Find segements with homogeneous labeling
             split = lambda df, chunk_size: numpy.array_split(df, len(df) // chunk_size + 1, axis=0)
-            segments_valid = split(data_valid, segment_length)
+            segments_valid = split(data_train, segment_length)
             segments_valid_homogeneous = []
             for segment in segments_valid:
-                if segment.shape[0] == segment_length:
+                if segment.road_label.nunique() == 1:  # and segment.shape[0] == segment_length: TODO Homogeneous length rmoved write that in paper
                     segments_valid_homogeneous.append(segment)
 
             data_valid = pandas.concat(segments_valid_homogeneous, axis=0)
