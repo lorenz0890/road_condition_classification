@@ -172,7 +172,7 @@ class ConcretePipelineFacade(PipelineFacade):
             X_test_new['max'] = X_test['acceleration_abs'].groupby(X_test.index // segment_length).std() ** (1 / 2)
             X_test_new['min'] = X_test['acceleration_abs'].groupby(X_test.index // segment_length).max()
             X_test_new['var'] = X_test['acceleration_abs'].groupby(X_test.index // segment_length).min()
-            X_test_new['sum'] = X_test['acceleration_abs'].groupby(X_test.index // segment_length).sum()
+           # X_test_new['sum'] = X_test['acceleration_abs'].groupby(X_test.index // segment_length).sum()
 
             y_test = data_test[['road_label', 'id']].reset_index(drop=True)
             y_test = y_test.groupby(y_test.index // segment_length).agg(lambda x: x.value_counts().index[0])
