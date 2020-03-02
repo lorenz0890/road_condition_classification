@@ -263,6 +263,7 @@ class ConcretePipelineFacade(PipelineFacade):
             y_valid = y_valid.groupby(y_valid.index // segment_length).agg(lambda x: x.value_counts().index[0])
             X_valid_new['id'] = y_valid['id']
             X_valid = X_valid_new
+            y_valid = y_valid['road_label'].rename(columns={'road_label': 0}, inplace=True)
 
         if config['feature_eng_extractor_type'] == "motif":
             X_valid, y_valid = extractor.extract_select_inference_features(
