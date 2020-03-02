@@ -131,9 +131,11 @@ class ConcretePipelineFacade(PipelineFacade):
             from tsfresh.feature_extraction import MinimalFCParameters
             from tsfresh.feature_extraction import ComprehensiveFCParameters
             #kind_to_fc_parameters = {'acceleration_abs' : MinimalFCParameters()}
+            '''
             kind_to_fc_parameters = {'acceleration_abs' : {"mean": None, "standard_deviation": None,
                                                            "variance": None, "minimum": None,
                                                            "maximum": None}}
+            
             X_train = extractor.extract_select_inference_features(
                 X_train,
                 args=['id', config['hw_num_processors'], None, kind_to_fc_parameters]
@@ -145,8 +147,8 @@ class ConcretePipelineFacade(PipelineFacade):
                 X_test,
                 args=['id', config['hw_num_processors'], None, kind_to_fc_parameters]
             )
-
             '''
+
             #min max var mean sum std aus min feature set von tshfresh
             X_train_new = pandas.DataFrame()
             X_train_new['mean'] = X_train['acceleration_abs'].groupby(X_train.index // segment_length).mean()
@@ -176,7 +178,7 @@ class ConcretePipelineFacade(PipelineFacade):
             y_test = y_test.groupby(y_test.index // segment_length).agg(lambda x: x.value_counts().index[0])
             X_test_new['id'] = y_test['id']
             X_test = X_test_new
-            '''
+
 
             X_train = ['placeholder',
                        [X_train, y_train['road_label'].rename(columns={'road_label': 0}, inplace=True),
