@@ -82,6 +82,7 @@ class ConcretePipelineFacade(PipelineFacade):
 
 
             #Find segements with homogeneous labeling
+            '''
             split = lambda df, chunk_size: numpy.array_split(df, len(df) // chunk_size + 1, axis=0)
             segments_train = split(data_train, segment_length)
             segments_test= split(data_test, segment_length)
@@ -95,7 +96,7 @@ class ConcretePipelineFacade(PipelineFacade):
 
             data_train = pandas.concat(segments_train_homogeneous, axis=0)
             data_test = pandas.concat(segments_test_homogeneous, axis=0)
-
+            '''
             
             #Generate id column
             train_id = [None]*data_train.index.size
@@ -220,6 +221,7 @@ class ConcretePipelineFacade(PipelineFacade):
 
             #Segement validation data ins pieces with homogeneous length
             # Find segements with homogeneous labeling
+            '''
             split = lambda df, chunk_size: numpy.array_split(df, len(df) // chunk_size + 1, axis=0)
             segments_valid = split(data_valid, segment_length)
             segments_valid_homogeneous = []
@@ -228,7 +230,8 @@ class ConcretePipelineFacade(PipelineFacade):
                     segments_valid_homogeneous.append(segment)
 
             data_valid = pandas.concat(segments_valid_homogeneous, axis=0)
-
+            '''
+            
             #Generate id column
             valid_id = [None] * data_valid.index.size
             id = 0
