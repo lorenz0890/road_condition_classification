@@ -21,9 +21,9 @@ python cli.py "./config_exp_1hz_90len_euc_tsfresh.json" --training &> exp_1hz_90
 python cli.py "./config_exp_1hz_90len_pca_tsfresh.json" --training &> exp_1hz_90len_pca_tsfresh.log
 python cli.py "./config_exp_1hz_90len_pca_tsfresh.json" --training &> exp_1hz_90len_pca_tsfresh.log
 
-echo "SCRIMP_PP"
-python cli.py "./config_exp_10hz_euc_motif.json" --training &> exp_10hz_euc_motif.log
-python cli.py "./config_exp_10hz_pca_motif.json" --training &> exp_10hz_pca_motif.log
-python cli.py "./config_exp_1hz_euc_motif.json" --training &> exp_1hz_euc_motif.log
-python cli.py "./config_exp_1hz_pca_motif.json" --training &> exp_1hz_pca_motif.log
+#echo "SCRIMP_PP"
+#python cli.py "./config_exp_10hz_euc_motif.json" --training &> exp_10hz_euc_motif.log
+#python cli.py "./config_exp_10hz_pca_motif.json" --training &> exp_10hz_pca_motif.log
+#python cli.py "./config_exp_1hz_euc_motif.json" --training &> exp_1hz_euc_motif.log
+#python cli.py "./config_exp_1hz_pca_motif.json" --training &> exp_1hz_pca_motif.log
 
