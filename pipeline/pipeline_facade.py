@@ -231,7 +231,7 @@ class ConcretePipelineFacade(PipelineFacade):
 
             data_valid = pandas.concat(segments_valid_homogeneous, axis=0)
             '''
-            
+
             #Generate id column
             valid_id = [None] * data_valid.index.size
             id = 0
