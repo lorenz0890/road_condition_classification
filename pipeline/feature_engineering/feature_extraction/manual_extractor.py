@@ -1,5 +1,6 @@
 from pipeline.feature_engineering.feature_extraction.abstract_extractor import Extractor
 from overrides import overrides
+import pandas
 
 class ManualExtractor(Extractor):
 
@@ -14,7 +15,16 @@ class ManualExtractor(Extractor):
         :param args:
         :return: pandas.DataFrame
         """
-        pass
+
+        #min max var mean sum std aus min feature set von tshfresh
+        X = pandas.DataFrame()
+        segment_length = args[0]
+        X['mean'] = data['acceleration_abs'].groupby(data.index // segment_length).mean()
+        X['std'] = data['acceleration_abs'].groupby(data.index // segment_length).std()
+        X['var'] = data['acceleration_abs'].groupby(data.index // segment_length).std()**(1/2)
+        X['max'] = data['acceleration_abs'].groupby(data.index // segment_length).max()
+
+        return X
 
     @overrides
     def select_features(self, data, args=None):
@@ -24,6 +34,12 @@ class ManualExtractor(Extractor):
         :param args:
         :return: pandas.DataFrame
         """
+        y_train = args[0]
+        segment_length = args[1]
+        y_train = data[['road_label', 'id']].reset_index(drop=True)
+        y_train = y_train.groupby(y_train.index // segment_length).agg(lambda x: x.value_counts().index[0])
+        data['id'] = y_train['id']
+        data = data
         return data
 
     @overrides
@@ -34,7 +50,20 @@ class ManualExtractor(Extractor):
         :param args:
         :return: list
         """
-        pass
+        X = pandas.DataFrame()
+        segment_length = args[0]
+
+        X['mean'] = data['acceleration_abs'].groupby(data.index // segment_length).mean()
+        X['std'] = data['acceleration_abs'].groupby(data.index // segment_length).std()
+        X['var'] = data['acceleration_abs'].groupby(data.index // segment_length).std() ** (1 / 2)
+        X['max'] = data['acceleration_abs'].groupby(data.index // segment_length).max()
+
+        y = data[['road_label', 'id']].reset_index(drop=True)
+        y = y.groupby(y.index // segment_length).agg(lambda x: x.value_counts().index[0])
+        X['id'] = y['id']
+        X = X
+        return X, y
+
 
     @overrides
     def extract_select_inference_features(self, data, args=None):
@@ -44,4 +73,10 @@ class ManualExtractor(Extractor):
         :param args:
         :return: list
         """
-        pass
+        X = pandas.DataFrame()
+        segment_length = args[0]
+
+        X['mean'] = data['acceleration_abs'].groupby(data.index // segment_length).mean()
+        X['std'] = data['acceleration_abs'].groupby(data.index // segment_length).std()
+        X['var'] = data['acceleration_abs'].groupby(data.index // segment_length).std() ** (1 / 2)
+        X['max'] = data['acceleration_abs'].groupby(data.index // segment_length).max()

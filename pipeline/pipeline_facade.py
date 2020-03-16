@@ -82,7 +82,6 @@ class ConcretePipelineFacade(PipelineFacade):
 
 
             #Find segements with homogeneous labeling
-            '''
             split = lambda df, chunk_size: numpy.array_split(df, len(df) // chunk_size + 1, axis=0)
             segments_train = split(data_train, segment_length)
             segments_test= split(data_test, segment_length)
@@ -96,7 +95,6 @@ class ConcretePipelineFacade(PipelineFacade):
 
             data_train = pandas.concat(segments_train_homogeneous, axis=0)
             data_test = pandas.concat(segments_test_homogeneous, axis=0)
-            '''
             
             #Generate id column
             train_id = [None]*data_train.index.size
@@ -124,62 +122,18 @@ class ConcretePipelineFacade(PipelineFacade):
             X_test = data_test[['acceleration_abs', 'id']].reset_index(drop=True)
 
             #Extract Training features
-            #X_train = extractor.extract_select_training_features(
-            #    X_train,
-            #    args=['id', config['hw_num_processors'], None, y_train['road_label'], config['feature_eng_baseline_extractor_fdr']]
-            #)
-
-            from tsfresh.feature_extraction import MinimalFCParameters
-            from tsfresh.feature_extraction import ComprehensiveFCParameters
-            #kind_to_fc_parameters = {'acceleration_abs' : MinimalFCParameters()}
-            '''
-            kind_to_fc_parameters = {'acceleration_abs' : {"mean": None, "standard_deviation": None,
-                                                           "variance": None, "minimum": None,
-                                                           "maximum": None}}
-            
-            X_train = extractor.extract_select_inference_features(
+            X_train = extractor.extract_select_training_features(
                 X_train,
-                args=['id', config['hw_num_processors'], None, kind_to_fc_parameters]
+                args=['id', config['hw_num_processors'], None, y_train['road_label'], config['feature_eng_baseline_extractor_fdr']]
             )
 
+
             #Get feature map for validation and training set
-            #kind_to_fc_parameters = from_columns(X_train)
+            kind_to_fc_parameters = from_columns(X_train)
             X_test = extractor.extract_select_inference_features(
                 X_test,
                 args=['id', config['hw_num_processors'], None, kind_to_fc_parameters]
             )
-            '''
-
-            #min max var mean sum std aus min feature set von tshfresh
-            X_train_new = pandas.DataFrame()
-            X_train_new['mean'] = X_train['acceleration_abs'].groupby(X_train.index // segment_length).mean()
-            X_train_new['std'] = X_train['acceleration_abs'].groupby(X_train.index // segment_length).std()
-            X_train_new['var'] = X_train['acceleration_abs'].groupby(X_train.index // segment_length).std()**(1/2)
-            X_train_new['max'] = X_train['acceleration_abs'].groupby(X_train.index // segment_length).max()
-            X_train_new['min'] = X_train['acceleration_abs'].groupby(X_train.index // segment_length).min()
-            #X_train_new['sum'] = X_train['acceleration_abs'].groupby(X_train.index // segment_length).sum()
-
-            y_train = data_train[['road_label', 'id']].reset_index(drop=True)
-            y_train = y_train.groupby(y_train.index // segment_length).agg(lambda x: x.value_counts().index[0])
-            X_train_new['id'] = y_train['id']
-            X_train = X_train_new
-
-            print(X_train)
-            print(y_train)
-
-            X_test_new = pandas.DataFrame()
-            X_test_new['mean'] = X_test['acceleration_abs'].groupby(X_test.index // segment_length).mean()
-            X_test_new['std'] = X_test['acceleration_abs'].groupby(X_test.index // segment_length).std()
-            X_test_new['var'] = X_test['acceleration_abs'].groupby(X_test.index // segment_length).std() ** (1 / 2)
-            X_test_new['max'] = X_test['acceleration_abs'].groupby(X_test.index // segment_length).max()
-            X_test_new['min'] = X_test['acceleration_abs'].groupby(X_test.index // segment_length).min()
-           # X_test_new['sum'] = X_test['acceleration_abs'].groupby(X_test.index // segment_length).sum()
-
-            y_test = data_test[['road_label', 'id']].reset_index(drop=True)
-            y_test = y_test.groupby(y_test.index // segment_length).agg(lambda x: x.value_counts().index[0])
-            X_test_new['id'] = y_test['id']
-            X_test = X_test_new
-
 
             X_train = ['placeholder',
                        [X_train, y_train['road_label'].rename(columns={'road_label': 0}, inplace=True),
@@ -221,7 +175,7 @@ class ConcretePipelineFacade(PipelineFacade):
 
             #Segement validation data ins pieces with homogeneous length
             # Find segements with homogeneous labeling
-            '''
+
             split = lambda df, chunk_size: numpy.array_split(df, len(df) // chunk_size + 1, axis=0)
             segments_valid = split(data_valid, segment_length)
             segments_valid_homogeneous = []
@@ -230,7 +184,7 @@ class ConcretePipelineFacade(PipelineFacade):
                     segments_valid_homogeneous.append(segment)
 
             data_valid = pandas.concat(segments_valid_homogeneous, axis=0)
-            '''
+
 
             #Generate id column
             valid_id = [None] * data_valid.index.size
@@ -246,12 +200,12 @@ class ConcretePipelineFacade(PipelineFacade):
             X_valid = data_valid[['acceleration_abs', 'id']].reset_index(drop=True)
 
             # Get feature map for validation and training set
-            #kind_to_fc_parameters = from_columns(X_train)
-            #run_summary['ts_fresh_relevant_features'] = kind_to_fc_parameters
-            #X_valid = extractor.extract_select_inference_features(
-            #    X_valid,
-            #    args=['id', config['hw_num_processors'], None, kind_to_fc_parameters]
-            #)
+            kind_to_fc_parameters = from_columns(X_train)
+            run_summary['ts_fresh_relevant_features'] = kind_to_fc_parameters
+            X_valid = extractor.extract_select_inference_features(
+                X_valid,
+                args=['id', config['hw_num_processors'], None, kind_to_fc_parameters]
+            )
 
             #y_valid = y_valid['road_label'].rename(columns={'road_label': 0}, inplace=True)
 
