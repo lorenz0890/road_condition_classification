@@ -209,20 +209,6 @@ class ConcretePipelineFacade(PipelineFacade):
 
             #y_valid = y_valid['road_label'].rename(columns={'road_label': 0}, inplace=True)
 
-            X_valid_new = pandas.DataFrame()
-            X_valid_new['mean'] = X_valid['acceleration_abs'].groupby(X_valid.index // segment_length).mean()
-            X_valid_new['std'] = X_valid['acceleration_abs'].groupby(X_valid.index // segment_length).std()
-            X_valid_new['var'] = X_valid['acceleration_abs'].groupby(X_valid.index // segment_length).std() ** (1 / 2)
-            X_valid_new['max'] = X_valid['acceleration_abs'].groupby(X_valid.index // segment_length).max()
-            X_valid_new['min'] = X_valid['acceleration_abs'].groupby(X_valid.index // segment_length).min()
-            # X_test_new['sum'] = X_test['acceleration_abs'].groupby(X_test.index // segment_length).sum()
-
-            y_valid = data_valid[['road_label', 'id']].reset_index(drop=True)
-            y_valid = y_valid.groupby(y_valid.index // segment_length).agg(lambda x: x.value_counts().index[0])
-            X_valid_new['id'] = y_valid['id']
-            X_valid = X_valid_new
-            y_valid = y_valid['road_label'].rename(columns={'road_label': 0}, inplace=True)
-
         if config['feature_eng_extractor_type'] == "motif":
             X_valid, y_valid = extractor.extract_select_inference_features(
                 data_valid, [motif_radius, motif_len, config['hw_num_processors']], True
