@@ -207,7 +207,7 @@ class ConcretePipelineFacade(PipelineFacade):
                 args=['id', config['hw_num_processors'], None, kind_to_fc_parameters]
             )
 
-            #y_valid = y_valid['road_label'].rename(columns={'road_label': 0}, inplace=True)
+            y_valid = y_valid['road_label'].rename(columns={'road_label': 0}, inplace=True)
 
         if config['feature_eng_extractor_type'] == "motif":
             X_valid, y_valid = extractor.extract_select_inference_features(
