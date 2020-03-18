@@ -292,6 +292,9 @@ class ConcretePipelineFacade(PipelineFacade):
         with open("./meta_data_{}.pkl".format(results_tag), 'wb') as meta_file:
             pickle.dump(meta_data, meta_file)
 
+        with open("./meta_data.pkl", 'wb') as meta_file:
+            pickle.dump(meta_data, meta_file)
+
         with open("./run_summary_{}.pkl".format(results_tag), 'wb') as run_summary_file:
             pickle.dump(run_summary, run_summary_file)
 
@@ -323,7 +326,7 @@ class ConcretePipelineFacade(PipelineFacade):
         )
         # TODO: Delegate to DAO
         meta_data, X_train, clf = None, None, None
-        with open('./meta_data', 'rb') as meta_file:
+        with open('./meta_data.pkl', 'rb') as meta_file:
             meta_data = pickle.load(meta_file)
 
         with open('./clf', 'rb') as clf_file:
