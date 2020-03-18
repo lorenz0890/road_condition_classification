@@ -359,20 +359,21 @@ class ConcretePipelineFacade(PipelineFacade):
                                                                       )
         if config['feature_eng_extractor_type'] == "ts-fresh":
 
+            segment_length = config['feature_eng_baseline_extractor_segement_len']
             valid_id = [None] * data_inference.index.size
             id = 0
-            for i in range(0, data_inference.index.size, 30):
-                valid_id[i:i + 30] = [id] * 30
+            for i in range(0, data_inference.index.size, segment_length):
+                valid_id[i:i + segment_length] = [id] * segment_length
                 id += 1
             valid_id = valid_id[:data_inference.index.size]
             data_inference['id'] = valid_id
 
-            X_valid = data_inference[['acceleration_abs', 'id']].reset_index(drop=True)
+            X_inference = data_inference[['acceleration_abs', 'id']].reset_index(drop=True)
 
             # Get feature map for validation and training set
             kind_to_fc_parameters = meta_data['feature_mapping']
-            X_valid = extractor.extract_select_inference_features(
-                X_valid,
+            X_inference = extractor.extract_select_inference_features(
+                X_inference,
                 args=['id', config['hw_num_processors'], None, kind_to_fc_parameters]
             )
 
