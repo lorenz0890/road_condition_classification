@@ -36,7 +36,8 @@ class ConcretePipelineFacade(PipelineFacade):
             file_path=[config['data_set_path'], config['data_labels_path']],
             identifiers=config['data_set_trips'],
             column_names=[config['data_set_column_names'], config['data_label_column_names']],
-            use_columns=[config['data_set_columns'], config['data_label_columns']]
+            use_columns=[config['data_set_columns'], config['data_label_columns']],
+            check_distribution = True
         )
 
         # 3. Preprocessing
@@ -317,7 +318,8 @@ class ConcretePipelineFacade(PipelineFacade):
             file_path=[config['data_set_path'], config['data_labels_path']],
             identifiers=config['data_set_trips'],
             column_names=[config['data_set_column_names'], config['data_label_column_names']],
-            use_columns=[config['data_set_columns'], config['data_label_columns']]
+            use_columns=[config['data_set_columns'], config['data_label_columns']],
+            check_distribution = False
         )
         # TODO: Delegate to DAO
         meta_data, X_train, clf = None, None, None

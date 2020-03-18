@@ -20,7 +20,7 @@ class DAO(ABC, RCTCComponent):
         pass
 
     @abstractmethod
-    def bulk_read_data(self, file_path, identifiers, column_names, use_columns):
+    def bulk_read_data(self, file_path, identifiers, column_names, use_columns, check_distribution):
         """
         Load a multiple datasets from data directory on disk, return concatenated pandas dataframe.
         :param file_path: list(), path(s) to data files
