@@ -342,7 +342,8 @@ class ConcretePipelineFacade(PipelineFacade):
 
         data_inference = preprocessor.inference_split_process(
             data=data,
-            params=params
+            config=config,
+            meta_data=meta_data
         )
 
         # 4. Feature extraction
