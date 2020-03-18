@@ -261,6 +261,9 @@ class ConcretePipelineFacade(PipelineFacade):
         with open("./clf_{}.pkl".format(results_tag), 'wb') as clf_file:
             pickle.dump(clf, clf_file)
 
+        with open("./clf.pkl", 'wb') as clf_file:
+            pickle.dump(clf, clf_file)
+
         meta_data = None
         if config['feature_eng_extractor_type'] == "motif":
             meta_data = {
