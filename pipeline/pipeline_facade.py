@@ -56,20 +56,6 @@ class ConcretePipelineFacade(PipelineFacade):
         y_test = None
 
         if config['feature_eng_extractor_type'] == "motif":
-            split = lambda df, chunk_size: numpy.array_split(df, len(df) // chunk_size + 1, axis=0)
-            segments_train = split(data_train, config['feature_eng_mp_extractor_lengths'])
-            segments_test= split(data_test, config['feature_eng_mp_extractor_lengths'])
-            segments_train_homogeneous, segments_test_homogeneous = [], []
-            for segment in segments_train:
-                if segment.road_label.nunique() == 1: #and segment.shape[0] == segment_length: TODO Homogeneous length rmoved write that in paper
-                    segments_train_homogeneous.append(segment)
-            for segment in segments_test:
-                if segment.road_label.nunique() == 1: #and segment.shape[0] == segment_length:
-                    segments_test_homogeneous.append(segment)
-
-            data_train = pandas.concat(segments_train_homogeneous, axis=0)
-            data_test = pandas.concat(segments_test_homogeneous, axis=0)
-
             X_train = extractor.extract_select_training_features(
                 data_train,
                 [config['feature_eng_mp_extractor_radii'], config['feature_eng_mp_extractor_lengths']]
