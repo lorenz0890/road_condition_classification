@@ -1,5 +1,7 @@
 # Classification of Road Conditions and Types Based on Mobile Devices Telemetry Data
 
+Implementation of [BSc Thesis](https://github.com/lorenz0890/road_condition_classification/blob/master/BSc_Kummer.pdf).
+
 ## Abstract
 
 While efficient and accurate solutions for detecting known patterns in
